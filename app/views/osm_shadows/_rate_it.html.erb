@@ -11,84 +11,16 @@ $(document).ready(function() {
 .ui-widget { font-size: 0.9em; }
 </style>
 <%
-   @unselected = 'unselected'
-
    # this hash has the names, in English and Bahasa Indonesia, for 
    # each of the special tags we are using.
    @fields = [
-       { :tag => 'hot:bbb:name',
+       { :tag => 'hot:rate:name',
          :type => 'text',
-         :en => "Name" },
-       { :tag => 'hot:bbb:mobile',
-         :type => 'text',
-         :en => "Mobile", :id => "Nomor Handphone" },
-       { :tag => 'hot:bbb:date',
-         :type => 'date',
-         :en => "Date", :id => "Tanggal" },
-       { :tag => 'hot:bbb:gender',
+         :en => "Nick Name" },
+       { :tag => 'hot:rate:choice',
          :type => 'select',
-         :options => [ @unselected, 'L', 'P' ],
-         :en => "Gender" },
-       { :tag => 'hot:bbb:status',
-         :type => 'text',
-         :en => "Status" },
-       { :tag => 'hot:bbb:street_address',
-         :type => 'text',
-         :en => "Address (Street)", :id => "Alamat (Jalan)" },
-       { :tag => 'hot:bbb:rt_jorong',
-         :type => 'text',
-         :en => "RT/JORONG" },
-       { :tag => 'hot:bbb:rw_korong',
-         :type => 'select',
-         :options => [ @unselected, 'option1', 'option2', 'option3' ],
-         :en => "RW/KORONG" },
-       { :tag => 'hot:bbb:kelurahan_nagari',
-         :type => 'select',
-         :options => [ @unselected, 'option1', 'option2', 'option3' ],
-         :en => "Kelurahan/Nagari" },
-       { :tag => 'hot:bbb:kode_pos',
-         :type => 'text',
-         :en => "Kode Pos" },
-       { :tag => 'hot:bbb:education',
-         :type => 'select',
-         :options => [ @unselected, 'SD', 'SMP', 'SMA', 'University' ],
-         :en => "Education", :id => "Pendidikan" },
-       { :tag => 'hot:bbb:occupation',
-         :type => 'text',
-         :en => "Occupation", :id => "Pekerjaan" },
-       { :tag => 'hot:bbb:literacy',
-         :type => 'select',
-         :options => [ @unselected, 'Ya', 'Tidak' ],
-         :en => "Literacy", :id => "Kemampuan Membaca" },
-       { :tag => 'hot:bbb:salary',
-         :type => 'text',
-         :en => "Salary per month", :id => "Pendapatan per bulan" },
-       { :tag => 'hot:bbb:social_group',
-         :type => 'select',
-         :options => [ @unselected, 'option1', 'option2', 'option3' ],
-         :en => "Social group", :id => "Kelompok Masyarakat" },
-       { :tag => 'hot:bbb:head_of_house',
-         :type => 'select',
-         :options => [ @unselected, 'Ya', 'Tidak' ],
-         :en => "Head of house", :id => "Kepala Rumah Tangga" },
-       { :tag => 'hot:bbb:people_in_house',
-         :type => 'text',
-         :en => "Number of people living in the house" },
-       { :tag => 'hot:bbb:heir',
-         :type => 'text',
-         :en => "Heir" },
-       { :tag => 'hot:bbb:alternative_name',
-         :type => 'text',
-         :en => "Alternative name" },
-       { :tag => 'hot:bbb:id_card_number',
-         :type => 'text',
-         :en => "ID card number" },
-       { :tag => 'hot:bbb:motivation',
-         :type => 'text',
-         :en => "Motivation for joining the program" },
-       { :tag => 'hot:bbb:url',
-         :type => 'url',
-         :en => "URL" },
+         :options => ['1','2','3','4','5'],
+         :en => "Stars" }
    ]
 %>
 
@@ -119,7 +51,6 @@ $(document).ready(function() {
 <%= form_tag({:controller => "osm_shadows", :action => "create", :method => "post"}, :id => "osm_shadows_form") do %>
 <%= hidden_field_tag("osm_shadow[osm_id]", @osm_shadow.osm_id) %>
 <%= hidden_field_tag("osm_shadow[osm_type]", @osm_shadow.osm_type) %>
-<%= hidden_field_tag("unselected_value", @unselected) %>
 
    <table class="osm_shadow">
    <% @fields.each do |field| %>

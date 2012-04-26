@@ -1,0 +1,109 @@
+<script type="text/javascript" src="<%= asset_path 'jquery-validation-1.9.0/jquery.validate.min.js' %>"></script>
+<script type="text/javascript" src="<%= asset_path 'jquery-datepicker/js/jquery-ui-1.8.16.custom.min.js' %>"></script>
+<link href="<%= asset_path 'jquery-datepicker/css/smoothness/jquery-ui-1.8.16.custom.css' %>" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+$(document).ready(function() {
+   $("#osm_shadows_form").validate();
+});
+</script>
+<style type="text/css">
+.ui-datepicker { width: 15em; }
+.ui-widget { font-size: 0.9em; }
+</style>
+<%
+   # this hash has the names, in English and Bahasa Indonesia, for 
+   # each of the special tags we are using.
+   @fields = [
+       { :tag => 'hot:simple:name',
+         :type => 'text',
+         :en => "Name" },
+       { :tag => 'hot:simple:mobile',
+         :type => 'text',
+         :en => "Mobile", :id => "Nomor Handphone" },
+       { :tag => 'hot:simple:date',
+         :type => 'date',
+         :en => "Date", :id => "Tanggal" },
+       { :tag => 'hot:simple:choice',
+         :type => 'select',
+         :options => ['yes','no','maybe','of course'],
+         :en => "Choice" }
+   ]
+%>
+
+<% if (params['action'] == "show") then %>
+   <table class="osm_shadow">
+   <% @fields.each do |field| %>
+   <tr>
+      <th>
+      <% if field.has_key?(:id) %>
+      <%= field[:id] %><br><span class="english">(<%= field[:en] %>)</span>
+      <% else %>
+      <%= field[:en] %>
+      <% end %>
+      </th>
+      <td>
+         <% if field[:type] == 'url' %>
+            <%= link_to @taghash[field[:tag]], @taghash[field[:tag]] %>
+         <% else %>
+            <%= @taghash[field[:tag]] %>
+         <% end %>
+      </td>
+   </tr>
+   <% end %>
+   </table>
+<% end %>
+
+<% if (params['action'] == "new") or (params['action'] == "edit") then %>
+<%= form_tag({:controller => "osm_shadows", :action => "create", :method => "post"}, :id => "osm_shadows_form") do %>
+<%= hidden_field_tag("osm_shadow[osm_id]", @osm_shadow.osm_id) %>
+<%= hidden_field_tag("osm_shadow[osm_type]", @osm_shadow.osm_type) %>
+
+   <table class="osm_shadow">
+   <% @fields.each do |field| %>
+   <tr>
+      <th>
+      <% if field.has_key?(:id) %>
+      <%= field[:id] %><br><span class="english">(<%= field[:en] %>)</span>
+      <% else %>
+      <%= field[:en] %>
+      <% end %>
+      </th>
+      <td>
+      <% if field[:type] == 'text' %>
+         <input type="text" name="taghash[<%=field[:tag]%>]" value="<%= @taghash[field[:tag]] %>">
+      <% elsif field[:type] == 'date' %>
+         <input id="taghash_<%= field[:tag].tr(':', '_') %>" type="text" name="taghash[<%=field[:tag]%>]" value="<%= @taghash[field[:tag]] %>">
+         <script type="text/javascript">
+         $(function() { 
+            $("#taghash_<%= field[:tag].tr(':', '_') %>")
+               .datepicker({ dateFormat: 'yy-mm-dd' })
+               .css({'width' : '220px'}); 
+         }); 
+         </script>
+      <% elsif field[:type] == 'url' %>
+         <input type="text" class="url" name="taghash[<%=field[:tag]%>]" value="<%= @taghash[field[:tag]] %>">
+      <% elsif field[:type] == 'select' %>
+         <%= select_tag "taghash[#{field[:tag]}]", 
+           options_for_select((field[:options] + [@taghash[field[:tag]]]).uniq, @taghash[field[:tag]]) %>
+      <% end %>
+      </td>
+      <% @taghash.delete(field[:tag]) %>
+   </tr>
+   <% end %>
+   </table>
+
+   <div class="osm_shadow_submit">
+      <%= submit_tag("Save Tags") %>
+      <% if params[:action] == "edit" then %>
+         <a href="<%= show_shadow_path(@osm_shadow.osm_type, @osm_shadow.osm_id) %>">
+      <% else %>
+         <a href="<%= mapsearch_path %>">
+      <% end %>
+      <input type="button" value="Cancel"></a>
+   </div>
+
+   <% @taghash.each do |tkey, tvalue| %>
+      <%= hidden_field_tag("taghash[#{tkey}]", tvalue) %>
+   <% end %>
+<% end %>
+<% end %>

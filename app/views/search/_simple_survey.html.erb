@@ -1,10 +1,10 @@
 <% @result.each do |shadow| %>
 <% desc = []
    shadow.tags.each do |t| 
-       if t.key == "hot:bbb:name" 
+       if t.key == "hot:simple:name" 
            desc.push "Name: #{t.value}"
-       elsif t.key == "hot:bbb:street_address"
-           desc.push "Address: #{t.value}"
+       elsif t.key == "hot:simple:mobile"
+           desc.push "Mobile: #{t.value}"
        end
    end
 
