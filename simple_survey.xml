@@ -1,0 +1,13 @@
+<presets xmlns="http://josm.openstreetmap.de/tagging-preset-1.0"
+	author="Kate Chapman"
+	description="Building collection presets for Indonesia"
+	shortdescription="Buildings"
+	version="1.0">
+	<item name="Building Survey">
+		<key key="building" value="yes"/>
+	    <text key="hot:simple:name" text="Name"/>
+	    <text key="hot:simple:mobile" text="Mobile"/>
+	    <text key="hot:simple:date" text="Date" />
+		<combo key="hot:simple:choice" text="Choice" values="yes,no,maybe" default="" delete_if_empty="true" />
+	</item>
+</presets>

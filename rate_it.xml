@@ -1,0 +1,11 @@
+<presets xmlns="http://josm.openstreetmap.de/tagging-preset-1.0"
+	author="Kate Chapman"
+	description="Building collection presets for Indonesia"
+	shortdescription="Buildings"
+	version="1.0">
+	<item name="Building w/Rating">
+		<key key="building" value="yes"/>
+	    <text key="hot:rate:name" text="Nick Name"/>
+		<combo key="hot:rate:choice" text="Stars" values="1,2,3,4,5" default="" delete_if_empty="true" />
+	</item>
+</presets>

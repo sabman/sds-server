@@ -1,0 +1,12 @@
+<presets xmlns="http://josm.openstreetmap.de/tagging-preset-1.0"
+	author="Kate Chapman"
+	description="Building collection presets for Indonesia"
+	shortdescription="Buildings"
+	version="1.0">
+	<item name="Hospital">
+	    <text key="hot:hospital:director_name" text="Director Name"/>
+	    <text key="hot:hospital:director_mobile" text="Director Mobile"/>
+		<text key="hot:hospital:full_beds" text="Full Beds"/>
+		<text key="hot:hospital:doctors" text="Doctors on Staff"/>
+	</item>
+</presets>
