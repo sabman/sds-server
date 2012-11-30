@@ -13,7 +13,7 @@ end
 
 Factory.define :project do |p|
    p.name "BBB Home Owner"
-   p.partial "bbb_home_owner"
+   p.partial "simple_survey"
 end
 
 
