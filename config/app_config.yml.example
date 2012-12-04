@@ -1,0 +1,4 @@
+development:
+    osm_api_url: 'http://api.openstreetmap.org/api/0.6/'
+production:
+    osm_api_url: 'http://api.openstreetmap.org/api/0.6/'
