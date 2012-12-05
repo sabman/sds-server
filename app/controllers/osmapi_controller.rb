@@ -3,8 +3,10 @@ class OsmapiController < ApplicationController
 require "net/http"
 require "uri"
 
+
 def proxy
-    uri = 'http://api.openstreetmap.org/api/0.6/' + params[:apirequest];
+    osm_api_url = APP_CONFIG[:osm_api_url] || "http://api.openstreetmap.org/api/0.6/"
+    uri = APP_CONFIG[:osm_api_url] + params[:apirequest];
     if (request.query_string) 
         uri = uri + "?" + request.query_string;
     end
