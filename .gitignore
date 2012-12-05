@@ -1,2 +1,4 @@
+webrat.log
+tmp/*
 log/*.log
 config/app_config.yml
