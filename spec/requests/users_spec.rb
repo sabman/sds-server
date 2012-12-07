@@ -34,7 +34,7 @@ describe "Users" do
                fill_in "Firstname", :with => "Karch"
                fill_in "Email",     :with => "karch@geofabrik.de"
                click_button
-               response.should have_selector("div.flash.success", :content => "successfully")
+               response.should have_selector("div.flash.notice", :content => "successfully")
                response.should render_template('users/show')
             end.should change(User, :count).by(1)
          end

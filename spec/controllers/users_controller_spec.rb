@@ -197,7 +197,7 @@ describe UsersController do
 
          it "should have a flash message" do
             put :update, :id => @user, :user => @attr
-            flash[:success].should =~ /updated/
+            flash[:notice].should =~ /updated/
          end
       end
    end
@@ -325,7 +325,7 @@ describe UsersController do
 
          it "should have a success message" do
             post :create, :user => @attr
-            flash[:success].should =~ /created new user successfully/i
+            flash[:notice].should =~ /created new user successfully/i
          end
 
          it "should set the password" do

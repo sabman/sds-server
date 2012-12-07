@@ -6,8 +6,7 @@ class UsersController < ApplicationController
    def update
       @user = User.find(params[:id])
       if @user.update_attributes(params[:user])
-         flash[:success] = "User updated successfully!"
-         redirect_to @user
+         redirect_to @user, :notice => "User updated successfully!"
       else
          @title = "Edit User" 
          render 'edit'
@@ -31,8 +30,7 @@ class UsersController < ApplicationController
    def create
       @user = User.new(params[:user])
       if @user.save
-         flash[:success] = "Created new user successfully!";
-         redirect_to @user
+         redirect_to @user, :notice => "Created new user successfully!"
       else
          @title = "New User"
          render 'new'
