@@ -1,6 +1,6 @@
 class OsmShadowsController < ApplicationController
-   before_filter :authenticate,  :only => [:index, :show, :new, :edit, :create]
-   before_filter :change_project, :only => [:show, :new, :edit]
+   before_filter :authenticate,  :only => [:index, :show, :list, :new, :edit, :create]
+   before_filter :change_project, :only => [:show, :list, :new, :edit]
 
 
    require 'xml/libxml'
@@ -14,6 +14,11 @@ class OsmShadowsController < ApplicationController
    def show
       @title = "Object Properties"
       retrieve_object
+   end
+
+   def list
+      @title = "Records for this Object"
+      retrieve_objects
    end
 
 
@@ -42,6 +47,29 @@ class OsmShadowsController < ApplicationController
    end
 
 
+   def update
+      if (!current_changeset.nil?) then
+         changeset = current_changeset
+      elsif (!current_user.nil?) then
+         changeset = Changeset.new
+         changeset.user_id = current_user.id
+         changeset.save!
+         store_changeset(changeset)
+      end
+      params['osm_shadow']['changeset_id'] = changeset.id
+      
+      shadow = OsmShadow.find(params[:id])
+      shadow.changeset = changeset
+      
+       if shadow.update_attributes!(params["osm_shadow"])
+         redirect_to(shadow, :notice => "Record updated successfully")
+       else
+         redirect_to({:action => :edit}, {:alert => "Sorry, Record was unable to be updated."})
+       end
+
+   end
+
+
    def create
       if (!current_changeset.nil?) then
          params['changeset_id'] = current_changeset.id
@@ -56,13 +84,19 @@ class OsmShadowsController < ApplicationController
       shadow = OsmShadow.from_params(params)
       saved = shadow.save_with_current
 
-      flash[:success]= "Object successfully saved."
-      redirect_to :action => "show", :osm_type => shadow.osm_type, :osm_id => shadow.osm_id
+      redirect_to(shadow, :notice => "Record successfully saved.")
    end
 
+   
 private
+
    def retrieve_object
-      @osm_shadow = OsmShadow.find_current(params[:osm_type], params[:osm_id])
+      if params[:id]
+         @osm_shadow = OsmShadow.find(params[:id])
+      else
+         @osm_shadow = OsmShadow.find_current(params[:osm_type], params[:osm_id])
+      end
+     
       @tags = Array.new
       @taghash = Hash.new
       if (!@osm_shadow.nil?) then
@@ -71,6 +105,13 @@ private
             @taghash[tag.key] = tag.value
          end
       end
+   end
+
+
+   def retrieve_objects
+      @osm_shadows = OsmShadow.where("osm_type = ? and osm_id = ?",  params[:osm_type], params[:osm_id])
+     
+      @osm_shadow = @osm_shadows.last
    end
 
 

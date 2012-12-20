@@ -1,0 +1,20 @@
+<%= render 'osm_object' %>
+<h1>Records.</h1>
+
+<% @osm_shadows.each do | @osm_shadow | %>
+  <%
+    @taghash = {}
+    @tags = @osm_shadow.tags
+    @osm_shadow.tags.each do |tag|
+      @taghash[tag.key] = tag.value
+     end
+  %>
+  <p><a href="<%= edit_osm_shadow_path(@osm_shadow) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" />Edit</a></p>
+
+  <%= render @current_user.project.partial %>
+
+  <ul>
+     <li><a href="#" id="jq_expert_view">Expert view</a></li>
+  </ul>
+  <%= render :partial=> 'expert_view'  %>
+<% end  %>

@@ -106,7 +106,7 @@ $(document).ready(function() {
 <ul>
 <li><%= @current_user.project.name %></li>
 
-<% if ((params['action'] == "show") or (params['action'] == "edit")) then %>
+<% if ["show", "edit", "list"].include?(params['action']) %>
    <li>Last modified: <%= @osm_shadow.created_at.strftime("%Y-%m-%d") %></li>
    <li>By: <%= "#{@osm_shadow.changeset.user.firstname} #{@osm_shadow.changeset.user.lastname}" %></li>
    <li>Version: <%= @osm_shadow.version %></li>
@@ -126,9 +126,5 @@ $(document).ready(function() {
 </ul>
 <div id="osm_object_map" class="osm_object_map"></div>
 
-<h2 style="margin-top: 20px;">Expert Functions</h2>
-<ul>
-   <li><a href="#" id="jq_expert_view">Expert view</a></li>
-</ul>
 </div>
 

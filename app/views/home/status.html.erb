@@ -24,7 +24,7 @@
 <tr>
 <th>User</th>
 <th>Date</th>
-<th>OSM Objects<br>OSM ID - OSM Type</th>
+<th>OSM Objects<br />OSM ID - OSM Type</th>
 </tr>
 
 <% @last_edits.each do |c| %>
@@ -32,15 +32,22 @@
 <td><%= "#{c.user.firstname}, #{c.user.lastname}"%></td>
 <td><%= c.created_at.strftime("%Y-%m-%d") %></td>
 <td>
-<ul>
-   <% c.osm_shadows.each do |s| %>
-   <li>
-   <a href="<%= show_shadow_path(s.osm_type, s.osm_id) %>" title="View Object">
-   <%= "#{s.osm_type} - #{s.osm_id}" %>
-   </a>
-   </li>
-   <% end %>
-</ul>
+  <ul>
+      <% c.osm_shadows.each do |s| %>
+        <li>
+          <!-- JUST THIS RECORD -->
+          <a href="<%= osm_shadow_path(s) %>" title="Show Object">
+            <%= "#{s.osm_type} - #{s.osm_id}" %>
+          </a> <br />
+          <!-- ALL RECORDS AT THIS OSM OBJECT -->
+         
+          <a href="<%= list_shadows_path(s.osm_type, s.osm_id) %>" title="View Others">
+            <%= "All @ #{s.osm_type} - #{s.osm_id}" %>
+          </a>
+         
+        </li>
+      <% end %>
+    </ul>
 </td>
 </tr>
 <% end %>

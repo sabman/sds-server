@@ -1,17 +1,18 @@
 class OsmShadow < ActiveRecord::Base
    include OsmShadowXmlConverter
 
-   attr_accessible :osm_id, :osm_type, :version, :changeset_id
+   attr_accessible :osm_id, :osm_type, :version, :changeset_id, :tags_attributes
    before_create :generate_version
 
    belongs_to :changeset
    has_many :tags, :dependent => :destroy
+   accepts_nested_attributes_for :tags, :allow_destroy => true
 
    validates :changeset_id, :presence => true
    validates :osm_type, :presence => true, :inclusion => { :in => ["node", "way", "relation"]}
    validates :osm_id, :presence => true, :numericality => {:less_than_or_equal_to => 9223372036854775807}
 
-   validates_uniqueness_of :osm_id, :scope => [:osm_type, :version]
+   #validates_uniqueness_of :osm_id, :scope => [:osm_type, :version]
    default_scope :order => 'osm_shadows.created_at DESC' # newest first
 
    
@@ -114,8 +115,8 @@ class OsmShadow < ActiveRecord::Base
       end
       return shadow
    end
-
    
+
    def add_tag(key, value)
       tag = Tag.new
       tag.key = key
