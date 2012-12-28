@@ -6,7 +6,9 @@ class OsmShadow < ActiveRecord::Base
 
    belongs_to :changeset
    has_many :tags, :dependent => :destroy
-   accepts_nested_attributes_for :tags, :allow_destroy => true
+   
+   #save tags when saving this object, but dont save it if it's a new tag, and it's empty 
+   accepts_nested_attributes_for :tags, :allow_destroy => true, :reject_if => proc { |tag| tag['value'].blank? && tag['id'].blank?}
 
    validates :changeset_id, :presence => true
    validates :osm_type, :presence => true, :inclusion => { :in => ["node", "way", "relation"]}
@@ -66,6 +68,12 @@ class OsmShadow < ActiveRecord::Base
          end
       end
    end
+
+   
+   def self.find_first(otype, oid)
+      OsmShadow.where("osm_type = ? and osm_id = ?", otype, oid).first
+   end
+
 
    def self.find_current(otype, oid)
       collection = CurrentOsmShadow.where("osm_type = ? and osm_id = ?", otype, oid)

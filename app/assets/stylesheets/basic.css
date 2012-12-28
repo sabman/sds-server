@@ -147,6 +147,18 @@ select.users_project option {
 }
 
 /* osm_shadows */
+div.osm_shadow_list{
+   float: left;
+}
+
+div.osm_shadow_list_item{
+   border-bottom-style:dotted;
+   border-width:1px;
+   margin-bottom: 1em;
+   padding-bottom: 1em;
+}
+
+
 div.osm_shadows_detail {
    width: 500px;
    margin: 0px 10px 10px 30px;
@@ -416,6 +428,13 @@ input[type=submit], input[type=button] {
    padding: 5px 12px;
    color: #950B04;
    font-weight: bold;
+}
+
+input.destroy_button {
+   font-weight: normal;
+   color: black;
+   padding: 1px;
+   margin-top: 4px;
 }
 
 input[type=text], input[type=password] {

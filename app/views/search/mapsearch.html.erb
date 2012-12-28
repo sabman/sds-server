@@ -208,7 +208,7 @@ function onFeatureSelect(feature) {
    params = 'zoom=' + zoom + '&lon=' + center.lon + '&lat=' + center.lat;
 
     //alert("link that jumps to: " + fstr);
-    window.location.href = '<%= new_osm_shadow_path %>/' + featureType(feature) + '/' + feature.osm_id + '?' + params;
+    window.location.href = '<%= osm_shadows_path %>/show/' + featureType(feature) + '/' + feature.osm_id + '?' + params;
 
 
     browseActiveFeature = feature; 

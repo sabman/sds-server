@@ -10,8 +10,8 @@ class HomeController < ApplicationController
       @title = "Application Status"
 
 
-      @cnt_objects = CurrentOsmShadow.all.count
-      @cnt_tags = CurrentTag.all.count
+      @cnt_objects = OsmShadow.count
+      @cnt_tags = Tag.count
       @cnt_users_active = User.where("active = 'true'").count
       @users_admin  = User.where("admin  = 'true'")
 

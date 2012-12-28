@@ -1,3 +1,5 @@
+test:
+    osm_api_url: 'http://api06.dev.openstreetmap.org/api/0.6/'
 development:
     osm_api_url: 'http://api.openstreetmap.org/api/0.6/'
 production:

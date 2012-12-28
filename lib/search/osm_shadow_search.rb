@@ -12,9 +12,9 @@ class OsmShadowSearch
    def by_tagstring(string)
       result = Array.new
       matched = Array.new
-      tags = CurrentTag.where("lower(value) like '%'||?||'%' or lower(key) like '%'||?||'%'", string.downcase, string.downcase)
+      tags = Tag.where("lower(value) like '%'||?||'%' or lower(key) like '%'||?||'%'", string.downcase, string.downcase)
       tags.each do |tag|
-         shadow = CurrentOsmShadow.find(tag.current_osm_shadow_id)
+         shadow = OsmShadow.find(tag.osm_shadow_id)
          if (!matched.include?(shadow.id)) then
             result.push(shadow)
          end

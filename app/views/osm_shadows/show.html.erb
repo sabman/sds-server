@@ -2,4 +2,8 @@
 <h1>Object Properties</h1>
 <p><a href="<%= edit_osm_shadow_path(@osm_shadow) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20">Edit</a></p>
 <%= render @current_user.project.partial %>
+
+<ul>
+ <li><a href="#" id="jq_expert_view_<%=@osm_shadow.id%>">Expert view</a></li>
+</ul>
 <%= render 'expert_view' %>

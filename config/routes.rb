@@ -20,8 +20,8 @@ HotJosm::Application.routes.draw do
 
 
    match '/osm_shadows/show/:osm_type/:osm_id', :to =>'osm_shadows#list', :as => 'list_shadows'
-   match '/osm_shadows/edit/:osm_type/:osm_id', :to =>'osm_shadows#edit', :as => 'edit_shadow'
-   match '/osm_shadows/new/:osm_type/:osm_id',  :to =>'osm_shadows#new',  :as => 'new_shadow'
+   #match '/osm_shadows/edit/:osm_type/:osm_id', :to =>'osm_shadows#edit', :as => 'edit_shadow'
+   #match '/osm_shadows/new/:osm_type/:osm_id',  :to =>'osm_shadows#new',  :as => 'new_shadow'
 
    match '/createshadows',    :to => 'josmapi#createshadows'
    match '/collectshadows',   :to => 'josmapi#collectshadows'

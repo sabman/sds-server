@@ -18,7 +18,23 @@ class OsmShadowsController < ApplicationController
 
    def list
       @title = "Records for this Object"
+      
       retrieve_objects
+      
+      if (@osm_shadow.nil?) then
+         @osm_shadow = OsmShadow.new
+         @osm_shadow.osm_type = params[:osm_type]
+         @osm_shadow.osm_id = params[:osm_id]
+         @tags = Array.new
+         @taghash = Hash.new
+      end
+      
+      if params['zoom']
+         current_user.zoom = params['zoom'] || 0
+         current_user.lon  = params['lon'] || 0
+         current_user.lat  = params['lat'] || 0
+         current_user.save!
+      end
    end
 
 
@@ -30,20 +46,12 @@ class OsmShadowsController < ApplicationController
 
    def new
       @title = "New Tags"
-      retrieve_object
 
-      if (@osm_shadow.nil?) then
-         @osm_shadow = OsmShadow.new
-         @osm_shadow.osm_type = params[:osm_type]
-         @osm_shadow.osm_id = params[:osm_id]
-         @tags = Array.new
-         @taghash = Hash.new
-      end
-
-      current_user.zoom = params['zoom'];
-      current_user.lon  = params['lon'];
-      current_user.lat  = params['lat'];
-      current_user.save!
+      @osm_shadow = OsmShadow.new
+      @osm_shadow.osm_type = params[:osm_type]
+      @osm_shadow.osm_id = params[:osm_id]
+      @tags = Array.new
+      @taghash = Hash.new
    end
 
 
@@ -82,11 +90,17 @@ class OsmShadowsController < ApplicationController
       end
 
       shadow = OsmShadow.from_params(params)
-      saved = shadow.save_with_current
+      @osm_shadow = shadow.save_with_current
 
-      redirect_to(shadow, :notice => "Record successfully saved.")
+      redirect_to(@osm_shadow, :notice => "Record successfully saved.")
    end
 
+   def destroy
+      @osm_shadow = OsmShadow.find(params[:id])
+      @osm_shadow .destroy
+      
+      redirect_to(list_shadows_url(:osm_type => @osm_shadow.osm_type, :osm_id=>@osm_shadow.osm_id), {:notice => "Record was successfully deleted."})
+   end
    
 private
 
@@ -94,7 +108,7 @@ private
       if params[:id]
          @osm_shadow = OsmShadow.find(params[:id])
       else
-         @osm_shadow = OsmShadow.find_current(params[:osm_type], params[:osm_id])
+         @osm_shadow = OsmShadow.find_first(params[:osm_type], params[:osm_id])
       end
      
       @tags = Array.new
@@ -110,8 +124,7 @@ private
 
    def retrieve_objects
       @osm_shadows = OsmShadow.where("osm_type = ? and osm_id = ?",  params[:osm_type], params[:osm_id])
-     
-      @osm_shadow = @osm_shadows.last
+      @osm_shadow = @osm_shadows.first
    end
 
 

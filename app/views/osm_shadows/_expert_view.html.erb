@@ -1,5 +1,5 @@
-<div id="expert_view">
-<h2>Expert View</h2>
+<div class="expert_view" id="expert_view_<%=@osm_shadow.id%>">
+<h3>Expert View</h3>
 <% if @tags.length == 0 %>
    <div class="osm_shadow_no_tags">No Tags saved for this object.</div>
 <% else %>
@@ -17,3 +17,12 @@
    </table>
 <% end %>
 </div>
+<script type="text/javascript">
+   // expert view
+   var ex<%=@osm_shadow.id%> = $("#expert_view_<%=@osm_shadow.id%>");
+   ex<%=@osm_shadow.id%>.hide();
+   $("#jq_expert_view_<%=@osm_shadow.id%>").click(function(e) {
+      e.preventDefault();
+      ex<%=@osm_shadow.id%>.toggle();   
+   });
+</script>

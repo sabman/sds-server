@@ -37,7 +37,7 @@ $(document).ready(function() {
    <tr>
       <th>
       <% if field.has_key?(:id) %>
-      <%= field[:id] %><br/><span class="english">(<%= field[:en] %>)</span>
+      <%= field[:id] %><br /><span class="english">(<%= field[:en] %>)</span>
       <% else %>
       <%= field[:en] %>
       <% end %>
@@ -55,7 +55,7 @@ $(document).ready(function() {
 <% end %>
 
 
-<% if params['action'] == "edit" %>
+<% if params['action'] == "new" || params['action'] == "edit" %>
 
   <%= form_for @osm_shadow do | form |  %>
     <%= form.hidden_field :osm_id %>
@@ -86,7 +86,7 @@ $(document).ready(function() {
             <% if field[:type] == 'text' %>
               <%= text_field_tag "osm_shadow[tags_attributes][#{i}][value]", tag_value %>
             <% elsif field[:type] == 'date' %>
-              <% date_tag_cls ="date_tag"+ field.id.to_s %>
+              <% date_tag_cls ="date_tag"+ rand(1000).to_s(8) %>
               <%= text_field_tag "osm_shadow[tags_attributes][#{i}][value]", tag_value, :class => date_tag_cls %>
               <script type="text/javascript">
                 $(function() {
@@ -118,65 +118,15 @@ $(document).ready(function() {
           <% end %>
           <input type="button" value="Cancel" />
         </a>
+        
     </div>
 
   <% end #form%>
+  
+  <% if params[:action] == "edit" %>
+      <%= button_to "Delete this record", @osm_shadow, :method=>:delete, :class=>:destroy_button,:confirm=>"Are you sure you want to delete this?" %>
+  <% end %>
+  
 
 <% end #edit %>
 
-
-
-<% if (params['action'] == "new") then %>
-<%= form_tag({:controller => "osm_shadows", :action => "create", :method => "post"}, :id => "osm_shadows_form") do %>
-<%= hidden_field_tag("osm_shadow[osm_id]", @osm_shadow.osm_id) %>
-<%= hidden_field_tag("osm_shadow[osm_type]", @osm_shadow.osm_type) %>
-
-   <table class="osm_shadow">
-   <% @fields.each do |field| %>
-   <tr>
-      <th>
-      <% if field.has_key?(:id) %>
-      <%= field[:id] %><br/><span class="english">(<%= field[:en] %>)</span>
-      <% else %>
-      <%= field[:en] %>
-      <% end %>
-      </th>
-      <td>
-      <% if field[:type] == 'text' %>
-         <input type="text" name="taghash[<%=field[:tag]%>]" value="<%= @taghash[field[:tag]] %>" />
-      <% elsif field[:type] == 'date' %>
-         <input id="taghash_<%= field[:tag].tr(':', '_') %>" type="text" name="taghash[<%=field[:tag]%>]" value="<%= @taghash[field[:tag]] %>" />
-         <script type="text/javascript">
-         $(function() { 
-            $("#taghash_<%= field[:tag].tr(':', '_') %>")
-               .datepicker({ dateFormat: 'yy-mm-dd' })
-               .css({'width' : '220px'}); 
-         }); 
-         </script>
-      <% elsif field[:type] == 'url' %>
-         <input type="text" class="url" name="taghash[<%=field[:tag]%>]" value="<%= @taghash[field[:tag]] %>" />
-      <% elsif field[:type] == 'select' %>
-         <%= select_tag "taghash[#{field[:tag]}]", 
-           options_for_select((field[:options] + [@taghash[field[:tag]]]).uniq, @taghash[field[:tag]]) %>
-      <% end %>
-      </td>
-      <% @taghash.delete(field[:tag]) %>
-   </tr>
-   <% end %>
-   </table>
-
-   <div class="osm_shadow_submit">
-      <%= submit_tag("Save Tags") %>
-      <% if params[:action] == "edit" then %>
-         <a href="<%= show_shadow_path(@osm_shadow.osm_type, @osm_shadow.osm_id) %>">
-      <% else %>
-         <a href="<%= mapsearch_path %>">
-      <% end %>
-      <input type="button" value="Cancel"></a>
-   </div>
-
-   <% @taghash.each do |tkey, tvalue| %>
-      <%= hidden_field_tag("taghash[#{tkey}]", tvalue) %>
-   <% end %>
-<% end #form%>
-<% end #new%>

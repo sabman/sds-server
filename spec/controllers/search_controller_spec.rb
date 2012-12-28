@@ -46,10 +46,10 @@ describe SearchController do
 
             it "should have a result headline" do
                changeset = Factory(:changeset, :user => @user)
-               shadow = Factory(:current_osm_shadow, :changeset => changeset)
-               t1 = Factory(:current_tag, :current_osm_shadow => shadow, :value => "blub")
-               t2 = Factory(:current_tag, :current_osm_shadow => shadow, :key => "blub")
-               get :tagsearch, :tagstring => "current"
+               shadow = Factory(:osm_shadow, :changeset => changeset)
+               t1 = Factory(:tag, :osm_shadow => shadow, :value => "blub")
+               t2 = Factory(:tag, :osm_shadow => shadow, :key => "blub")
+               get :tagsearch, :tagstring => "separate"
                response.should have_selector("h2", :content => "result")
                response.should have_selector("th", :content => "OSM ID")
             end
