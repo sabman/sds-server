@@ -111,6 +111,12 @@ $(document).ready(function() {
 <%= collection_select(:current_user, :project_id, Project.all, :id, :name, {}, {:class => 'change_project'}) %>
 </div>
 
+<h2>Other Records</h2>
+<ul>
+   <li>
+      <%= link_to "View #{@osm_shadow.sibling_count} Records", list_shadows_path(@osm_shadow.osm_type, @osm_shadow.osm_id) %> for this OSM object.
+   </li>
+</ul>
 <h2>OSM Properties</h2>
 <ul>
 <li>OSM ID: <%= @osm_shadow.osm_id %></li>
