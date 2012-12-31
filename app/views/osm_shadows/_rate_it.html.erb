@@ -114,7 +114,7 @@ $(document).ready(function() {
 
   <% end #form%>
   
-  <% if params[:action] == "edit" %>
+  <% if params[:action] == "edit" && current_user.admin? %>
     <%= button_to "Delete this record", @osm_shadow, :method=>:delete, :class=>:destroy_button,:confirm=>"Are you sure you want to delete this?" %>
   <% end %>
       
