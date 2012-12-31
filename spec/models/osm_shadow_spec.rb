@@ -41,7 +41,7 @@ describe OsmShadow do
       end
 
       it "should have the right osm_shadows in the right order" do
-         @changeset.osm_shadows.should == [@os2, @os1] # ordered newest first
+         @changeset.osm_shadows.should == [@os1, @os2] # ordered oldest first
       end
    end
 
@@ -109,10 +109,10 @@ describe OsmShadow do
       shadow3 = @changeset.osm_shadows.new({:osm_id => 345, :osm_type => 'relation'})
       shadow4 = @changeset.osm_shadows.new({:osm_id => 111, :osm_type => 'way'})
 
-      shadow.save_with_current
-      shadow2.save_with_current
-      shadow3.save_with_current
-      shadow4.save_with_current
+      shadow.save_new_with_tags
+      shadow2.save_new_with_tags
+      shadow3.save_new_with_tags
+      shadow4.save_new_with_tags
 
       cnt = OsmShadow.where("osm_id = ? and osm_type = ?", shadow.osm_id, shadow.osm_type).count
       cnt.should == 1
@@ -130,12 +130,12 @@ describe OsmShadow do
       my_changeset = Factory(:changeset)
       shadow = OsmShadow.new({:osm_id => @my_osm_id, :osm_type => @my_osm_type})
       shadow.changeset = my_changeset
-      shadow.save_with_current
+      shadow.save_new_with_tags
 
       my_changeset2 = Factory(:changeset)
       shadow2 = OsmShadow.new({:osm_id => @my_osm_id, :osm_type => @my_osm_type})
       shadow2.changeset = my_changeset2
-      shadow2.save_with_current
+      shadow2.save_new_with_tags
 
       cnt = OsmShadow.where("osm_id = ? and osm_type = ?", shadow.osm_id, shadow.osm_type).count
       cnt.should == 2
@@ -149,11 +149,12 @@ describe OsmShadow do
 
 
    it "should find osm_shadow object from current tables" do
-      shadow  = @changeset.osm_shadows.new({:osm_id => 345, :osm_type => 'way'})
-      shadow.tags << Tag.new({ :key => "name", :value => "blub"})
-      shadow.save_with_current
-      blub = OsmShadow.find_current("way", 345)
-      blub.should be_a_kind_of(CurrentOsmShadow)
+      pending "todo when versioning is in place"
+      #shadow  = @changeset.osm_shadows.new({:osm_id => 345, :osm_type => 'way'})
+      #shadow.tags << Tag.new({ :key => "name", :value => "blub"})
+      #shadow.save_with_current
+      #blub = OsmShadow.find_current("way", 345)
+      #blub.should be_a_kind_of(CurrentOsmShadow)
    end
 
 end

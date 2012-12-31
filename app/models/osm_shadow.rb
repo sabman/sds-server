@@ -14,11 +14,16 @@ class OsmShadow < ActiveRecord::Base
    validates :osm_type, :presence => true, :inclusion => { :in => ["node", "way", "relation"]}
    validates :osm_id, :presence => true, :numericality => {:less_than_or_equal_to => 9223372036854775807}
 
-   #validates_uniqueness_of :osm_id, :scope => [:osm_type, :version]
-   default_scope :order => 'osm_shadows.created_at DESC' # newest first
+   default_scope :order => 'osm_shadows.created_at ASC' # oldest first
+   
+   #workaround for rails bug with creating new children and new parent objects at same time (#1943)
+   before_validation :initialize_tags, :on => :create
+   def initialize_tags
+      tags.each { |t| t.osm_shadow = self }
+   end
 
    
-   def save_with_current
+   def save_new_with_tags
       if !self.new_record?
          return false
       end
@@ -39,62 +44,37 @@ class OsmShadow < ActiveRecord::Base
          })
       end
 
-      update_current
       return shadow
    end
 
-   def update_current
-      CurrentOsmShadow.destroy_all({:osm_type => osm_type, :osm_id => osm_id})
-
-      # no entry in current tables if there are no tags
-      if self.tags.length == 0 then
-         return nil
-      end
-
-      current_shadow = CurrentOsmShadow.new({
-         :osm_type      => osm_type,
-         :osm_id        => osm_id,
-         :changeset_id  => changeset_id,
-         :version       => version
-      })
-      current_shadow.save!
-
-      self.tags.each do |t|
-         unless (t.key.blank? or t.value.blank?) then
-            current_shadow.tags.create!({
-               :key                     => t.key,
-               :value                   => t.value
-            })
-         end
-      end
-   end
-
    
-   def self.find_first(otype, oid)
+
+   def sibling_count
+      OsmShadow.count(:conditions => "osm_type = '#{self.osm_type}' and osm_id = #{self.osm_id}") 
+   end
+   
+   def self.find_oldest(otype, oid)
       OsmShadow.where("osm_type = ? and osm_id = ?", otype, oid).first
    end
 
-
-   def self.find_current(otype, oid)
-      collection = CurrentOsmShadow.where("osm_type = ? and osm_id = ?", otype, oid)
-      if (collection.length > 0) then
-         shadow = collection.first
-         shadow.tags = CurrentTag.where("current_osm_shadow_id = ?", shadow.id)
-         return shadow
-      end
-      return nil
-   end
-
-
-   def self.current_from_collectshadows_params(params)
+   
+   
+   def self.from_collectshadows_params(params)
       shadows = Array.new
 
       ['nodes', 'ways', 'relations'].each do |ot|
-         unless (params[ot].nil?) then
-            shadows = shadows + CurrentOsmShadow.where("osm_type = '#{ot.chomp('s')}' and osm_id IN (?)", params[ot].split(','))
+      
+         unless params[ot].nil?
+            ids = params[ot].split(',')
+            
+            ids.each do | id |
+               shadow = OsmShadow.find_oldest(ot.chomp('s'), id)
+               shadows << shadow unless shadow.nil?
+            end
+ 
          end
       end
-
+     
       return shadows
    end
 

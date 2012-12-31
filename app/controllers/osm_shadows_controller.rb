@@ -1,6 +1,7 @@
 class OsmShadowsController < ApplicationController
-   before_filter :authenticate,  :only => [:index, :show, :list, :new, :edit, :create]
+   before_filter :authenticate,  :only => [:index, :show, :list, :new, :edit, :create, :destroy]
    before_filter :change_project, :only => [:show, :list, :new, :edit]
+   before_filter :admin_user,   :only => [:destroy]
 
 
    require 'xml/libxml'
@@ -77,23 +78,29 @@ class OsmShadowsController < ApplicationController
 
    end
 
-
    def create
+   
       if (!current_changeset.nil?) then
-         params['changeset_id'] = current_changeset.id
+         changeset = current_changeset
       elsif (!current_user.nil?) then
          changeset = Changeset.new
          changeset.user_id = current_user.id
          changeset.save!
          store_changeset(changeset)
-         params['changeset_id'] = changeset.id
       end
-
-      shadow = OsmShadow.from_params(params)
-      @osm_shadow = shadow.save_with_current
-
-      redirect_to(@osm_shadow, :notice => "Record successfully saved.")
+      params['osm_shadow']['changeset_id'] = changeset.id
+      
+      @osm_shadow = OsmShadow.new(params['osm_shadow'])
+      
+      if @osm_shadow.save
+         redirect_to(@osm_shadow, :notice => "Record successfully saved.")
+      else
+         @tags = Array.new
+         @taghash = Hash.new
+         render :action => "new", :alert => "Sorry, Record was unable to be saved."
+      end
    end
+
 
    def destroy
       @osm_shadow = OsmShadow.find(params[:id])
@@ -108,7 +115,7 @@ private
       if params[:id]
          @osm_shadow = OsmShadow.find(params[:id])
       else
-         @osm_shadow = OsmShadow.find_first(params[:osm_type], params[:osm_id])
+         @osm_shadow = OsmShadow.find_oldest(params[:osm_type], params[:osm_id])
       end
      
       @tags = Array.new
@@ -135,4 +142,10 @@ private
          current_user.save!
       end
    end
+   
+   def admin_user
+      redirect_to(signin_path) unless current_user.active?
+      redirect_to(home_path) unless current_user.admin?
+   end
+   
 end

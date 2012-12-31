@@ -5,7 +5,7 @@ class JosmapiController < ApplicationController
    def collectshadows 
       doc = OsmShadowXmlConverter.get_xml_doc 
 
-      shadows = OsmShadow.current_from_collectshadows_params(params)
+      shadows = OsmShadow.from_collectshadows_params(params)
       shadows.each do |s|
          doc.root << s.to_xml_node
       end
@@ -14,16 +14,17 @@ class JosmapiController < ApplicationController
    end
 
    def createshadows
-      shadows = OsmShadowXmlConverter.from_xml(request.raw_post)
+      existing_shadows, new_shadows = OsmShadowXmlConverter.from_xml(request.raw_post)
 
       changeset = Changeset.new
       changeset.user = current_user
       changeset.save!
-
-      shadows.each do |shadow|
+      
+      new_shadows.each do | shadow|
          shadow.changeset_id = changeset.id
-         shadow.save_with_current
+         shadow.save_new_with_tags
       end
+
       render :text => changeset.id.to_s, :content_type => "text/xml"
    end
 

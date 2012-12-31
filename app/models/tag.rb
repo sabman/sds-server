@@ -4,6 +4,6 @@ class Tag < ActiveRecord::Base
 
    validates :key, :presence => true
    # validates :value, :presence => true
-   validates :osm_shadow_id, :presence => true
+   validates_presence_of :osm_shadow
 
 end

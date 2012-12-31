@@ -18,7 +18,7 @@ describe OsmShadowsController do
 
       describe "GET 'list'" do
          before(:each) do
-            @osm_shadows = [Factory(:osm_shadow)]
+            @osm_shadows = [Factory(:osm_shadow), Factory(:osm_shadow)]
             @osm_shadow = @osm_shadows.first
          end
          
@@ -98,24 +98,74 @@ describe OsmShadowsController do
          end
       end
       
-      describe "DELETE 'destroy'" do
+      describe "non admined DELETE 'destroy'" do
          before(:each) do
             @osm_shadow = Factory(:osm_shadow)
          end
          it "should redirect to list view" do 
             delete :destroy, :id => @osm_shadow.id
-            response.should redirect_to(list_shadows_url(:osm_type => @osm_shadow.osm_type, :osm_id=>@osm_shadow.osm_id))
+            response.should redirect_to(home_path)
          end
          
-         it "should reduce the osm shadow count by one" do
+         it "should not reduce the osm shadow count by one" do
             lambda {
              delete :destroy, :id => @osm_shadow.id
-            }.should change {OsmShadow.count}.from(1).to(0)
+            }.should_not change {OsmShadow.count}.from(1).to(0)
          end
 
       end
    end
 
+   #updating an osm_shadow - which is more about updating the tags.
+   describe "POST update" do
+      describe "success" do
+         before(:each) do
+            @user = Factory(:user)
+            @changeset = Factory(:changeset)
+            test_sign_in(@user)
+            
+            @shadow = Factory(:osm_shadow)
+            @t1 = Factory(:tag, :osm_shadow => @shadow, :value => "cat")
+            @t2 = Factory(:tag, :osm_shadow => @shadow, :key =>"akey", :value => "dog")
+            
+            @osmattr = {:osm_id => @shadow.osm_id, :osm_type => @shadow.osm_type}
+         end
+      
+         it "should update existing tags" do
+            form_attrs = @osmattr.merge({:tags_attributes => {
+               "0" =>{"id" => @t1.id, "key"=>"highway", "value"=>"tabby"}, 
+               "1" =>{"id" => @t2.id, "key"=>"akey", "value"=>"poodle"}
+               }})
+            put :update, :id => @shadow.id, :osm_shadow => form_attrs
+            
+            shad = OsmShadow.find(@shadow.id)
+  
+            shad.tags.count.should eql 2
+            shad.tags.find_by_key("highway").value.should eql "tabby"
+            shad.tags.find_by_key("akey").value.should eql "poodle"
+         end
+         
+         it "should create any new tags" do
+            form_attrs = @osmattr.merge({:tags_attributes => {
+               "0" =>{"id" => @t1.id, "key"=>"highway", "value"=>"tabby"}, 
+               "1" =>{"key"=>"forename", "value"=>"santa"},
+               "2" =>{"key"=>"surname", "value"=>"claus"}
+               }})
+            put :update, :id => @shadow.id, :osm_shadow => form_attrs
+            
+            shad = OsmShadow.find(@shadow.id)
+  
+            shad.tags.count.should eql 4
+            shad.tags.find_by_key("akey").value.should eql "dog" #existing, not updated
+            shad.tags.find_by_key("highway").value.should eql "tabby" #existing, updated
+            shad.tags.find_by_key("forename").value.should eql "santa" #new tag, created
+            shad.tags.find_by_key("surname").value.should eql "claus" #new tags, created
+         end
+         
+         pending "should update version with each update. TODO when versioning implemented"
+      
+      end
+   end
 
 
    describe "POST 'create'" do
@@ -129,58 +179,76 @@ describe OsmShadowsController do
             @attr = {
                :osm_id        => 112,
                :osm_type      => "node",
-               :project_id    => 1,
                :changeset_id  => @changeset.id
             }
-            @attr_tags = {
-               :key           => ["AA", "BB", "CC", "DD"], 
-               :value         => ["aa", "bb", "cc", "dd"]
-            }   
+
+            @form_attrs = @attr.merge({:tags_attributes => {
+               "0"=>{"key"=>"AA", "value"=>"aa" }, "1" => {"key"=>"BB", "value"=>"bb"},
+               "2"=>{"key"=>"CC", "value"=>"cc" }, "3" => {"key"=>"DD", "value"=>"dd"}
+               }})
          end
 
          it "should redirect to osm_shadow_path" do
-            post :create, :osm_shadow => @attr, :tags => @attr_tags
-            response.should redirect_to(osm_shadow_path(assigns(:osm_shadow)))
+            post :create, :osm_shadow => @form_attrs
+            response.should redirect_to(assigns(:osm_shadow))
          end
 
 
          it "should create a osm_shadow" do
             lambda do
-               post :create, :osm_shadow => @attr, :tags => @attr_tags
+               post :create, :osm_shadow => @form_attrs
             end.should change(OsmShadow, :count).by(1)
          end
 
          it "should create tags" do
             lambda do
-               post :create, :osm_shadow => @attr, :tags => @attr_tags
+               post :create, :osm_shadow => @form_attrs
             end.should change(Tag, :count).by(4)
+            new_shadow = assigns(:osm_shadow)
+            new_shadow.tags.count.should eql 4
+            aa_tag = new_shadow.tags.find_by_key("AA")
+            aa_tag.value.should eql "aa"
          end
+         
 
          it "should create osm_shadow without tags" do
-            post :create, :osm_shadow => @attr, :tags => {:key => [], :value => []}
+            post :create, :osm_shadow => @attr
+            new_shadow = assigns(:osm_shadow)
+            
+            new_shadow.tags.count.should eql 0
             response.should redirect_to(osm_shadow_path(assigns(:osm_shadow)))
          end
 
-         it "should create all tags if no unselected_value parameter is given" do
-            @unselected = 'unselected'
-            lambda do
-               post :create, :osm_shadow => @attr, :taghash => {'aa' => 'blub', 'bb' => @unselected} 
-            end.should change(Tag, :count).by(2)
-         end
 
-         it "should not create a tag with value 'unselected' if unselected_value parameter is given" do
-            @unselected = 'unselected'
-            lambda do
-               post :create, :osm_shadow => @attr, :taghash => {'aa' => 'blub', 'bb' => @unselected}, :unselected_value => @unselected
-            end.should change(Tag, :count).by(1)
-         end
       end
 
+   end
+   
+   describe "admin user" do
+      before(:each) do
+         @osm_shadow = Factory(:osm_shadow)
+         @user = Factory(:user)
+         @user.toggle(:admin)
+         test_sign_in(@user)
+      end
+      
+         
+         it "should redirect to list view" do 
+            delete :destroy, :id => @osm_shadow.id
+            response.should redirect_to(list_shadows_url(:osm_type => @osm_shadow.osm_type, :osm_id=>@osm_shadow.osm_id))
+         end
+         
+         it "should reduce the osm shadow count by one" do
+            lambda {
+             delete :destroy, :id => @osm_shadow.id
+            }.should change {OsmShadow.count}.from(1).to(0)
+         end
+      
    end
 
    describe "inactive user" do
       before(:each) do
-         @osm_shadow = Factory(:current_osm_shadow)
+         @osm_shadow = Factory(:osm_shadow)
          @user = Factory(:user, :active => false)
          #test_sign_in(@user)
       end
@@ -191,6 +259,14 @@ describe OsmShadowsController do
             response.should redirect_to(signin_path)
          end
       end
+      
+     describe "DELETE 'destroy'" do
+         it "should redirect to signin" do
+            delete :destroy, :id => @osm_shadow.id
+            response.should redirect_to(signin_path)
+         end
+      end
+      
    end
 
 end

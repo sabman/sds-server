@@ -17,22 +17,39 @@ module OsmShadowXmlConverter
       return node
    end
 
+   
    def self.from_xml(xml)
-      collection = Array.new
-      p = XML::Parser.string(xml)
-      doc = p.parse
+      collection = []
+      existing_shadows  = []
+      parser = XML::Parser.string(xml)
+      doc = parser.parse
 
       doc.find('//osm_sds/osm_shadow').each do |s|
-         shadow = OsmShadow.new({'osm_id' => s['osm_id'], 'osm_type' => s['osm_type']})
+         #find and update an existing osm shadow, and if necessary, update or create any tags
+         if OsmShadow.exists?(:osm_id => s['osm_id'], :osm_type => s['osm_type'])
+            existing_shadow = OsmShadow.find_oldest(s['osm_type'], s['osm_id'])
+            s.find('tag').each do |t|
+               tag = existing_shadow.tags.find_or_initialize_by_key(t['k'])
+               tag.value = t['v']
+               tag.save
+            end
+            
+            existing_shadows << existing_shadow
+         else
+            shadow = OsmShadow.new({'osm_id' => s['osm_id'], 'osm_type' => s['osm_type']})
 
-         s.find('tag').each do |t|
-            tag = Tag.new({'key' => t['k'], 'value' => t['v']})
-            shadow.tags << tag
+            s.find('tag').each do |t|
+               tag = Tag.new({'key' => t['k'], 'value' => t['v']})
+               shadow.tags << tag
+            end
+            collection.push(shadow)
          end
-         collection.push(shadow)
       end
-      return collection
+      new_shadows = collection
+      
+      return existing_shadows, new_shadows
    end
+   
 
    def self.get_xml_doc
       doc = XML::Document.new
