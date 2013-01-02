@@ -12,7 +12,10 @@ $(document).ready(function() {
 });
 </script>
 <h1>Search</h1>
-<p>Enter a string. You receive a list of objects, which contain this search string as key or value in any tag.</p>
+<p>Enter a word. You receive a list of records, which contains this word as the key or value in any tag.</p>
+
+<p>Or try: <%= link_to "Search for records using a map", mapsearch_path %></p>
+
 
 <h2>Your search values:</h2>
 <%= form_tag("/tagsearch", :method => "get") do %>
