@@ -422,6 +422,10 @@ div.osm_object_map {
    font-style: italic;
 }
 
+#footer p img {
+   vertical-align:text-top;
+}
+
 
 /* */
 input[type=submit], input[type=button] {
