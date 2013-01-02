@@ -103,7 +103,7 @@ describe HomeController do
 
             it "should have the logo" do
                get 'index'
-               response.should have_selector("img", :src => "/assets/layout/logo.png")
+               response.should have_selector("img", :src => "/assets/layout/hot-sml-logo.png")
             end
          end
 
