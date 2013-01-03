@@ -104,7 +104,7 @@ class OsmShadowsController < ApplicationController
 
    def destroy
       @osm_shadow = OsmShadow.find(params[:id])
-      @osm_shadow .destroy
+      @osm_shadow.destroy
       
       redirect_to(list_shadows_url(:osm_type => @osm_shadow.osm_type, :osm_id=>@osm_shadow.osm_id), {:notice => "Record was successfully deleted."})
    end
