@@ -30,7 +30,7 @@ describe "LayoutLinks" do
 
       it "should have a search link" do 
          visit home_path
-         response.should have_selector("a", :href => mapsearch_path, :content => "Search")
+         response.should have_selector("a", :href => tagsearch_path, :content => "Search")
       end
   end
 
