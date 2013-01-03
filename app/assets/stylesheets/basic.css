@@ -146,6 +146,15 @@ select.users_project option {
    width: 205px;   
 }
 
+
+/* Projects */
+
+form.project_form fieldset {
+   border-style: dotted;
+   border-color: lightgray;
+   border-width: 1px;
+}
+
 /* search results */
 
 table.osm_shadow_results{

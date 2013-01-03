@@ -1,0 +1,29 @@
+<%= form_for(@project,  :html => { :class => "project_form" }) do  | f | %>
+    <fieldset>
+        <legend>Project form</legend>
+		<table>
+			<tbody>
+				<tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        <%= f.text_field :name %>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Partial
+                    </td>
+                    <td>
+                        <%= f.text_field :partial %>
+                    </td>
+                    </tr>
+                    </tbody>
+
+        </table>
+        <%= f.submit %>
+    </fieldset>
+<% end %>
+  <% if params[:action] == "edit" && current_user.admin? %>
+    <%= button_to "Delete this record", @project, :method=>:delete, :class=>:destroy_button,:confirm=>"Are you sure you want to delete this?" %>
+  <% end %>
