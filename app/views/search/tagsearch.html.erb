@@ -36,20 +36,14 @@ $(document).ready(function() {
 <% end %>
 
 <% if !params[:tagstring].blank? %>
-<h2>Search result</h2>
+<h2>Search results</h2>
 
 <% if @result.length == 0 %>
    <p>No Objects found.</p>
 <% else %>
-   <table class="osm_shadow">
-   <tr>
-   <th style="width: 20px;"></th>
-   <th style="width: 40px;">OSM ID</th>
-   <th style="width: 40px;">OSM Type</th>
-   <th></th>
-   </tr>
+
    <%= render @current_user.project.partial %>
-   </table>
+
 <% end %>
 
 <% end %>

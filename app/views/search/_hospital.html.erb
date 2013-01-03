@@ -1,18 +1,48 @@
-<% @result.each do |shadow| %>
-<% desc = []
-   shadow.tags.each do |t| 
-       if t.key == "hot:hospital:director_name" 
-           desc.push "Director Name: #{t.value}"
-       elsif t.key == "hot:simple:director_mobile"
-           desc.push "Director Mobile: #{t.value}"
-       end
-   end
-
+<% 
+@fields = [
+       { :tag => 'hot:hospital:director_name',
+         :type => 'text',
+         :en => "Director Name" },
+       { :tag => 'hot:simple:director_mobile',
+         :type => 'text',
+         :en => "Director Mobile Number" },
+       { :tag => 'hot:hospital:full_beds',
+         :type => 'text',
+         :en => "Total Full Beds"},
+       { :tag => 'hot:hospital:doctors',
+         :type => 'text',
+         :en => "Doctors on Staff" }
+   ] 
 %>
+
+<table class="osm_shadow_results">
+<tr>
+<th style="width: 20px;"></th>
+<th style="width: 40px;">OSM ID</th>
+<th style="width: 40px;">OSM Type</th>
+<% @fields.each do | field | %>
+   <th><%= field[:en] %></th>
+<% end %>
+</tr>
+
+<% @result.each do |shadow| %>
+   <% 
+   shadow_tags = {}
+   shadow.tags.each do |tag|
+      if @fields.any? { |f| f[:tag] == tag.key }  
+         shadow_tags[tag.key] = tag.value
+      end
+   end
+   %>
+   
    <tr>
    <td><a href="<%= osm_shadow_path(shadow) %>" title="View Object"><img src="<%= asset_path 'snow/view.png' %>" width="20" /></a></td>
    <td><%= shadow.osm_id %></td>
    <td><%= shadow.osm_type %></td>
-   <td><%= desc.join(" - ") %></td>
+   <% @fields.each do |field | %>
+      <td><%= shadow_tags[field[:tag]]%></td>
+   <% end %>
    </tr>
 <% end %>
+
+</table>

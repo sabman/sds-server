@@ -146,6 +146,14 @@ select.users_project option {
    width: 205px;   
 }
 
+/* search results */
+
+table.osm_shadow_results{
+   width: auto;   
+   background-color: #E5E6E8;
+}
+
+
 /* osm_shadows */
 div.osm_shadow_list{
    float: left;
@@ -175,11 +183,11 @@ table.osm_shadow {
    background-color: #E5E6E8;
 }
 
-table.osm_shadow tr:nth-child(1n+2) {
+table.osm_shadow, table.osm_shadow_results tr:nth-child(1n+2) {
    background-color: #F5F6F8;
 }
 
-table.osm_shadow tr, table.users tr:nth-child(2n+3) {
+table.osm_shadow tr, table.users, table.osm_shadow_results tr:nth-child(2n+3) {
    background-color: #F1F4F5;
 }
 
@@ -192,7 +200,7 @@ table.osm_shadow th {
    width: 50%;
 }
 
-table.osm_shadow td {
+table.osm_shadow, table.osm_shadow_results td {
    vertical-align: middle;   
 }
 
