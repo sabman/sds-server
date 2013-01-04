@@ -4,15 +4,20 @@
 
 <ul>
 <% if current_user.admin? %>
-<li>
-<%= link_to "User administration", users_path %>
-<br>Add a new user, look at the properties of an user or edit them.
-</li>
+   <li>
+   <%= link_to "User administration", users_path %>
+   <br>Add a new user, look at the properties of an user or edit them.
+   </li>
 
-<li>
-<%= link_to "Status page", status_path %>
-<br>Have a look at the application status page.
-</li>
+   <li>
+   <%= link_to "Status page", status_path %>
+   <br>Have a look at the application status page.
+   </li>
+   
+   <li>
+   <%= link_to "Projects", projects_path %>
+   <br />Show, edit and add new projects.
+   </li>
 <% end %>
 
 <li>
