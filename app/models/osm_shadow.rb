@@ -14,8 +14,6 @@ class OsmShadow < ActiveRecord::Base
    validates :osm_type, :presence => true, :inclusion => { :in => ["node", "way", "relation"]}
    validates :osm_id, :presence => true, :numericality => {:less_than_or_equal_to => 9223372036854775807}
 
-   default_scope :order => 'osm_shadows.created_at ASC' # oldest first
-   
    #workaround for rails bug with creating new children and new parent objects at same time (#1943)
    before_validation :initialize_tags, :on => :create
    def initialize_tags
@@ -54,7 +52,7 @@ class OsmShadow < ActiveRecord::Base
    end
    
    def self.find_oldest(otype, oid)
-      OsmShadow.where("osm_type = ? and osm_id = ?", otype, oid).first
+      OsmShadow.where("osm_type = ? and osm_id = ?", otype, oid).order("created_at ASC").first
    end
 
    

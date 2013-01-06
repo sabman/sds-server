@@ -112,12 +112,8 @@ class OsmShadowsController < ApplicationController
 private
 
    def retrieve_object
-      if params[:id]
-         @osm_shadow = OsmShadow.find(params[:id])
-      else
-         @osm_shadow = OsmShadow.find_oldest(params[:osm_type], params[:osm_id])
-      end
-     
+      @osm_shadow = OsmShadow.find(params[:id])
+
       @tags = Array.new
       @taghash = Hash.new
       if (!@osm_shadow.nil?) then
@@ -130,7 +126,7 @@ private
 
 
    def retrieve_objects
-      @osm_shadows = OsmShadow.where("osm_type = ? and osm_id = ?",  params[:osm_type], params[:osm_id])
+      @osm_shadows = OsmShadow.where("osm_type = ? and osm_id = ?",  params[:osm_type], params[:osm_id]).order("created_at ASC")
       @osm_shadow = @osm_shadows.first
    end
 

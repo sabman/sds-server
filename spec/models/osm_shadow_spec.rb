@@ -39,10 +39,6 @@ describe OsmShadow do
       it "should have a osm_shadows attribute" do
          @changeset.should respond_to(:osm_shadows)
       end
-
-      it "should have the right osm_shadows in the right order" do
-         @changeset.osm_shadows.should == [@os1, @os2] # ordered oldest first
-      end
    end
 
    describe "validations" do
