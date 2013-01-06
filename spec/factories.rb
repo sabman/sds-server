@@ -14,6 +14,21 @@ end
 Factory.define :project do |p|
    p.name "BBB Home Owner"
    p.partial "simple_survey"
+   p.tags_definition  [
+      { :tag => 'hot:simple:name',
+        :type => 'text',
+        :en => "Name" },
+      { :tag => 'hot:simple:mobile',
+        :type => 'text',
+        :en => "Mobile", :id => "Nomor Handphone" },
+      { :tag => 'hot:simple:date',
+        :type => 'date',
+        :en => "Date", :id => "Tanggal" },
+      { :tag => 'hot:simple:choice',
+        :type => 'select',
+        :options => ['yes','no','maybe','of course'],
+        :en => "Choice" }
+    ].to_json
 end
 
 

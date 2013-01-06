@@ -3,7 +3,9 @@
      <a href="<%= edit_project_path(project) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" />Edit</a>
     <ul>
         <li>Name: <%= project.name %> </li>
-        <li>Partial: <%= project.partial %> </li>
+        <li>Tags Definition (JSON):<br />
+            <%= project.tags_definition %>
+        </li>
         <li>Created: <%= time_ago_in_words(project.created_at) %> ago.</li>
     </ul>
 

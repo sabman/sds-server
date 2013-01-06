@@ -27,10 +27,10 @@ $(document).ready(function() {
 </tr>
 <tr>
    <th>Enter Search String</th>
-   <td><input type="text" name="tagstring" value="<%= params[:tagstring] %>"></td>
+   <td><input type="text" name="tagstring" value="<%= params[:tagstring] %>" /></td>
 </tr>
 <tr>
-   <td colspan="2"><input type="submit" value="search"></td>
+   <td colspan="2"><input type="submit" value="search" /></td>
 </tr>
 </table>
 <% end %>
@@ -42,7 +42,7 @@ $(document).ready(function() {
    <p>No Objects found.</p>
 <% else %>
 
-   <%= render @current_user.project.partial %>
+   <%= render :partial => 'osm_shadow', :object => @result %>
 
 <% end %>
 

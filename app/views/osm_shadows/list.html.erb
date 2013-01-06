@@ -12,9 +12,9 @@
       %>
       
       
-      <h2>Record #<%=@osm_shadow.id %></h2> <a href="<%= edit_osm_shadow_path(@osm_shadow) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" />Edit</a></p>
+      <h2>Record #<%=@osm_shadow.id %></h2> <a href="<%= edit_osm_shadow_path(@osm_shadow) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" />Edit</a>
 
-      <%= render @current_user.project.partial %>
+      <%= render @osm_shadow %>
 
       <ul>
          <li><a href="#" id="jq_expert_view_<%=@osm_shadow.id%>">Expert view</a></li>
