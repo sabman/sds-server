@@ -1,0 +1,28 @@
+<h1><%= @project.name %> data.</h1>
+<p>Lists all the records which have tags relevant to this project</p>
+
+<table class="osm_shadow_results">
+  <tr>
+    <th style="width: 20px;"></th>
+    <th style="width: 40px;">OSM ID</th>
+    <% @project.fields.each do | field | %>
+      <th><%= field['en'] %></th>
+    <% end %>
+  </tr>
+
+  <%  @shadows.each do |shadow| %>
+
+    <tr>
+      <td><a href="<%= osm_shadow_path(shadow["osm_shadow_id"]) %>" title="View Object"><img src="<%= asset_path 'snow/view.png' %>" width="20" /></a></td>
+      <td><%= shadow["osm_shadow_id"] %></td>
+
+      <% shadow["tags"].each do | tag | %>
+        <td><%= tag.values[0] %></td>
+      <% end %>
+
+    </tr>
+    
+  <% end %>
+
+</table>
+

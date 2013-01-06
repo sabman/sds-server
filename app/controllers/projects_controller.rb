@@ -2,15 +2,16 @@ class ProjectsController < ApplicationController
     before_filter :authenticate
     before_filter :admin_user
 
-    before_filter :get_project, :only => [:show, :update, :edit, :destroy]
+    before_filter :get_project, :only => [:show, :update, :edit, :destroy, :data]
 
     def show
+      @title = "Showing project #{@project.name}"
 
     end
     
     def index
+        @title = "All projects"
         @projects = Project.all
-        logger.debug @projects.inspect
     end
     
     def new
@@ -41,6 +42,12 @@ class ProjectsController < ApplicationController
     def destroy
       @project.destroy
       redirect_to(projects_path, :notice => "Record was successfully deleted.")
+    end
+
+    def data
+      @title = "Project #{@project.name} data"
+      @shadows = @project.shadows
+      #todo csv here
     end
 
     private

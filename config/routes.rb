@@ -6,8 +6,9 @@ HotJosm::Application.routes.draw do
    resources :osm_shadows
    resources :sessions, :only => [:new, :create, :destroy]
    
-   resources :projects
-
+   resources :projects do
+     get :data, :on => :member
+   end
 
    match '/mapsearch', :to => 'search#mapsearch'
    match '/tagsearch', :to => 'search#tagsearch'

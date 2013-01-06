@@ -155,6 +155,16 @@ form.project_form fieldset {
    border-width: 1px;
 }
 
+div.project_list_item ul {
+  padding-left: 1em;
+
+}
+
+div.project_list_item {
+   border-bottom-style:dotted;
+   border-width:1px;
+}
+
 /* search results */
 
 table.osm_shadow_results{
@@ -403,7 +413,7 @@ div.osm_object_map {
 }
 
 #header div.logo {
-   width: 420px;
+   width: 300px;
    float: left;
    padding: 10px 0px 40px 0px;
 }

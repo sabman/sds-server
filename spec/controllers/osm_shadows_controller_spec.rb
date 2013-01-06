@@ -60,7 +60,7 @@ describe OsmShadowsController do
 
          it "should have the right title" do
             get :show, :id => @osm_shadow.id 
-            response.should have_selector("title", :content => "Object Properties")
+            response.should have_selector("title", :content => "Object #{@osm_shadow.id} Properties")
          end
          
           it "should assign the osm shadow" do

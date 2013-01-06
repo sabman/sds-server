@@ -13,12 +13,12 @@ class OsmShadowsController < ApplicationController
 
 
    def show
-      @title = "Object Properties"
       retrieve_object
+      @title = "Object #{@osm_shadow.id} Properties"
    end
 
    def list
-      @title = "Records for this Object"
+      @title = "Records for this Object. #{params[:osm_type]}:#{params[:osm_id]}"
       
       retrieve_objects
       

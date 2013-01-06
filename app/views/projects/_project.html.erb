@@ -1,6 +1,8 @@
 <div class="project_list_item">
     <h2><%= link_to project.name, project %></h2>
      <a href="<%= edit_project_path(project) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" />Edit</a>
+
+     
     <ul>
         <li>Name: <%= project.name %> </li>
         <li>Tags Definition (JSON):<br />
@@ -8,5 +10,5 @@
         </li>
         <li>Created: <%= time_ago_in_words(project.created_at) %> ago.</li>
     </ul>
-
+    <%= link_to image_tag(asset_path'snow/data.png')+"View data table", data_project_path(project)  %>
 </div>
