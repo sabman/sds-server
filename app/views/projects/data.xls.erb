@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <% ["record", "osm_id", "osm_type"].concat(@project.tag_names).each do | key | %>
+            <Cell><Data ss:Type="String"><%= key %></Data></Cell>
+        <% end %>       
+      </Row>
+    <% 
+      @project.shadows.each do | shadow |
+      tag_vals = []
+      shadow["tags"].each do | tag |
+        val = tag.values[0].empty? ? nil : tag.values[0]
+        tag_vals << val
+      end 
+      %>  
+      <Row>
+          <Cell><Data ss:Type="String"><%= shadow["osm_shadow_id"] %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= shadow["osm_id"] %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= shadow["osm_type"] %></Data></Cell>
+        <% tag_vals.each do | tag | %>
+            <Cell><Data ss:Type="String"><%= tag %></Data></Cell>
+        <% end %>
+      </Row>
+    <% end %>  
+    </Table>
+  </Worksheet>
+</Workbook>

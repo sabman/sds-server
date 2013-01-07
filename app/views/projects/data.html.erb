@@ -4,7 +4,9 @@
 <table class="osm_shadow_results">
   <tr>
     <th style="width: 20px;"></th>
-    <th style="width: 40px;">OSM ID</th>
+    <th style="width: 40px;">Record No.</th>
+    <th style="width: 40px;">OSM_ID</th>
+    <th style="width: 40px;">OSM_Type</th>
     <% @project.fields.each do | field | %>
       <th><%= field['en'] %></th>
     <% end %>
@@ -15,7 +17,8 @@
     <tr>
       <td><a href="<%= osm_shadow_path(shadow["osm_shadow_id"]) %>" title="View Object"><img src="<%= asset_path 'snow/view.png' %>" width="20" /></a></td>
       <td><%= shadow["osm_shadow_id"] %></td>
-
+      <td><%= shadow["osm_id"] %></td>
+      <td><%= shadow["osm_type"] %></td>
       <% shadow["tags"].each do | tag | %>
         <td><%= tag.values[0] %></td>
       <% end %>
@@ -25,4 +28,7 @@
   <% end %>
 
 </table>
+
+<%= link_to image_tag(asset_path'snow/data.png')+"Download as CSV (tab separated)", data_project_path(@project, :format=>"csv")  %> <br />
+<%= link_to image_tag(asset_path'snow/data.png')+"Download as Excel (XLS)", data_project_path(@project, :format=>"xls")  %>
 

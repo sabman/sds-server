@@ -47,7 +47,13 @@ class ProjectsController < ApplicationController
     def data
       @title = "Project #{@project.name} data"
       @shadows = @project.shadows
-      #todo csv here
+      respond_to do |format|
+        format.html
+        format.csv { send_data(@project.to_csv, :filename => "SDS_Project_#{@project.id}_data.csv") }
+        format.xls  do
+         headers["Content-Disposition"] = "attachment; filename=\"SDS_Project_#{@project.id}_data.xls\"" 
+        end
+      end
     end
 
     private
