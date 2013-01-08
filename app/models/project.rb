@@ -33,7 +33,7 @@ class Project < ActiveRecord::Base
   # gets an array of tags based on the project's fields
   #<Tag id: 10, key: "hot:simple:name", value: "", osm_shadow_id: 8, created_at: "2012-09-23 16:07:01", updated_at: "2012-09-23 16:07:01">
   def tags
-    tags = Tag.where("key in (?)", self.tag_keys).order("osm_shadow_id ASC, created_at DESC")
+    tags = Tag.where("tags.key in (?)", self.tag_keys).order("osm_shadow_id ASC, created_at DESC")
 
     tags
   end
