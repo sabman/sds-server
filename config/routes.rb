@@ -8,6 +8,7 @@ HotJosm::Application.routes.draw do
    
    resources :projects do
      get :data, :on => :member
+     resources :users, :only => [:index]
    end
 
    match '/mapsearch', :to => 'search#mapsearch'

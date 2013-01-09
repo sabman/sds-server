@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130108183326) do
+ActiveRecord::Schema.define(:version => 20130109104429) do
 
   create_table "changesets", :force => true do |t|
     t.integer  "user_id"
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(:version => 20130108183326) do
   end
 
   add_index "current_tags", ["current_osm_shadow_id"], :name => "index_current_tags_on_current_osm_shadow_id"
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "osm_shadows", :force => true do |t|
     t.string   "osm_type"

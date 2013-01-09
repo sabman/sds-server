@@ -1,8 +1,11 @@
 class User < ActiveRecord::Base
-   attr_accessible :firstname, :lastname, :email, :password, :project_id, :active, :admin
+   attr_accessible :firstname, :lastname, :email, :password, :project_id, :active, :admin, :memberships_attributes
 
    has_many :changesets
-   belongs_to :project
+   belongs_to :project #project_id TODO move to session
+   has_many :memberships
+   has_many :projects, :through => :memberships
+   accepts_nested_attributes_for :memberships, :allow_destroy => true
 
    validates :firstname, :presence => true, :length => {:maximum => 64}
    validates :lastname,  :presence => true, :length => {:maximum => 64}
@@ -16,6 +19,12 @@ class User < ActiveRecord::Base
    validates :active, :inclusion => { :in => [true, false] }
 
    before_save :generate_password
+
+   #workaround for rails bug with creating new children and new parent objects at same time (#1943)
+   before_validation :initialize_memberships, :on => :create
+   def initialize_memberships
+      memberships.each { |t| t.user = self }
+   end
 
    def has_password?(submitted_password)
       password == submitted_password

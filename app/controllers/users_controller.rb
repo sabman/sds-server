@@ -21,9 +21,14 @@ class UsersController < ApplicationController
 
 
    def index
-      @title = "All users"
-      @users = User.all
-      # @users = User.paginate(:page => params[:page], :per_page => 20)
+      if params[:project_id]
+        @project = Project.find(params[:project_id])
+        @title = "Project #{@project.name} users"
+        @users = @project.users
+      else
+        @title = "All users"
+        @users = User.all
+      end
    end
 
 
@@ -48,9 +53,5 @@ class UsersController < ApplicationController
       @title = "New User"
    end
 
-  private
-      def admin_user
-         redirect_to(signin_path) unless current_user.active?
-         redirect_to(home_path) unless current_user.admin?
-      end
+
 end

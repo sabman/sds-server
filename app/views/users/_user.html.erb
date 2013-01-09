@@ -1,7 +1,12 @@
 <tr class="jq_users_active_<%= user.active %>">
-<td><a href="<%= user_path(user.id) %>" title="View User"><img src="<%= asset_path 'snow/view.png' %>" width="20"></a>
-<td><%= user.firstname %></td>
-<td><%= user.lastname %></td>
-<td><%= user.project.name %></td>
+  <td><a href="<%= user_path(user.id) %>" title="View User"><img src="<%= asset_path 'snow/view.png' %>" width="20"></a>
+  <td><%= user.firstname %></td>
+  <td><%= user.lastname %></td>
+  <td><%= user.project.name %></td>
+  <% if user.projects %>
+    <td> <%= user.projects.map{|pp| pp.name}.join(', ') %> </td>
+    <% else %>
+    <td>No Projects Found</td>
+  <% end %>
 </tr>
 

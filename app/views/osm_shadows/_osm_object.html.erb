@@ -108,7 +108,7 @@ $(document).ready(function() {
 </ul>
 
 <div id="change_project">
-<%= collection_select(:current_user, :project_id, Project.all, :id, :name, {}, {:class => 'change_project'}) %>
+<%= collection_select(:current_user, :project_id, current_user.projects, :id, :name, {}, {:class => 'change_project'}) %>
 </div>
 
 <h2>Other Records</h2>

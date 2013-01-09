@@ -17,14 +17,4 @@ before_filter :change_project, :only => [:tagsearch]
       end
    end
 
-private
-   
-   def change_project
-      @user = current_user
-      if !params['change_project'].blank? then
-         current_user.project_id = params['change_project']
-         current_user.save!
-      end
-   end
-
 end

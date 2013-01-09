@@ -61,8 +61,4 @@ class ProjectsController < ApplicationController
         @project = Project.find_by_id(params[:id])
     end
 
-   def admin_user
-      redirect_to(signin_path) unless current_user.active?
-      redirect_to(home_path) unless current_user.admin?
-   end
 end

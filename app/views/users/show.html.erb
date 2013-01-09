@@ -26,8 +26,12 @@ Edit User
    <td><%= @user.password %></td>
 </tr>
 <tr>
-   <th>Default project</th>
+   <th>Active project</th>
    <td><%= @user.project.name %></td>
+</tr>
+<tr>
+   <th>Allowed Projects</th>
+   <td><%= @user.projects.map{|pp| pp.name}.join(', ') %></td>
 </tr>
 <tr>
    <th>Active</th>

@@ -18,12 +18,4 @@ class HomeController < ApplicationController
       @last_edits = Changeset.limit(5)
    end
 
-
-
-private
-   def admin_user
-      redirect_to(signin_path) unless current_user.active?
-      redirect_to(home_path) unless current_user.admin?
-   end
-
 end

@@ -1,0 +1,46 @@
+<%  @user.projects ||= [Project.new]
+(Project.all - @user.projects).each do |project|
+  @user.memberships.build(:project => project)
+end
+@user.memberships.sort! {|x,y| x.project.name <=> y.project.name }
+%>
+<%= form_for(@user) do |f| %>
+  <%= render 'shared/error_messages' %>
+  <table>
+    <tr>
+      <td><%= f.label :firstname %></td>
+      <td><%= f.text_field :firstname %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :lastname %></td>
+      <td><%= f.text_field :lastname %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :email %></td>
+      <td><%= f.text_field :email %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :project %></td>
+      <td><%= collection_select(:user, :project_id, Project.all, :id, :name, {}, {:class => 'users_project'}) %></td>
+    </tr>
+    <tr> <td colspan="2"><b>Projects</b></td></tr>
+
+      <%= f.fields_for :memberships do |ff| %>
+        <tr>
+          <td>
+            <%= ff.label :_destroy, ff.object.project.name %>
+          </td>
+          <td>
+            <%= ff.check_box :_destroy,  {:checked => ff.object.persisted?},  '0', '1'
+          %>
+            <%= ff.hidden_field :project_id %>
+          </td>
+        </tr>
+      <% end %>
+        
+    <tr>
+      <td colspan="2"><%= f.submit "Save" %></td>
+    </tr>
+  </table>
+
+<% end %>

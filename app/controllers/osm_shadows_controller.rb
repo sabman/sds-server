@@ -131,17 +131,6 @@ private
    end
 
 
-   def change_project
-      @user = current_user
-      if !params['change_project'].blank? then
-         current_user.project_id = params['change_project']
-         current_user.save!
-      end
-   end
-   
-   def admin_user
-      redirect_to(signin_path) unless current_user.active?
-      redirect_to(home_path) unless current_user.admin?
-   end
-   
+
+
 end

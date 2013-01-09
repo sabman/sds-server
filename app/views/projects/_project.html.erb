@@ -11,4 +11,6 @@
         <li>Created: <%= time_ago_in_words(project.created_at) %> ago.</li>
     </ul>
     <%= link_to image_tag(asset_path'snow/data.png')+"View data table", data_project_path(project)  %>
+     &nbsp;
+     <%= link_to "View Users", project_users_path(project)  %>
 </div>

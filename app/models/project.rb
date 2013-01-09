@@ -1,6 +1,9 @@
 class Project < ActiveRecord::Base
   require 'csv'
   
+  has_many :memberships
+  has_many :users, :through => :memberships
+
   attr_accessible :tags_definition, :name
 
   #converts json from db to a Ruby hash

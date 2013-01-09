@@ -23,7 +23,7 @@ $(document).ready(function() {
 <table class="osm_shadow">
 <tr>
    <th>Select Project</th>
-   <td><%= collection_select(:current_user, :project_id, Project.all, :id, :name, {}, {:class => 'users_project'}) %></td>
+   <td><%= collection_select(:current_user, :project_id, current_user.projects, :id, :name, {}, {:class => 'users_project'}) %></td>
 </tr>
 <tr>
    <th>Enter Search String</th>
