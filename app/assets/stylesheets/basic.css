@@ -521,7 +521,7 @@ div.notice {
    background-color: #B9FFA2;
 }
 
-div.error {
+div.error, div.alert{
    border: 2px solid #e4c7dd;
    background-color: #e4c7dd;
 }
