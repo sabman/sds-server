@@ -12,7 +12,8 @@
       %>
       
       
-      <h2>Record #<%=@osm_shadow.id %></h2> <a href="<%= edit_osm_shadow_path(@osm_shadow) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" />Edit</a>
+    <h2><%= link_to "Record #{@osm_shadow.id}", @osm_shadow %> </h2>
+      <a href="<%= edit_osm_shadow_path(@osm_shadow) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" />Edit</a>
 
       <%= render @osm_shadow %>
 

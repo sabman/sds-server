@@ -2,7 +2,7 @@ class OsmShadowsController < ApplicationController
    before_filter :authenticate,  :only => [:index, :show, :list, :new, :edit, :create, :destroy]
    before_filter :change_project, :only => [:show, :list, :new, :edit]
    before_filter :admin_user,   :only => [:destroy]
-
+   before_filter :find_project
 
    require 'xml/libxml'
    require 'pp'
@@ -116,21 +116,27 @@ private
 
       @tags = Array.new
       @taghash = Hash.new
+      @visible_tag_keys = find_visible_tag_keys
+  
       if (!@osm_shadow.nil?) then
          @osm_shadow.tags.each do |tag|
-            @tags.push(tag)
-            @taghash[tag.key] = tag.value
-         end
+              @tags.push(tag)
+              @taghash[tag.key] = tag.value
+           end
+        end
       end
-   end
-
 
    def retrieve_objects
       @osm_shadows = OsmShadow.where("osm_type = ? and osm_id = ?",  params[:osm_type], params[:osm_id]).order("created_at ASC")
       @osm_shadow = @osm_shadows.first
+      @visible_tag_keys = find_visible_tag_keys
    end
 
+   def find_visible_tag_keys
+      visible_tag_keys = []
+      current_user.projects.map {|x| visible_tag_keys.concat(x.tag_keys)}
 
-
+      visible_tag_keys
+   end
 
 end

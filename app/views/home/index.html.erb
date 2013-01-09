@@ -36,10 +36,18 @@
 <tr>
    <th>Name</th>
    <td><%= "#{current_user.firstname} #{current_user.lastname}" %></td>
+
 </tr>
 <tr>
-   <th>Active project</th>
-   <td><%= current_user.project.name %></td>
+  <th>Email</th>
+  <td><%= current_user.email %></td></tr>
+<tr>
+  <th>Projects</th>
+  <% if current_user.projects %>
+    <td> <%= current_user.projects.map{|projs| projs.name}.join(', ') %> </td>
+  <% else %>
+    <td>No Projects Found</td>
+  <% end %>
 </tr>
 <% if current_user.admin? %>
 <tr>

@@ -96,7 +96,7 @@ $(document).ready(function() {
 <div class="osm_object">
 <h2>Project</h2>
 <ul>
-<li><%= @current_user.project.name %></li>
+<li><%= @active_project.name  %></li>
 
 <% if ["show", "edit", "list"].include?(params['action']) && !@osm_shadow.new_record? %>
    <li>Last modified: <%= @osm_shadow.created_at.strftime("%Y-%m-%d") %></li>
@@ -108,7 +108,7 @@ $(document).ready(function() {
 </ul>
 
 <div id="change_project">
-<%= collection_select(:current_user, :project_id, current_user.projects, :id, :name, {}, {:class => 'change_project'}) %>
+<%= select_tag(nil, options_for_select(current_user.projects.collect {|v,i| [v.name, v.id]}, :selected => @active_project.id),{:class => 'change_project'}) %>
 </div>
 
 <h2>Other Records</h2>

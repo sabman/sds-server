@@ -26,6 +26,8 @@ describe SearchController do
    describe "GET 'tagsearch'" do
       before(:each) do
          @user = Factory(:user)
+         @project = Factory(:project)
+         @user.projects << @project
       end
 
       describe "signed-in" do

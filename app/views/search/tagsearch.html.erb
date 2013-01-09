@@ -4,9 +4,9 @@ $(document).ready(function() {
    var new_project;
    $("#current_user_project_id").change(function() {
       $("#current_user_project_id option:selected").each(function() {
-         new_project =$(this).val();  
+         new_project =$(this).val();
       });
-      $("#change_project").val(new_project); 
+      $("#change_project").val(new_project);
       
    });
 });
@@ -19,11 +19,12 @@ $(document).ready(function() {
 
 <h2>Your search values:</h2>
 <%= form_tag("/tagsearch", :method => "get") do %>
-<%= hidden_field_tag("change_project", current_user.project_id) %>
+<%= hidden_field_tag("change_project", @active_project.id) %>
 <table class="osm_shadow">
 <tr>
    <th>Select Project</th>
-   <td><%= collection_select(:current_user, :project_id, current_user.projects, :id, :name, {}, {:class => 'users_project'}) %></td>
+   <td><%= select_tag(nil, options_for_select(current_user.projects.collect {|v,i| [v.name, v.id]}, :selected => @active_project.id),{:class => 'change_project', :id=>"current_user_project_id"}) %> </td>
+   <td><%# collection_select(:current_user, :project_id, current_user.projects, :id, :name, {}, {:class => 'users_project'}) %></td>
 </tr>
 <tr>
    <th>Enter Search String</th>

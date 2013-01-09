@@ -1,6 +1,7 @@
 class SearchController < ApplicationController
 before_filter :authenticate, :only => [:mapsearch, :tagsearch]
 before_filter :change_project, :only => [:tagsearch]
+before_filter :find_project, :only => [:tagsearch]
 
    def mapsearch
       @title = "Map Search"

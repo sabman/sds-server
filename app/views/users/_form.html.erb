@@ -19,12 +19,7 @@ end
       <td><%= f.label :email %></td>
       <td><%= f.text_field :email %></td>
     </tr>
-    <tr>
-      <td><%= f.label :project %></td>
-      <td><%= collection_select(:user, :project_id, Project.all, :id, :name, {}, {:class => 'users_project'}) %></td>
-    </tr>
     <tr> <td colspan="2"><b>Projects</b></td></tr>
-
       <%= f.fields_for :memberships do |ff| %>
         <tr>
           <td>

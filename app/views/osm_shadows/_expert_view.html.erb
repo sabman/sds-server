@@ -8,11 +8,14 @@
       <th>Key</th>
       <th>Value</th>
    </tr>
+
    <% @tags.each do |t| %>
+    <%if @visible_tag_keys.include?(t.key) %>
       <tr>
          <td><%= t.key %></td>
          <td><%= t.value %></td>
       </tr>
+      <% end %>
    <% end %>
    </table>
 <% end %>

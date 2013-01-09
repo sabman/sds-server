@@ -7,6 +7,8 @@ describe OsmShadowsController do
       before(:each) do
          @user = Factory(:user)
          test_sign_in(@user)
+         @project = Factory(:project)
+         @user.projects << @project
       end
 
       describe "GET 'index'" do
@@ -122,6 +124,9 @@ describe OsmShadowsController do
          before(:each) do
             @user = Factory(:user)
             @changeset = Factory(:changeset)
+            @project = Factory(:project)
+            @user.projects << @project
+
             test_sign_in(@user)
             
             @shadow = Factory(:osm_shadow)
@@ -173,6 +178,8 @@ describe OsmShadowsController do
       describe "success" do
          before(:each) do
             @user = Factory(:user)
+            @project = Factory(:project)
+            @user.projects << @project
             @changeset = Factory(:changeset)
             test_sign_in(@user)
 
@@ -229,6 +236,8 @@ describe OsmShadowsController do
          @osm_shadow = Factory(:osm_shadow)
          @user = Factory(:user)
          @user.toggle(:admin)
+         @project = Factory(:project)
+         @user.projects << @project
          test_sign_in(@user)
       end
       
@@ -268,5 +277,70 @@ describe OsmShadowsController do
       end
       
    end
+
+  describe "a user with no projects" do
+   before(:each) do
+         @osm_shadow = Factory(:osm_shadow)
+         @user = Factory(:user)
+         test_sign_in(@user)
+      end
+
+     describe "GET 'show'" do
+         it "should redirect to home" do
+            get :show, :id => @osm_shadow.id
+            response.should redirect_to(home_path)
+         end
+      end
+
+      describe "GET 'edit'" do
+         it "should redirect to home" do
+            get :edit, :id => @osm_shadow.id
+            response.should redirect_to(home_path)
+         end
+      end
+
+     describe "DELETE 'destroy'" do
+         it "should redirect to home" do
+            delete :destroy, :id => @osm_shadow.id
+            response.should redirect_to(home_path)
+         end
+      end
+  end
+
+  describe "a user with only one project" do
+     before(:each) do
+         @osm_shadow = Factory(:osm_shadow)
+         @user = Factory(:user)
+
+         @normal_project = Factory(:project)
+         @forbidden_project = Factory(:project, :name=>"forbidden",
+           :tags_definition => [{ :tag => 'forbidden_key', :type => 'text',:en => "Name" }].to_json)
+         @project = Factory(:project, :name=>"another",
+           :tags_definition => [{ :tag => 'hot:simple:name', :type => 'text',:en => "Name" }].to_json)
+         @user.projects << @project
+         @forbidden_tag = Factory(:tag, :osm_shadow => @osm_shadow, :key =>"forbidden_key", :value => "cats and dogs")
+         @tag = Factory(:tag, :osm_shadow => @osm_shadow, :key =>"hot:simple:name", :value => "simple name")
+         test_sign_in(@user)
+
+         get :show, :id => @osm_shadow.id
+      end
+
+      describe "GET 'show'" do
+         it "should redirect to home" do
+            response.should be_success
+         end
+         
+         it "should show the keys of projects it belongs to" do
+            response.should have_selector("td", :content => @tag.key)
+            response.should have_selector("td", :content => @tag.value)
+         end
+
+        it "should not show the keys of projects it does not belong to" do
+            response.should_not have_selector("td", :content => @forbidden_tag.key)
+            response.should_not have_selector("td", :content => @forbidden_tag.value)
+         end
+      end
+  end
+
 
 end

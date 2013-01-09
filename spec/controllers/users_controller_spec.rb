@@ -233,6 +233,8 @@ describe UsersController do
          20.times do
             @users << Factory(:user, :email => Factory.next(:email))
          end
+         @project = Factory(:project)
+         @user.projects << @project
       end
 
       it "should be successful" do
@@ -245,10 +247,10 @@ describe UsersController do
          response.should have_selector("title", :content => "All users")
       end
 
-      it "should have an project element for each user" do
+      it "should have an projects element for each user" do
          get :index
          @users[0..2].each do |user|
-            response.should have_selector("tr", :content => user.project.name)
+            response.should have_selector("tr", :content => user.projects.map{|projs| projs.name}.join(', '))
          end
       end
    end

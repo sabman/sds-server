@@ -44,7 +44,7 @@ describe "Homepages" do
 
       it "should display default object class" do
          get home_path
-         response.should have_selector("th", :content => "project")
+         response.should have_selector("th", :content => "Projects")
       end
 
     end

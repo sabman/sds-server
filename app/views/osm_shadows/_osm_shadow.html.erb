@@ -13,7 +13,7 @@ $(document).ready(function() {
 <%
    # this hash has the names, in English and Bahasa Indonesia, for
    # each of the special tags we are using.
-   @fields = current_user.project.fields
+   @fields = @active_project.fields
 %>
 
 <% if params['action'] == "show" || params['action'] == "list" %>
