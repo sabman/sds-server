@@ -3,6 +3,7 @@ class OsmShadowsController < ApplicationController
    before_filter :change_project, :only => [:show, :list, :new, :edit]
    before_filter :admin_user,   :only => [:destroy]
    before_filter :find_project
+   before_filter :filter_tag_params, :only => [:create, :update]
 
    require 'xml/libxml'
    require 'pp'
@@ -110,6 +111,20 @@ class OsmShadowsController < ApplicationController
    end
    
 private
+
+   #filters params to remove any tags from projects the user does not have access to
+   def filter_tag_params
+     if params["osm_shadow"]["tags_attributes"]
+       allowed_tag_keys = current_user.find_visible_tag_keys
+       tags_attributes = params["osm_shadow"].delete("tags_attributes")
+       
+       tags_attributes.each do |tag_attr|
+         tags_attributes.delete(tag_attr[0]) unless allowed_tag_keys.include?(tag_attr[1]["key"])
+       end
+
+       params["osm_shadow"]["tags_attributes"] = tags_attributes
+     end
+   end
 
    def retrieve_object
       @osm_shadow = OsmShadow.find(params[:id])

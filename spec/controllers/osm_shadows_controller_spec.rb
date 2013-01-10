@@ -127,18 +127,22 @@ describe OsmShadowsController do
             @project = Factory(:project)
             @user.projects << @project
 
+            @forbidden_project = Factory(:project, :name=>"another project",
+                  :tags_definition => [{ :tag => 'akey', :type => 'text', :en => "a key"}].to_json)
+
             test_sign_in(@user)
             
             @shadow = Factory(:osm_shadow)
-            @t1 = Factory(:tag, :osm_shadow => @shadow, :value => "cat")
+            @t1 = Factory(:tag, :osm_shadow => @shadow, :key=>"hot:simple:name", :value => "cat")
             @t2 = Factory(:tag, :osm_shadow => @shadow, :key =>"akey", :value => "dog")
             
             @osmattr = {:osm_id => @shadow.osm_id, :osm_type => @shadow.osm_type}
          end
       
-         it "should update existing tags" do
+         #should only update the hot:simple:name tag
+         it "should update existing tags where allowed" do
             form_attrs = @osmattr.merge({:tags_attributes => {
-               "0" =>{"id" => @t1.id, "key"=>"highway", "value"=>"tabby"}, 
+               "0" =>{"id" => @t1.id, "key"=>"hot:simple:name", "value"=>"tabby"}, 
                "1" =>{"id" => @t2.id, "key"=>"akey", "value"=>"poodle"}
                }})
             put :update, :id => @shadow.id, :osm_shadow => form_attrs
@@ -146,25 +150,29 @@ describe OsmShadowsController do
             shad = OsmShadow.find(@shadow.id)
   
             shad.tags.count.should eql 2
-            shad.tags.find_by_key("highway").value.should eql "tabby"
-            shad.tags.find_by_key("akey").value.should eql "poodle"
+            shad.tags.find_by_key("hot:simple:name").value.should eql "tabby"
+            shad.tags.find_by_key("akey").value.should eql "dog"
          end
          
+         #it should only create the new tag for the allowed project
          it "should create any new tags" do
             form_attrs = @osmattr.merge({:tags_attributes => {
-               "0" =>{"id" => @t1.id, "key"=>"highway", "value"=>"tabby"}, 
-               "1" =>{"key"=>"forename", "value"=>"santa"},
+               "0" =>{"id" => @t1.id, "key"=>"hot:simple:name", "value"=>"tabby"}, 
+               "1" =>{"key"=>"hot:simple:mobile", "value"=>"12345"},
                "2" =>{"key"=>"surname", "value"=>"claus"}
                }})
+
             put :update, :id => @shadow.id, :osm_shadow => form_attrs
-            
+
             shad = OsmShadow.find(@shadow.id)
-  
-            shad.tags.count.should eql 4
-            shad.tags.find_by_key("akey").value.should eql "dog" #existing, not updated
-            shad.tags.find_by_key("highway").value.should eql "tabby" #existing, updated
-            shad.tags.find_by_key("forename").value.should eql "santa" #new tag, created
-            shad.tags.find_by_key("surname").value.should eql "claus" #new tags, created
+
+            #user just has access to one project, hot:simple so only one additional tag should be created.
+            #it already has 2. We update one, and add one more.
+            shad.tags.count.should eql 3
+            shad.tags.find_by_key("akey").value.should eql "dog" #existing, not updated by user
+            shad.tags.find_by_key("hot:simple:name").value.should eql "tabby" #existing, updated
+            shad.tags.find_by_key("hot:simple:mobile").value.should eql "12345" #new tag, created
+            shad.tags.find_by_key("surname").should be_nil  #new tags NOT created
          end
          
          pending "should update version with each update. TODO when versioning implemented"
@@ -190,8 +198,8 @@ describe OsmShadowsController do
             }
 
             @form_attrs = @attr.merge({:tags_attributes => {
-               "0"=>{"key"=>"AA", "value"=>"aa" }, "1" => {"key"=>"BB", "value"=>"bb"},
-               "2"=>{"key"=>"CC", "value"=>"cc" }, "3" => {"key"=>"DD", "value"=>"dd"}
+               "0"=>{"key"=>"hot:simple:name", "value"=>"aa" }, "1" => {"key"=>"BB", "value"=>"bb"},
+               "2"=>{"key"=>"hot:simple:mobile", "value"=>"cc" }, "3" => {"key"=>"DD", "value"=>"dd"}
                }})
          end
 
@@ -207,14 +215,14 @@ describe OsmShadowsController do
             end.should change(OsmShadow, :count).by(1)
          end
 
-         it "should create tags" do
+         it "should create tags for the project the user is allowed on" do
             lambda do
                post :create, :osm_shadow => @form_attrs
-            end.should change(Tag, :count).by(4)
+            end.should change(Tag, :count).by(2)
             new_shadow = assigns(:osm_shadow)
-            new_shadow.tags.count.should eql 4
-            aa_tag = new_shadow.tags.find_by_key("AA")
-            aa_tag.value.should eql "aa"
+            new_shadow.tags.count.should eql 2
+            name_tag = new_shadow.tags.find_by_key("hot:simple:name")
+            name_tag.value.should eql "aa"
          end
          
 
