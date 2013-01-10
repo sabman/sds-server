@@ -37,6 +37,14 @@ class User < ActiveRecord::Base
       return user if user.has_password?(pwd)
    end
 
+   #returns the visible keys permitted to the user from it's projects
+   def find_visible_tag_keys
+      visible_tag_keys = []
+      self.projects.map {|x| visible_tag_keys.concat(x.tag_keys)}
+
+      visible_tag_keys
+   end
+
 private 
    def generate_password
       if new_record?

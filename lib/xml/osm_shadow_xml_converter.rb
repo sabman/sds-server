@@ -2,23 +2,25 @@ module OsmShadowXmlConverter
 
    require 'xml/libxml'
 
-   def to_xml_node
+   def to_xml_node(allowed_tag_keys)
       node = XML::Node.new 'osm_shadow'
       node['osm_id'] = self.osm_id.to_s
       node['osm_type'] = self.osm_type
 
       self.tags.each do |tag|
+        if allowed_tag_keys.include?(tag.key)
          tnode = XML::Node.new 'tag'
          tnode['k'] = tag.key
          tnode['v'] = tag.value
          node << tnode
+        end
       end
 
       return node
    end
 
    
-   def self.from_xml(xml)
+   def self.from_xml(xml, allowed_tag_keys)
       collection = []
       existing_shadows  = []
       parser = XML::Parser.string(xml)
@@ -29,9 +31,11 @@ module OsmShadowXmlConverter
          if OsmShadow.exists?(:osm_id => s['osm_id'], :osm_type => s['osm_type'])
             existing_shadow = OsmShadow.find_oldest(s['osm_type'], s['osm_id'])
             s.find('tag').each do |t|
-               tag = existing_shadow.tags.find_or_initialize_by_key(t['k'])
-               tag.value = t['v']
-               tag.save
+              if allowed_tag_keys.include?(t['k'])
+                 tag = existing_shadow.tags.find_or_initialize_by_key(t['k'])
+                 tag.value = t['v']
+                 tag.save
+              end
             end
             
             existing_shadows << existing_shadow
@@ -39,8 +43,10 @@ module OsmShadowXmlConverter
             shadow = OsmShadow.new({'osm_id' => s['osm_id'], 'osm_type' => s['osm_type']})
 
             s.find('tag').each do |t|
+              if allowed_tag_keys.include?(t['k'])
                tag = Tag.new({'key' => t['k'], 'value' => t['v']})
                shadow.tags << tag
+              end
             end
             collection.push(shadow)
          end
