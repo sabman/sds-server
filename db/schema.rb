@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109104429) do
+ActiveRecord::Schema.define(:version => 20130111130547) do
 
   create_table "changesets", :force => true do |t|
     t.integer  "user_id"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20130109104429) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "tags_definition"
+    t.string   "preset_filename"
   end
 
   create_table "tags", :force => true do |t|

@@ -8,6 +8,13 @@
         <li>Tags Definition (JSON):<br />
             <%= project.tags_definition %>
         </li>
+        <li>Preset: 
+         <% if project.preset_filename %>
+            <%= link_to project.preset_filename, project.preset_public_path  %>
+          <% else %>
+            No preset file found
+          <% end %>
+        </li>
         <li>Created: <%= time_ago_in_words(project.created_at) %> ago.</li>
     </ul>
     <%= link_to image_tag(asset_path'snow/data.png')+"View data table", data_project_path(project)  %>

@@ -5,6 +5,58 @@ class Project < ActiveRecord::Base
   has_many :users, :through => :memberships
 
   attr_accessible :tags_definition, :name
+  
+  after_destroy :delete_presets
+  
+  #removes the directory along with any presets stored there
+  def delete_presets
+    FileUtils.rm_r(self.preset_filedir) if File.exists?(self.preset_filedir)
+  end
+
+  #saves an uploaded file. 
+  def save_preset(file_upload)
+    tmp = file_upload.tempfile
+    filename = file_upload.original_filename
+    
+    #check to make sure it's xml and there's none of the usual naughty files being uploaded
+    unless File.extname(filename) != ".xml" || (["crossdomain.xml", "clientaccesspolicy.xml"]).include?(filename)
+
+      #get and if necessary create the preset for the project
+      dest_dir = self.preset_filedir
+      unless File.exists?(dest_dir)
+        FileUtils.mkdir_p(dest_dir, :mode => 0700)
+      end
+
+      dest_file = File.join(dest_dir, filename)
+      
+      #delete any other exising presets? 
+      # if self.preset_filename && File.exist?(preset_filepath)
+      #   FileUtils.rm(preset_filepath)
+      # end
+      
+      #copy from tempfile to the final resting place
+      FileUtils.cp(tmp.path, dest_file)
+      
+      self.preset_filename = filename
+      self.save
+    end
+  end
+  
+  def preset_filepath
+    dest_dir = self.preset_filedir
+    dest_filepath = File.join(dest_path, self.preset_filename)
+    
+    dest_filepath
+  end
+  
+  def preset_filedir
+    File.join("public/presets", self.id.to_s)
+  end
+  
+  def preset_public_path
+    File.join("/presets", self.id.to_s, self.preset_filename)
+  end
+  
 
   #converts json from db to a Ruby hash
   def fields

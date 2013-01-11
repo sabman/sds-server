@@ -11,6 +11,13 @@
           <td>Tag Fields Definition (JSON) </td>
           <td><%= f.text_area :tags_definition %></td>
         </tr>
+        <tr>
+          <td>Preset File (must be an .xml file)</td>
+          <td><% if @project.preset_filename %>
+          Current file: <%= link_to @project.preset_filename, @project.preset_public_path  %> <br />
+          <% end %>
+            <%= f.file_field :file_upload %></td>
+        </tr>
       </tbody>
 
     </table>
