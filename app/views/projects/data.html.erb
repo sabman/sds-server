@@ -26,7 +26,7 @@
     <tbody>
       <%  @shadows.each do |shadow| %>
         <tr>
-          <td><a href="<%= osm_shadow_path(shadow["osm_shadow_id"]) %>" title="View Object"><img src="<%= asset_path 'snow/view.png' %>" width="20" /></a></td>
+          <td><a href="<%= osm_shadow_path(shadow["osm_shadow_id"], :change_project => @project) %>" title="View Object"><img src="<%= asset_path 'snow/view.png' %>" width="20" /></a></td>
           <td><%= shadow["osm_shadow_id"] %></td>
           <td><%= shadow["osm_id"] %></td>
           <td><%= shadow["osm_type"] %></td>
