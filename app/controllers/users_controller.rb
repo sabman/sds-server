@@ -16,6 +16,9 @@ class UsersController < ApplicationController
 
    def edit
       @user = User.find(params[:id])
+      if params[:reset_password] 
+         @user.plain_password = User.generate_password
+      end
       @title = "Edit User"
    end
 
@@ -50,6 +53,7 @@ class UsersController < ApplicationController
 
    def new
       @user = User.new
+      @user.plain_password = User.generate_password
       @title = "New User"
    end
 

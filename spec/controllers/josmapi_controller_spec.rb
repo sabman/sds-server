@@ -13,7 +13,7 @@ describe JosmapiController do
       describe "success" do
          before(:each) do
             @user = Factory(:user)
-            @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.password
+            @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.plain_password
          end
 
          it "should find the right action" do
@@ -75,7 +75,7 @@ describe JosmapiController do
      
       describe "success" do
          before(:each) do
-            @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.password
+            @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.plain_password
          end
 
          it "should find the right action" do
@@ -88,7 +88,7 @@ describe JosmapiController do
 
       describe "With multiple records" do
          before(:each) do
-            @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.password
+            @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.plain_password
             request.env['HTTP_AUTHORIZATION'] = @credentials
         end
          
@@ -198,7 +198,7 @@ describe JosmapiController do
          
          
          @user = Factory(:user)
-         @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.password
+         @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.plain_password
 
          @project = Factory(:project)
          @user.projects << @project
@@ -286,7 +286,7 @@ describe JosmapiController do
             @forbidden_project = Factory(:project, :name=>"forbidden",
            :tags_definition => [{ :tag => 'forbidden_key', :type => 'text',:en => "Name" }].to_json)
 
-            @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.password
+            @credentials = ActionController::HttpAuthentication::Basic.encode_credentials @user.email, @user.plain_password
             @xml = '<xml><osm_sds><osm_shadow osm_id="123" osm_type="way"><tag k="hot:simple:name" v="schnee"/><tag k="forbidden_key" v="secret lizard king"/></osm_shadow></osm_sds></xml>'
          end
 

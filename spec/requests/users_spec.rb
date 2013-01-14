@@ -8,7 +8,7 @@ describe "Users" do
          user.toggle!(:admin)
          visit signin_path
          fill_in :email,    :with => user.email
-         fill_in :password, :with => user.password
+         fill_in :password, :with => user.plain_password
          click_button
       end
 
@@ -49,7 +49,7 @@ describe "Users" do
             fill_in :email,    :with => ""
             fill_in :password, :with => ""
             click_button
-            response.should have_selector("div.flash.error", :content => "Invalid")
+            response.should have_selector("div.flash.alert", :content => "Invalid")
          end
       end
 
@@ -58,7 +58,7 @@ describe "Users" do
             user = Factory(:user)
             visit signin_path
             fill_in :email,    :with => user.email
-            fill_in :password, :with => user.password
+            fill_in :password, :with => user.plain_password
             click_button
             controller.should be_signed_in
             click_link "Sign out"

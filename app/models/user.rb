@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-   attr_accessible :firstname, :lastname, :email, :password, :project_id, :active, :admin, :memberships_attributes
-
+   attr_accessible :firstname, :lastname, :email, :plain_password, :project_id, :active, :admin, :memberships_attributes
+   attr_accessor :plain_password
+   
    has_many :changesets
    belongs_to :project #project_id TODO move to session
    has_many :memberships
@@ -9,6 +10,9 @@ class User < ActiveRecord::Base
 
    validates :firstname, :presence => true, :length => {:maximum => 64}
    validates :lastname,  :presence => true, :length => {:maximum => 64}
+   validates_presence_of :plain_password, :on => :create
+   validates_presence_of :email
+   validates_uniqueness_of :email
 
    email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
    validates :email, 
@@ -18,7 +22,7 @@ class User < ActiveRecord::Base
 
    validates :active, :inclusion => { :in => [true, false] }
 
-   before_save :generate_password
+   before_save :encrypt_password
 
    #workaround for rails bug with creating new children and new parent objects at same time (#1943)
    before_validation :initialize_memberships, :on => :create
@@ -26,16 +30,17 @@ class User < ActiveRecord::Base
       memberships.each { |t| t.user = self }
    end
 
-   def has_password?(submitted_password)
-      password == submitted_password
-   end
-
-   def self.authenticate(email, pwd)
+   def self.authenticate(email, password)
       user = find_by_email(email)
       return nil if user.nil?
       return nil if (user.active? == false)
-      return user if user.has_password?(pwd)
+      if user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
+         user
+      else
+         nil
+      end
    end
+   
 
    #returns the visible keys permitted to the user from it's projects
    def find_visible_tag_keys
@@ -45,17 +50,24 @@ class User < ActiveRecord::Base
       visible_tag_keys
    end
 
+
+   def encrypt_password
+    if plain_password.present?
+      self.password_salt = BCrypt::Engine.generate_salt
+      self.password_hash = BCrypt::Engine.hash_secret(plain_password, password_salt)
+    end
+   end
+   
 private 
-   def generate_password
-      if new_record?
-         foo = (('A'..'Z').to_a << ('a'..'z').to_a << ('1'..'9').to_a ).flatten
-         foo.delete_if {|x| x == "I" }
-         foo.delete_if {|x| x == "l" }
-         foo.delete_if {|x| x == "O" }
-         bar = String.new
-         8.times { bar << foo.shuffle[0] }
-         self.password = bar
-      end
+   def self.generate_password
+      foo = (('A'..'Z').to_a << ('a'..'z').to_a << ('1'..'9').to_a ).flatten
+      foo.delete_if {|x| x == "I" }
+      foo.delete_if {|x| x == "l" }
+      foo.delete_if {|x| x == "O" }
+      bar = String.new
+      10.times { bar << foo.shuffle[0] }
+      
+      return bar
    end   
 
 end

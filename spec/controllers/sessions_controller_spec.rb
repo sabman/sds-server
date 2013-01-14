@@ -21,7 +21,7 @@ describe SessionsController do
       describe "invalid signin" do
 
          before(:each) do
-            @attr = { :email => "email@example.com", :password => "invalid" }
+            @attr = { :email => "email@example.com", :plain_password => "invalid" }
          end
 
          it "should re-render the new page" do
@@ -36,14 +36,14 @@ describe SessionsController do
 
          it "should have a flash.now message" do
             post :create, :session => @attr
-            flash.now[:error].should =~ /invalid/i
+            flash.now[:alert].should =~ /invalid/i
          end
       end
 
       describe "with valid email and password" do
          before(:each) do
             @user = Factory(:user)
-            @attr = { :email => @user.email, :password => @user.password }
+            @attr = { :email => @user.email, :password => @user.plain_password }
          end
 
          it "should sign the user in" do

@@ -7,7 +7,7 @@ describe User do
          :firstname  => "Christine",
          :lastname   => "Karch",
          :email      => "karch@geofabrik.de",
-         :password   => "blubber"
+         :plain_password   => "blubber"
       }
    end
 

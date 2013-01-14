@@ -11,7 +11,7 @@ describe UsersController do
             :firstname => "ABC",
             :lastname => "EFG",
             :email => "abc@geofabrik.de",
-            :password => "abc",
+            :plain_password  => "abc",
             :active => true
          }
       end
@@ -49,7 +49,7 @@ describe UsersController do
             :firstname => "ABC",
             :lastname => "EFG",
             :email => "abc@geofabrik.de",
-            :password => "abc",
+            :plain_password => "abc",
             :active => true
          }
       end
@@ -157,7 +157,7 @@ describe UsersController do
                :firstname => "",
                :lastname => "",
                :email => "",
-               :password => "",
+               :plain_password => "",
                :active => ""
             }
          end
@@ -178,7 +178,7 @@ describe UsersController do
                :firstname => "Christine",
                :lastname => "Karch",
                :email => "foo@geofabrik.de",
-               :password => "abc123",
+               :plain_password => "abc123",
                :active => true
             }
          end
@@ -284,7 +284,8 @@ describe UsersController do
             @attr = {
                :firstname => "",
                :lastname => "",
-               :email => ""   
+               :email => "",
+               :plain_password => ""
             }
          end
 
@@ -310,7 +311,8 @@ describe UsersController do
             @attr = {
                :firstname => "Christine",
                :lastname => "Karch",
-               :email => "karch@geofabrik.de"   
+               :email => "karch@geofabrik.de",
+               :plain_password  => "pass"
             }
          end
          
@@ -330,9 +332,9 @@ describe UsersController do
             flash[:notice].should =~ /created new user successfully/i
          end
 
-         it "should set the password" do
+         it "should set and encrypt the password" do
             my_user = User.create!(@attr)
-            my_user.password.should_not be_blank
+            my_user.encrypt_password.should_not be_blank
          end
 
          it "should create an active user" do

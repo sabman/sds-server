@@ -4,6 +4,7 @@ Factory.define :user do |user|
    user.firstname                "Phil" 
    user.lastname                 "Losoph"
    user.email                    { Factory.next(:email) }
+   user.plain_password            "pass"
    user.association              :project
 end
 

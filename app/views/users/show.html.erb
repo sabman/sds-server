@@ -22,10 +22,6 @@ Edit User
    <td><%= @user.email %></td>
 </tr>
 <tr>
-   <th>Password</th>
-   <td><%= @user.password %></td>
-</tr>
-<tr>
    <th>Subscribed Projects</th>
    <td><%= @user.projects.map{|projs| projs.name}.join(', ') %></td>
 </tr>

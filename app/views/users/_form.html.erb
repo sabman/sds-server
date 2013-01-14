@@ -20,6 +20,14 @@ end
       <td><%= f.text_field :email %></td>
     </tr>
     <tr>
+      <td>Password</td>
+      <td><%= @user.plain_password %> <%= f.hidden_field :plain_password %> 
+      <% if params[:action] == "edit"  %>
+        <%= link_to "Reset & gnerate new password", edit_user_path(@user, :reset_password => true) %>
+       <% end %>
+      </td>
+    </tr>
+    <tr>
       <td><%= f.label :active %></td>
       <td><%= f.select(:active, options_for_select([['Active', true], ['Inactive', false]], @user.active)) %></td>
     </tr>
