@@ -18,7 +18,7 @@ module SessionsHelper
    end
 
    def deny_access
-      redirect_to signin_path, :notice => "Please sign in to access this page."
+      redirect_to signin_path, :alert => "Please sign in to access this page."
    end
 
    def signed_in?

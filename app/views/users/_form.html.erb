@@ -25,7 +25,7 @@ end
     </tr>
     <tr>
       <td><%= f.label :admin %></td>
-      <td><%= f.select(:admin, options_for_select([['Admin', true], ['No admin', false]], @user.admin)) %></td>
+      <td><%= f.select(:admin, options_for_select([['Admin', true], ['Not admin', false]], @user.admin)) %></td>
     </tr>
     <tr> <td colspan="2"><b>Projects</b></td></tr>
       <%= f.fields_for :memberships do |ff| %>
