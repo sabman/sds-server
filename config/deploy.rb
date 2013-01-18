@@ -71,6 +71,6 @@ namespace :deploy do
     rake = fetch(:rake, 'rake')
     rails_env = fetch(:rails_env, 'production')
 
-    run "cd '#{current_path}' && #{rake} create_admin RAILS_ENV=#{rails_env}"
+    run "cd '#{current_path}' && #{rake} db:create_admin RAILS_ENV=#{rails_env}"
   end
 end
