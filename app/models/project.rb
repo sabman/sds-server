@@ -24,7 +24,7 @@ class Project < ActiveRecord::Base
       #get and if necessary create the preset for the project
       dest_dir = self.preset_filedir
       unless File.exists?(dest_dir)
-        FileUtils.mkdir_p(dest_dir, :mode => 0744)
+        FileUtils.mkdir_p(dest_dir, :mode => 0755)
       end
 
       dest_file = File.join(dest_dir, filename)
@@ -36,7 +36,7 @@ class Project < ActiveRecord::Base
       
       #copy from tempfile to the final resting place
       FileUtils.cp(tmp.path, dest_file)
-      
+      FileUtils.chmod(0644, dest_file)
       self.preset_filename = filename
       self.save
     end
