@@ -11,6 +11,10 @@ JOSM where they are processed like normal tags.
 
 See the [.odt/.pdf documentation in the "doc" folder.](doc/sds.pdf)
 
+Installation / Deployment
+
+See doc/readme_install.md
+
 # Open Source License
 
 This code was was originally written by Christine Karch
