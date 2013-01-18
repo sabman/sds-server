@@ -10,7 +10,7 @@ load "config/recipes/rbenv"
 load "config/recipes/check"
 
 
-server "192.168.15.145", :web, :app, :db, :primary => true
+server "192.168.15.139", :web, :app, :db, :primary => true
 set :user, "tim"
 set :application, "sds-server"
 
@@ -74,3 +74,15 @@ namespace :deploy do
     run "cd '#{current_path}' && #{rake} db:create_admin[Admin,Adminson,admin@example.com,changemeplease] RAILS_ENV=#{rails_env}"
   end
 end
+
+after "deploy:symlink","uploads:symlink"
+
+namespace :uploads do
+  desc "creates a symlink between the public uploads directory and shared so that the uploads will persist between deployments"
+  task :symlink do
+    run "mkdir -p #{shared_path}/system/presets"
+    run "ln -nfs #{shared_path}/system/presets #{release_path}/public/presets"
+  end
+end
+
+
