@@ -37,7 +37,7 @@ group :test do
 end
 
 
-#gem 'rake', '10.0.3'
+gem 'rake', '0.9.2.2'
 
 group :production do
 # Use unicorn as the web server
