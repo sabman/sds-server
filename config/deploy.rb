@@ -64,3 +64,13 @@ namespace :bundler do
   end
 end
 before "deploy:assets:precompile", "bundler:bundle_new_release"
+
+namespace :deploy do
+  desc "Run the remote create_admin rake task"
+  task :create_admin do
+    rake = fetch(:rake, 'rake')
+    rails_env = fetch(:rails_env, 'production')
+
+    run "cd '#{current_path}' && #{rake} create_admin RAILS_ENV=#{rails_env}"
+  end
+end
