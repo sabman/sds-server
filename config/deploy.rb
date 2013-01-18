@@ -75,13 +75,14 @@ namespace :deploy do
   end
 end
 
-after "deploy:symlink","uploads:symlink"
+after "deploy:create_symlink","uploads:create_symlink"
 
 namespace :uploads do
   desc "creates a symlink between the public uploads directory and shared so that the uploads will persist between deployments"
-  task :symlink do
-    run "mkdir -p #{shared_path}/system/presets"
-    run "ln -nfs #{shared_path}/system/presets #{release_path}/public/presets"
+  task :create_symlink do
+    run "mkdir -p #{shared_path}/presets"
+    run "rm -rf #{release_path}/pubic/presets"
+    run "ln -nfs #{shared_path}/presets #{release_path}/public/presets"
   end
 end
 
