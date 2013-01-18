@@ -37,18 +37,15 @@ group :test do
 end
 
 
+gem 'rake', '10.0.3'
 
-
-
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
+group :production do
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
+end
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
