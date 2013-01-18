@@ -24,7 +24,7 @@ class Project < ActiveRecord::Base
       #get and if necessary create the preset for the project
       dest_dir = self.preset_filedir
       unless File.exists?(dest_dir)
-        FileUtils.mkdir_p(dest_dir, :mode => 0644)
+        FileUtils.mkdir_p(dest_dir, :mode => 0744)
       end
 
       dest_file = File.join(dest_dir, filename)
