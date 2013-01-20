@@ -1,3 +1,6 @@
+#
+# READ doc/readme_install.md for documentation
+#
 require "bundler/capistrano"
 set :bundle_flags, "--deployment --quiet --binstubs"
 
@@ -86,4 +89,10 @@ namespace :uploads do
   end
 end
 
-
+after "deploy:create_symlink", "deploy:symlink_app_config"
+namespace :deploy do
+  task :symlink_app_config do
+    run "cp -n  #{release_path}/config/app_config.yml.example  #{shared_path}/config/app_config.yml"  #copy the example file unless already exists
+    run "ln -s #{shared_path}/config/app_config.yml #{release_path}/config/" #link the example file to shared
+  end
+end

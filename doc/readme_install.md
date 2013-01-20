@@ -68,6 +68,11 @@ Edit deploy.rb and find the line saying
 
 and change the line according to ` db:create_admin[firstname,lastname,email,password] `
 
+###Optional - Change OSM API urls configuration:###
+On the server, edit the file at ` app_path/shared/config/app_config.yml`
+
+
+
 Get deploying!
 -------------
 
