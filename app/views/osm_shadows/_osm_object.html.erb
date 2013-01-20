@@ -67,6 +67,24 @@ function initmap()
 
 </script>
 <script type="text/javascript">
+  jQuery.extend({
+  //Function parseQuerystring
+  //Copyright (c) 2011 Paul Gueller paul(dot)gueller(at)gmail(dot)com
+  //Dual licensed under MIT and GPL.
+  //Date: 26-April-2011
+  //@author Paul Gueller
+  //@version 1.0.2
+   parseQuerystring: function(){
+      var nvpair = {};
+      var qs = window.location.search.replace('?', '');
+      var pairs = qs.split('&');
+      $.each(pairs, function(i, v){
+        var pair = v.split('=');
+        nvpair[pair[0]] = pair[1];
+      });
+      return nvpair;
+    }
+  });
 $(document).ready(function() {
 
 
@@ -85,8 +103,17 @@ $(document).ready(function() {
       $("#change_project option:selected").each(function() {
          project = $(this).val();
       });
-      change_href = window.location.pathname + '?change_project=' + project;
-      window.location.href = change_href;   
+      var query_array = jQuery.parseQuerystring()
+      query_array["change_project"] = project
+      var query_string = "?"
+      $.each(query_array, function(i, v){
+       if (v != undefined){
+         query_string = query_string + i+"="+v + "&";
+       }
+      })
+      var change_href = window.location.pathname + query_string
+
+      window.location.href = change_href;
    }); 
 
 
@@ -118,7 +145,9 @@ $(document).ready(function() {
 <h2>Other Records</h2>
 <ul>
    <li>
+     <% if @osm_shadow.sibling_count %>
       <%= link_to "View #{@osm_shadow.sibling_count} Records", list_shadows_path(@osm_shadow.osm_type, @osm_shadow.osm_id) %> for this OSM object.
+     <% end  %>
    </li>
 </ul>
 <h2>OSM Properties</h2>

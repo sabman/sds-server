@@ -48,8 +48,12 @@ class OsmShadow < ActiveRecord::Base
    
 
    def sibling_count
-      OsmShadow.count(:conditions => "osm_type = '#{self.osm_type}' and osm_id = #{self.osm_id}") 
-   end
+       if self.osm_id
+         OsmShadow.count(:conditions => "osm_type = '#{self.osm_type}' and osm_id = #{self.osm_id}")
+       else
+         nil
+       end
+     end
    
    def self.find_oldest(otype, oid)
       OsmShadow.where("osm_type = ? and osm_id = ?", otype, oid).order("created_at ASC").first
