@@ -55,6 +55,7 @@ function initmap()
          extent = this.features[0].geometry.getBounds();
          if (extent) {
             this.map.zoomToExtent(extent.scale(2));
+            josm_link(extent.scale(3), '<%= @osm_shadow.osm_type %>', '<%= @osm_shadow.osm_id %>')
          } else {
             this.map.zoomToMaxExtent();
          }
@@ -63,6 +64,18 @@ function initmap()
 
    map.addLayer(layer);
    layer.loadGML();
+}
+
+//changes the josm remote control link to load the surrounding area.
+function josm_link(extent, osm_type, osm_id){
+  var proj = new OpenLayers.Projection("EPSG:4326");
+  extent = extent.transform(map.getProjectionObject(), proj );
+  var left = extent.left;
+  var right = extent.right;
+  var top = extent.top;
+  var bottom = extent.bottom;
+  var url = "​http://abc.com/load_and_zoom?left="+left+"&right="+right+"&top="+top+"&bottom="+bottom+"&select="+osm_type+osm_id;
+  $("a.josm_remote_link").attr("href", "http://localhost:8111/load_and_zoom?left="+left+"&right="+right+"&top="+top+"&bottom="+bottom+"&select="+osm_type+osm_id);
 }
 
 </script>
@@ -135,7 +148,7 @@ $(document).ready(function() {
    <li>Version: <%= @osm_shadow.version %></li>
 <% end %>
 
-   <li><a href="#" id="change_project_show"><img src="<%= asset_path 'snow/edit.png' %>" width="20">Change project</a></li>
+   <li><a href="#" id="change_project_show"><img src="<%= asset_path 'snow/edit.png' %>" width="20" />Change project</a></li>
 </ul>
 
 <div id="change_project">
@@ -156,6 +169,8 @@ $(document).ready(function() {
 <li>OSM Type: <%= @osm_shadow.osm_type %></li>
 </ul>
 <div id="osm_object_map" class="osm_object_map"></div>
-
+  <p>
+    <a href="http://localhost:8111/load_object?new_layer=true&objects=<%=@osm_shadow.osm_type%><%=@osm_shadow.osm_id%>" class="josm_remote_link" target="_blank">Open in JOSM (remote control) </a>
+  </p>
 </div>
 

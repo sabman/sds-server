@@ -62,7 +62,7 @@ function initmap()
    var mapnik = new OpenLayers.Layer.OSM.Mapnik("mapnik", {
       keyid: "mapnik",
       displayOutsideMaxExtent: true,
-      wrapDateLine: true,
+      wrapDateLine: true
    });
    map.addLayer(mapnik);
    lonlat.transform(proj4326, projmerc);
