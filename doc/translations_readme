@@ -8,12 +8,23 @@ edit the line:
 
 I18n.default_locale = :en
 
-(for example for indonesian:
+(for example for Indonesian:
 I18n.default_locale = :id
 )
 
+* Restrict available languages *
 
+By default the system will look in config/locales and based on the languages there, it will populate the available langauges array
 
+You can override this by editing the line in config/initializers/locale.rb
+
+I18n.available_locales = [:en]
+
+For example, to specify that the site should only run in Indonesian,  and French but not English:
+
+I18n.available_locales = [:id, :fr]
+
+** Add new language **
 
 To add a new language you need to translate Rails, add model translations and add template string translations.
 There is also full page translations
