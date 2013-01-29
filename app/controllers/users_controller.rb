@@ -6,7 +6,7 @@ class UsersController < ApplicationController
    def update
       @user = User.find(params[:id])
       if @user.update_attributes(params[:user])
-         redirect_to @user, :notice => "User updated successfully!"
+         redirect_to @user, :notice => t("notice.user_updated")
       else
          @title = "Edit User" 
          render 'edit'
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
    def create
       @user = User.new(params[:user])
       if @user.save
-         redirect_to @user, :notice => "Created new user successfully!"
+         redirect_to @user, :notice => t("notice.user_created")
       else
          @title = "New User"
          render 'new'

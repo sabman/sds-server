@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
    protect_from_forgery  
    include SessionsHelper
+   before_filter :set_locale
 
   private
 
@@ -15,14 +16,14 @@ class ApplicationController < ActionController::Base
        @active_project = Project.find(session[:active_project])
        unless current_user.projects.include?(@active_project)
          session[:active_project] = nil
-         redirect_to(home_path, :alert => "Sorry you are not subscribed to this project")
+         redirect_to(home_path, :alert => t("alert.project_not_subscribed") )
        end
      elsif current_user.projects.first
        @active_project = current_user.projects.first
        session[:active_project] = @active_project.id
      else
        session[:active_project] = nil
-       redirect_to(home_path, :alert => "Sorry you are not subscribed to this project.")
+       redirect_to(home_path, :alert => t("alert.project_not_subscribed") )
      end
 
    end
@@ -35,9 +36,14 @@ class ApplicationController < ActionController::Base
       if current_user.projects.include?(target_project)
         session[:active_project] = target_project.id
       else
-        redirect_to(home_path, :alert => "Sorry you are not subscribed to this project.")
+        redirect_to(home_path, :alert => t("alert.project_not_subscribed"))
       end
     end
   end
+
+  def set_locale
+     session[:locale] = params[:locale] if params[:locale]
+     I18n.locale = session[:locale] || I18n.default_locale
+   end
 
 end

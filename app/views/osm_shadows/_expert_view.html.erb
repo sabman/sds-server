@@ -1,7 +1,7 @@
 <div class="expert_view" id="expert_view_<%=@osm_shadow.id%>">
-<h3>Expert View</h3>
+  <h3><%= t".head" %></h3>
 <% if @tags.length == 0 %>
-   <div class="osm_shadow_no_tags">No Tags saved for this object.</div>
+  <div class="osm_shadow_no_tags"><%= t".notags" %></div>
 <% else %>
    <table class="osm_shadow">
    <tr>

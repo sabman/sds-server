@@ -15,11 +15,11 @@ class OsmShadowsController < ApplicationController
 
    def show
       retrieve_object
-      @title = "Object #{@osm_shadow.id} Properties"
+      @title = t"osm_shadows.show.title", :id => @osm_shadow.id
    end
 
    def list
-      @title = "Records for this Object. #{params[:osm_type]}:#{params[:osm_id]}"
+      @title = t"osm_shadows.list.title", :type => params[:osm_type], :osmid => params[:osm_id]
       
       retrieve_objects
       
@@ -41,13 +41,13 @@ class OsmShadowsController < ApplicationController
 
 
    def edit 
-      @title = "Edit Tags"
+      @title = t"osm_shadows.edit.title"
       retrieve_object
    end
 
 
    def new
-      @title = "New Tags"
+      @title = t"osm_shadows.new.h1"
 
       @osm_shadow = OsmShadow.new
       @osm_shadow.osm_type = params[:osm_type]
@@ -72,9 +72,9 @@ class OsmShadowsController < ApplicationController
       shadow.changeset = changeset
       
        if shadow.update_attributes!(params["osm_shadow"])
-         redirect_to(shadow, :notice => "Record updated successfully")
+         redirect_to(shadow, :notice => t("notice.record_updated"))
        else
-         redirect_to({:action => :edit}, {:alert => "Sorry, Record was unable to be updated."})
+         redirect_to({:action => :edit}, {:alert => t("alert.record_not_updated")})
        end
 
    end
@@ -94,11 +94,11 @@ class OsmShadowsController < ApplicationController
       @osm_shadow = OsmShadow.new(params['osm_shadow'])
       
       if @osm_shadow.save
-         redirect_to(@osm_shadow, :notice => "Record successfully saved.")
+         redirect_to(@osm_shadow, :notice => t("notice.record_saved"))
       else
          @tags = Array.new
          @taghash = Hash.new
-         render :action => "new", :alert => "Sorry, Record was unable to be saved."
+         render :action => "new", :alert => t("alert.record_not_saved")
       end
    end
 
@@ -107,7 +107,7 @@ class OsmShadowsController < ApplicationController
       @osm_shadow = OsmShadow.find(params[:id])
       @osm_shadow.destroy
       
-      redirect_to(list_shadows_url(:osm_type => @osm_shadow.osm_type, :osm_id=>@osm_shadow.osm_id), {:notice => "Record was successfully deleted."})
+      redirect_to(list_shadows_url(:osm_type => @osm_shadow.osm_type, :osm_id=>@osm_shadow.osm_id), {:notice => t("notice.record_deleted") })
    end
    
 private

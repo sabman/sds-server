@@ -1,5 +1,5 @@
 <%= render 'osm_object' %>
-<h1>Records.</h1>
+<h1><%= t'.h1' %>.</h1>
 <div class="osm_shadow_list">
   <% @osm_shadows.each do | @osm_shadow | %>
   <div class="osm_shadow_list_item">
@@ -13,18 +13,18 @@
       
       
     <h2><%= link_to "Record #{@osm_shadow.id}", @osm_shadow %> </h2>
-      <a href="<%= edit_osm_shadow_path(@osm_shadow) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" />Edit</a>
+    <a href="<%= edit_osm_shadow_path(@osm_shadow) %>" title="<%= t'edit' %>"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" /><%= t'edit' %></a>
 
       <%= render @osm_shadow %>
 
       <ul>
-         <li><a href="#" id="jq_expert_view_<%=@osm_shadow.id%>">Expert view</a></li>
+        <li><a href="#" id="jq_expert_view_<%=@osm_shadow.id%>"><%= t"expert" %></a></li>
       </ul>
       <%= render :partial=> 'expert_view'  %>
     </div>
   <% end  %>
   
-<%= link_to "Add new Record", new_osm_shadow_path(:osm_type => params[:osm_type], :osm_id => params[:osm_id]) %>
+<%= link_to "#{t".add_new"}", new_osm_shadow_path(:osm_type => params[:osm_type], :osm_id => params[:osm_id]) %>
 </div>
 
 

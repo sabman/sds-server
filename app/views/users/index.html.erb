@@ -5,19 +5,19 @@
   <p><%= link_to "View all users", users_path %></p>
   <% end %>
 <p>
-<a href="#" title="Hide/show inactive users" class="jq_users_hide_inactive">
+<a href="#" title="<%= t".hide_show" %>" class="jq_users_hide_inactive">
 <img src="<%= asset_path 'snow/edit.png' %>" width="20" />
-Hide/show inactive users
+<%= t".hide_show" %>
 </a>
 </p>
 
 <table class="users">
 <tr>
    <th></th>
-   <th>Firstname</th>
-   <th>Lastname</th>
-   <th>Email</th>
-   <th>Projects</th>
+   <th><%= t"users.firstname" %></th>
+   <th><%= t"users.lastname" %></th>
+   <th><%= t"users.email" %></th>
+   <th><%= t"users.projects" %></th>
 </tr>
    <%= render @users %>
 </table>

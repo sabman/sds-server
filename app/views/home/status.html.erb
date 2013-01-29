@@ -1,14 +1,14 @@
-<h1>Application Status</h1>
+<h1><%= t'.title' %></h1>
 
 
 <div class="app_status_side">
-<h2>Database Statistics</h2>
+<h2><%= t'.stats_title' %></h2>
 <ul>
-   <li>Number of objects: <%= @cnt_objects %></li>
-   <li>Number of tags: <%= @cnt_tags %></li>
-   <li>Number of users: <%= @cnt_users_active %></li>
+   <li><%= t'.num_objects' %> :<%= @cnt_objects %></li>
+   <li><%= t'.num_tags' %> : <%= @cnt_tags %></li>
+   <li><%= t'.num_users' %> : <%= @cnt_users_active %></li>
 </ul>
-<h2>Application Admins</h2>
+<h2><%= t'.admins_title' %></h2>
 <ul>
    <% @users_admin.each do |u| %>
    <li>
@@ -19,12 +19,12 @@
 </div>
 
 
-<h2>Last Edits in Database</h2>
+<h2><%= t'.last_edits_title' %></h2>
 <table class="app_status">
 <tr>
-<th>User</th>
-<th>Date</th>
-<th>OSM Objects<br />OSM ID - OSM Type</th>
+  <th><%= t'user_th' %></th>
+  <th><%= t'date_th' %></th>
+  <th><%= t'.osm_objects' %><br /><%= t'.osm_id_type' %></th>
 </tr>
 
 <% @last_edits.each do |c| %>
@@ -36,12 +36,12 @@
       <% c.osm_shadows.each do |s| %>
         <li>
           <!-- JUST THIS RECORD -->
-          <a href="<%= osm_shadow_path(s) %>" title="Show Object">
+          <a href="<%= osm_shadow_path(s) %>" title="<%= t'.show_object' %>">
             <%= "#{s.osm_type} - #{s.osm_id}" %>
           </a> <br />
           <!-- ALL RECORDS AT THIS OSM OBJECT -->
          
-          <a href="<%= list_shadows_path(s.osm_type, s.osm_id) %>" title="View Others">
+              <a href="<%= list_shadows_path(s.osm_type, s.osm_id) %>" title="<%= t'.view_others' %>">
             <%= "All @ #{s.osm_type} - #{s.osm_id}" %>
           </a>
          

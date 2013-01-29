@@ -23,19 +23,19 @@ end
       <td>Password</td>
       <td><%= @user.plain_password %> <%= f.hidden_field :plain_password %> 
       <% if params[:action] == "edit"  %>
-        <%= link_to "Reset & gnerate new password", edit_user_path(@user, :reset_password => true) %>
+        <%= link_to "#{t".reset_pass"}", edit_user_path(@user, :reset_password => true) %>
        <% end %>
       </td>
     </tr>
     <tr>
       <td><%= f.label :active %></td>
-      <td><%= f.select(:active, options_for_select([['Active', true], ['Inactive', false]], @user.active)) %></td>
+      <td><%= f.select(:active, options_for_select([['Active', true], ["#{t".inactive"}", false]], @user.active)) %></td>
     </tr>
     <tr>
       <td><%= f.label :admin %></td>
-      <td><%= f.select(:admin, options_for_select([['Admin', true], ['Not admin', false]], @user.admin)) %></td>
+      <td><%= f.select(:admin, options_for_select([['Admin', true], ["#{t".not_admin"}", false]], @user.admin)) %></td>
     </tr>
-    <tr> <td colspan="2"><b>Projects</b></td></tr>
+    <tr> <td colspan="2"><b><%= t".projects" %></b></td></tr>
       <%= f.fields_for :memberships do |ff| %>
         <tr>
           <td>

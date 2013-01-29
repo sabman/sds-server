@@ -11,23 +11,23 @@ $(document).ready(function() {
    });
 });
 </script>
-<h1>Search</h1>
-<p>Enter a word. You receive a list of records, which contains this word as the key or value in any tag.</p>
+<h1><%= t".head" %></h1>
+<p><%= t".desc" %></p>
 
-<p>Or try: <%= link_to "Search for records using a map", mapsearch_path %></p>
+<p><%= t".or" %>: <%= link_to "#{t".mapsearch_link"}", mapsearch_path %></p>
 
 
-<h2>Your search values:</h2>
+<h2><%= t".searched" %>:</h2>
 <%= form_tag("/tagsearch", :method => "get") do %>
 <%= hidden_field_tag("change_project", @active_project.id) %>
 <table class="osm_shadow">
 <tr>
-   <th>Select Project</th>
+  <th><%= t".selproj" %></th>
    <td><%= select_tag(nil, options_for_select(current_user.projects.collect {|v,i| [v.name, v.id]}, :selected => @active_project.id),{:class => 'change_project', :id=>"current_user_project_id"}) %> </td>
    <td><%# collection_select(:current_user, :project_id, current_user.projects, :id, :name, {}, {:class => 'users_project'}) %></td>
 </tr>
 <tr>
-   <th>Enter Search String</th>
+  <th><%= t".search_head" %></th>
    <td><input type="text" name="tagstring" value="<%= params[:tagstring] %>" /></td>
 </tr>
 <tr>
@@ -37,10 +37,10 @@ $(document).ready(function() {
 <% end %>
 
 <% if !params[:tagstring].blank? %>
-<h2>Search results</h2>
+  <h2><%= t".results" %></h2>
 
 <% if @result.length == 0 %>
-   <p>No Objects found.</p>
+  <p><%= t".none" %></p>
 <% else %>
 
    <%= render :partial => 'osm_shadow', :object => @result %>

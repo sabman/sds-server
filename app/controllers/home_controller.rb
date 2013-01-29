@@ -7,7 +7,7 @@ class HomeController < ApplicationController
    end
 
    def status
-      @title = "Application Status"
+      @title = t"home.status.title"
 
 
       @cnt_objects = OsmShadow.count

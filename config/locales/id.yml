@@ -1,7 +1,30 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
-en:
+#Models
+#Attribute names
+id:
+  activerecord:
+      models:
+        user: pemakai
+        tag: tag
+        changeset: changeset
+        project: proyek
+      attributes:
+        user:
+          firstname: "nama depan"
+          lastname: "mame last"
+          email: "email"
+          password: "password"
+          active: "active"
+          admin: "admin"
+          zoom: "zoom"
+          lat: "lat"
+          lon: "lon"
+        tag:
+          key: "key"
+          value: "value"
+        project:
+          tags_definition: "tags definition"
+          name: "dama"
+          preset_filename: "preset filename"
 
   site_title: ""
   user_th: "User"
@@ -40,7 +63,7 @@ en:
       osm_id_type: "OSM ID - OSM Type"
       show_object: "Show Object"
       view_others: "View others"
-      
+
   osm_shadows:
     show:
       title: "Object %{id} Properties"
@@ -72,8 +95,8 @@ en:
     expert_view:
       head: "Expert View"
       notags: "No Tags saved for this object."
-      
-    
+
+
   projects:
     show:
       title: "Showing project %{name}"
@@ -174,5 +197,4 @@ en:
     record_not_saved: "Sorry, Record was unable to be saved."
     invalid_email_pw: "Invalid email/password combination."
     deny_access: "Please sign in to access this page."
-
 

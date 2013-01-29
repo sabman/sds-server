@@ -7,7 +7,7 @@
 });
 </script>
 <h1><%= @project.name %> data.</h1>
-<p>Lists all the records which have tags relevant to this project</p>
+<p><%= t".desc" %></p>
 <div class="data_table_container">
   <table class="osm_shadow_results" id="osm_shadow_results">
     <thead>
@@ -37,5 +37,5 @@
   </table>
 </div>
 <br />
-<%= link_to image_tag(asset_path'snow/data.png')+"Download as CSV (tab separated)", data_project_path(@project, :format=>"csv")  %> <br />
-<%= link_to image_tag(asset_path'snow/data.png')+"Download as Excel (XLS)", data_project_path(@project, :format=>"xls")  %>
+<%= link_to image_tag(asset_path'snow/data.png')+"#{t".csv_link"}", data_project_path(@project, :format=>"csv")  %> <br />
+<%= link_to image_tag(asset_path'snow/data.png')+"#{t".xls_link"}", data_project_path(@project, :format=>"xls")  %>

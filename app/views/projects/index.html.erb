@@ -1,5 +1,5 @@
-<h1>Viewing All Projects</h1>
-<p><%= link_to image_tag(asset_path('snow/edit2.png'))+" Create New Project", new_project_path %></p>
+<h1><%= t".head" %></h1>
+<p><%= link_to image_tag(asset_path('snow/edit2.png'))+" #{t".create_new"}", new_project_path %></p>
 <div class="projects_list">
 
 <%= render @projects %>

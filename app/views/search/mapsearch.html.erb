@@ -223,10 +223,10 @@ function featureType(feature) {
 // ]]>
         </script>
     
-<h1>Map Search</h1>
-<p>Zoom to an area of interest, then load buildings by clicking the button below the map.</p>
+<h1><%= t".head" %></h1>
+<p><%= t".desc" %></p>
 
-<p>Or try: <%= link_to "Search for records using tags", tagsearch_path %></p>
+<p><%= t".or" %> : <%= link_to "#{t".tagsearch_link"}", tagsearch_path %></p>
 
 <div id="map" style="width: 100%; height: 500px;"></div>
-<button id="dataLoadButton">Load OSM Geometries</button>
+<button id="dataLoadButton"><%= t".load_osm" %> </button>

@@ -1,36 +1,36 @@
-<h1>User Details</h1>
+<h1><%= t".head" %></h1>
 <%= render :partial => "users_sidebar" %>
 
 <p>
 <a href="<%= edit_user_path(@user.id) %>" title="Edit User">
-<img src="<%= asset_path 'snow/edit2.png' %>" width="20">
-Edit User
+<img src="<%= asset_path 'snow/edit2.png' %>" width="20" />
+<%= t".edit" %>
 </a>
 </p>
 
 <table class="users">
 <tr>
-   <th>Firstname</th>
+  <th><%= t"users.firstname" %></th>
    <td><%= @user.firstname %></td>
 </tr>
 <tr>
-   <th>Lastname</th>
+  <th><%= t"users.lastname" %></th>
    <td><%= @user.lastname %></td>
 </tr>
 <tr>
-   <th>Email</th>
+  <th><%= t"users.email" %></th>
    <td><%= @user.email %></td>
 </tr>
 <tr>
-   <th>Subscribed Projects</th>
+  <th><%= t"users.projects" %></th>
    <td><%= @user.projects.map{|projs| projs.name}.join(', ') %></td>
 </tr>
 <tr>
-   <th>Active</th>
+  <th><%= t".active" %></th>
    <td><%= @user.active %></td>
 </tr>
 <tr>
-   <th>Admin</th>
+  <th><%= t".admin" %></th>
    <td><%= @user.admin %></td>
 </tr>
 </table>

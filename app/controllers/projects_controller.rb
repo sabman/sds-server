@@ -5,12 +5,12 @@ class ProjectsController < ApplicationController
     before_filter :get_project, :only => [:show, :update, :edit, :destroy, :data]
 
     def show
-      @title = "Showing project #{@project.name}"
+      @title = t("projects.show.title", :name => @project.name)
 
     end
     
     def index
-        @title = "All projects"
+        @title = t"projects.index.head"
         @projects = Project.all
     end
     
@@ -25,9 +25,9 @@ class ProjectsController < ApplicationController
          if params[:preset_file_upload]
             save_preset_upload
          end
-         redirect_to(@project, :notice => "Record successfully saved.")
+         redirect_to(@project, :notice => t("notice.record_saved"))
       else
-         render :action => "new", :alert => "Sorry, Record was unable to be saved."
+         render :action => "new", :alert => t("alert.record_not_saved")
       end
     end
 
@@ -40,15 +40,15 @@ class ProjectsController < ApplicationController
           if params[:preset_file_upload]
             save_preset_upload
           end
-          redirect_to(@project, :notice => "Project updated successfully")
+          redirect_to(@project, :notice => t("notice.record_updated"))
        else
-          redirect_to(edit_project_path(@project), :alert => "Sorry, Record was unable to be updated.")
+          redirect_to(edit_project_path(@project), :alert => t("alert.record_not_updated"))
        end
     end
 
     def destroy
       @project.destroy
-      redirect_to(projects_path, :notice => "Record was successfully deleted.")
+      redirect_to(projects_path, :notice => t("notice.record_deleted"))
     end
 
     def data

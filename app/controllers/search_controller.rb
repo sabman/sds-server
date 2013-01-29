@@ -4,14 +4,14 @@ before_filter :change_project, :only => [:tagsearch]
 before_filter :find_project, :only => [:tagsearch]
 
    def mapsearch
-      @title = "Map Search"
+      @title = t("search.mapsearch.head")
    end
 
    def tagsearch
-      @title = "Tag Search"
+      @title = t("search.tagsearch.head")
 
       if !params[:tagstring].blank? then
-         @title = "Tag Search Results"
+         @title = t("search.tagsearch.results_title")
 
          search = OsmShadowSearch.new("by_tagstring", params[:tagstring])
          @result = search.execute

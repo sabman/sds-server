@@ -1,0 +1,60 @@
+<h1>Selamat Datang di Toko data HOT</h1>
+
+<h2>Di mana Anda bisa pergi?</h2>
+
+<ul>
+<% if current_user.admin? %>
+   <li>
+   <%= link_to "Pengguna administrasi", users_path %>
+   <br>ATambahkan pengguna baru, melihat sifat pengguna atau mengeditnya.
+   </li>
+
+   <li>
+   <%= link_to "Status halaman", status_path %>
+   <br>Silahkan lihat pada halaman status aplikasi.
+   </li>
+   
+   <li>
+   <%= link_to "Proyek", projects_path %>
+   <br />Tampilkan, mengedit dan menambahkan proyek-proyek baru.
+   </li>
+<% end %>
+
+<li>
+<%= link_to "Tag pencarian", tagsearch_path %>
+<br>Mencari benda oleh tag.
+</li>
+
+<li>
+<%= link_to "Peta pencarianh", mapsearch_path %>
+<br>Pilih fitur dengan mengklik pada peta.</li>
+</ul>
+
+
+<h2>Anda data pribadi</h2>
+<table class="users">
+<tr>
+   <th>Nama</th>
+   <td><%= "#{current_user.firstname} #{current_user.lastname}" %></td>
+
+</tr>
+<tr>
+  <th>Email</th>
+  <td><%= current_user.email %></td></tr>
+<tr>
+  <th>Proyek</th>
+  <% if current_user.projects %>
+    <td> <%= current_user.projects.map{|projs| projs.name}.join(', ') %> </td>
+  <% else %>
+    <td>Tidak ada Proyek Ditemukan</td>
+  <% end %>
+</tr>
+<% if current_user.admin? %>
+<tr>
+   <th>Hak admin</th>
+   <td><%= current_user.admin %></td>
+</tr>
+<% end %>
+</table>
+</ul>
+

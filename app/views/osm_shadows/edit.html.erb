@@ -1,9 +1,10 @@
 <%= render 'osm_object' %>
-<h1>Edit Object</h1>
-<p><a href="<%= url_for(@osm_shadow) %>" title="View Object"><img src="<%= asset_path 'snow/view.png'%>" width="20" />View Object Properties (Cancel Edit)</a></p>
+<h1><%= t".h1" %></h1>
+<p><a href="<%= url_for(@osm_shadow) %>" title="<%= t".view" %>"><img src="<%= asset_path 'snow/view.png'%>" width="20" />
+    <%= t".view2" %></a></p>
 <%= render @osm_shadow %>
 
 <ul>
- <li><a href="#" id="jq_expert_view_<%=@osm_shadow.id%>">Expert view</a></li>
+  <li><a href="#" id="jq_expert_view_<%=@osm_shadow.id%>"><%= t"expert" %></a></li>
 </ul>
 <%= render 'expert_view' %>

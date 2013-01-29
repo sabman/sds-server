@@ -1,21 +1,21 @@
 <div class="project_list_item">
     <h2><%= link_to project.name, project %></h2>
-     <a href="<%= edit_project_path(project) %>" title="Edit"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" />Edit</a>
+    <a href="<%= edit_project_path(project) %>" title="<%= t"edit" %>"><img src="<%= asset_path 'snow/edit2.png' %>" width="20" /><%= t"edit" %></a>
 
      
     <ul>
-        <li>Name: <%= project.name %> </li>
-        <li>Tags Definition (JSON):<br />
+      <li><%= t"name" %>: <%= project.name %> </li>
+        <li><%= t".tags_def" %><br />
             <%= project.tags_definition %>
         </li>
         <li>Preset: 
          <% if project.preset_filename %>
             <%= link_to project.preset_filename, project.preset_public_path  %>
           <% else %>
-            No preset file found
+            <%= t".no_preset" %>
           <% end %>
         </li>
-        <li>Created: <%= time_ago_in_words(project.created_at) %> ago.</li>
+        <li><%= t".created" %>: <%= time_ago_in_words(project.created_at) %> ago.</li>
     </ul>
     <%= link_to image_tag(asset_path'snow/data.png')+"View data table", data_project_path(project)  %>
      &nbsp;

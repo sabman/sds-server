@@ -133,7 +133,7 @@ $(document).ready(function() {
 });
 </script>
 <div class="osm_object">
-<h2>Project</h2>
+  <h2><%= t".h2" %></h2>
 <ul>
 <li><%= @active_project.name  %></li>
 <li>
@@ -143,34 +143,35 @@ $(document).ready(function() {
 </li>
 
 <% if ["show", "edit", "list"].include?(params['action']) && !@osm_shadow.new_record? %>
-   <li>Last modified: <%= @osm_shadow.created_at.strftime("%Y-%m-%d") %></li>
-   <li>By: <%= "#{@osm_shadow.changeset.user.firstname} #{@osm_shadow.changeset.user.lastname}" %></li>
-   <li>Version: <%= @osm_shadow.version %></li>
+  <li><%= t".lastmod" %>: <%= @osm_shadow.created_at.strftime("%Y-%m-%d") %></li>
+  <li><%= t".by" %>: <%= "#{@osm_shadow.changeset.user.firstname} #{@osm_shadow.changeset.user.lastname}" %></li>
+  <li><%= t".v" %>: <%= @osm_shadow.version %></li>
 <% end %>
 
-   <li><a href="#" id="change_project_show"><img src="<%= asset_path 'snow/edit.png' %>" width="20" />Change project</a></li>
+  <li><a href="#" id="change_project_show"><img src="<%= asset_path 'snow/edit.png' %>" width="20" /><%= t"chproj" %></a></li>
 </ul>
 
 <div id="change_project">
 <%= select_tag(nil, options_for_select(current_user.projects.collect {|v,i| [v.name, v.id]}, :selected => @active_project.id),{:class => 'change_project'}) %>
 </div>
 
-<h2>Other Records</h2>
+  <h2><%= t".hother" %></h2>
 <ul>
    <li>
      <% if @osm_shadow.sibling_count %>
-      <%= link_to "View #{@osm_shadow.sibling_count} Records", list_shadows_path(@osm_shadow.osm_type, @osm_shadow.osm_id) %> for this OSM object.
+      <%= link_to "View #{@osm_shadow.sibling_count} Records", list_shadows_path(@osm_shadow.osm_type, @osm_shadow.osm_id) %> <%= t".siblings" %>.
      <% end  %>
    </li>
 </ul>
-<h2>OSM Properties</h2>
+  <h2><%= t".osmprops" %></h2>
 <ul>
 <li>OSM ID: <%= @osm_shadow.osm_id %></li>
 <li>OSM Type: <%= @osm_shadow.osm_type %></li>
 </ul>
 <div id="osm_object_map" class="osm_object_map"></div>
   <p>
-    <a href="http://localhost:8111/load_object?new_layer=true&objects=<%=@osm_shadow.osm_type%><%=@osm_shadow.osm_id%>" class="josm_remote_link" target="_blank">Open in JOSM (remote control) </a>
+    <a href="http://localhost:8111/load_object?new_layer=true&objects=<%=@osm_shadow.osm_type%><%=@osm_shadow.osm_id%>" 
+       class="josm_remote_link" target="_blank"><%= t".josm_link" %></a>
   </p>
 </div>
 

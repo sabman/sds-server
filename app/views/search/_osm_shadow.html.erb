@@ -23,7 +23,7 @@
   %>
 
     <tr>
-      <td><a href="<%= osm_shadow_path(shadow) %>" title="View Object"><img src="<%= asset_path 'snow/view.png' %>" width="20" /></a></td>
+      <td><a href="<%= osm_shadow_path(shadow) %>" title="<%= t".view" %>"><img src="<%= asset_path 'snow/view.png' %>" width="20" /></a></td>
       <td><%= shadow.osm_id %></td>
       <td><%= shadow.osm_type %></td>
       <% @fields.each do |field | %>

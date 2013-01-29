@@ -1,0 +1,32 @@
+Translations & Internationalisation
+
+To add a new language you need to translate Rails, add model translations and add template string translations.
+
+**  Rails translations **
+
+This file contains all the translations that rails holds internally for example the messages given when validations fail
+
+Download the appropriate rails internationalisation file from https://github.com/svenfuchs/rails-i18n/tree/master/rails/locale/ and put in
+config/locales
+
+Rename to id.rails.yml for example
+
+config/locales/id.yml
+
+* Model translations *
+
+id:
+  activerecord:
+      models:
+
+* Template / View translations *
+
+in config/locales/id.yml
+
+layouts:
+      application:
+        title:  "HOT Separate OSM Data Store"
+
+
+
+
