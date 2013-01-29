@@ -1,8 +1,28 @@
-Translations & Internationalisation
+***Translations & Internationalisation**
+
+*Default language*
+
+edit config/initializers/locale.rb
+
+edit the line:
+
+I18n.default_locale = :en
+
+(for example for indonesian:
+I18n.default_locale = :id
+)
+
+
+
 
 To add a new language you need to translate Rails, add model translations and add template string translations.
+There is also full page translations
 
-**  Rails translations **
+* Page translations *
+
+See home/index.en.html.erb and home/index.id.html.erb for different ones
+
+*  Rails translations **
 
 This file contains all the translations that rails holds internally for example the messages given when validations fail
 
@@ -26,6 +46,8 @@ in config/locales/id.yml
 layouts:
       application:
         title:  "HOT Separate OSM Data Store"
+
+
 
 
 

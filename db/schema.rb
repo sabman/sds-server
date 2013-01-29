@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130114160114) do
+ActiveRecord::Schema.define(:version => 20130129154107) do
 
   create_table "changesets", :force => true do |t|
     t.integer  "user_id"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20130114160114) do
     t.float    "lon",           :default => 0.0
     t.string   "password_hash"
     t.string   "password_salt"
+    t.string   "locale"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
