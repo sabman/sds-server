@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
     if current_user && I18n.available_locales.map{|lo| lo.to_s}.include?(current_user.locale)
       session[:locale] = current_user.locale
     else
-      session[:locale] ||= I18n.default_locale
+      session[:locale] = I18n.default_locale
     end
 
     I18n.locale = session[:locale] || I18n.default_locale
