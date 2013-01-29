@@ -1,15 +1,19 @@
-<script type="text/javascript">
-  $(document).ready(function() {
-    var cl = $(".change_locale");
-    var lang;
-    cl.change(function() {
-      $(".change_locale option:selected").each(function() {
-        lang = $(this).val();
+<% if  I18n.available_locales.size > 1 %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var cl = $(".change_locale");
+      var lang;
+      cl.change(function() {
+        $(".change_locale option:selected").each(function() {
+          lang = $(this).val();
+        });
+        var change_href = window.location.pathname + "?locale="+ lang
+        window.location.href = change_href;
       });
-      var change_href = window.location.pathname + "?locale="+ lang
-      window.location.href = change_href;
     });
-  });
-</script>
+  </script>
 
-<%= select_tag(nil, options_for_select(I18n.available_locales.map{|lo| lo.to_s }, :selected => I18n.locale.to_s),{:class => 'change_locale'}) %>
+  <%= select_tag(nil, options_for_select(I18n.available_locales.map{|lo| lo.to_s }, :selected => I18n.locale.to_s),{:class => 'change_locale'}) %>
+<% else %>
+  <%= I18n.default_locale.to_s %>
+<% end %>
