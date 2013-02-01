@@ -49,17 +49,3 @@ Factory.define :tag do |tag|
    tag.association   :osm_shadow
 end
 
-
-Factory.define :current_osm_shadow do |osm_shadow|
-   osm_shadow.osm_type     "way"
-   osm_shadow.osm_id       123
-   osm_shadow.version      2
-   osm_shadow.association  :changeset
-end
-
-Factory.define :current_tag do |tag|
-   tag.key           "current_highway"
-   tag.value         "my_current_value"
-   tag.association   :current_osm_shadow
-end
-
