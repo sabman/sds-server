@@ -35,16 +35,13 @@
   <ul>
       <% c.osm_shadows.each do |s| %>
         <li>
-          <!-- JUST THIS RECORD -->
           <a href="<%= osm_shadow_path(s) %>" title="<%= t'.show_object' %>">
             <%= "#{s.osm_type} - #{s.osm_id}" %>
-          </a> <br />
-          <!-- ALL RECORDS AT THIS OSM OBJECT -->
-         
-              <a href="<%= list_shadows_path(s.osm_type, s.osm_id) %>" title="<%= t'.view_others' %>">
-            <%= "All @ #{s.osm_type} - #{s.osm_id}" %>
           </a>
-         
+          <br />
+          <% if s.sibling_count %>
+            <%= link_to "(#{t('.other_count', :count => s.sibling_count)})", list_shadows_path(s.osm_type, s.osm_id) %>
+          <% end  %>
         </li>
       <% end %>
     </ul>

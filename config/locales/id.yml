@@ -63,6 +63,7 @@ id:
       osm_id_type: "OSM ID - OSM Type"
       show_object: "Show Object"
       view_others: "View others"
+      other_count: "%{count} other records"
 
   osm_shadows:
     show:
