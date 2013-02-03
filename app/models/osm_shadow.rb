@@ -19,32 +19,6 @@ class OsmShadow < ActiveRecord::Base
       tags.each { |t| t.osm_shadow = self }
    end
 
-   
-   def save_new_with_tags
-      if !self.new_record?
-         return false
-      end
-
-      shadow = OsmShadow.new({
-         :osm_type      => osm_type, 
-         :osm_id        => osm_id,
-         :changeset_id  => changeset_id
-      })
-      shadow.save!
-      self.id = shadow.id
-      
-      self.tags.each do |t|
-         shadow.tags.create!({
-            :key            => t.key,
-            :value          => t.value
-         })
-      end
-
-      return shadow
-   end
-
-   
-
    def sibling_count
        if self.osm_id
          OsmShadow.count(:conditions => "osm_type = '#{self.osm_type}' and osm_id = #{self.osm_id}")

@@ -25,8 +25,21 @@ class JosmapiController < ApplicationController
       
       new_shadows.each do | shadow|
          shadow.changeset_id = changeset.id
-         shadow.save_new_with_tags
-      end
+         
+         shad = OsmShadow.new({
+             :osm_type      => shadow.osm_type,
+             :osm_id        => shadow.osm_id,
+             :changeset_id  => shadow.changeset_id
+          })
+          shad.save!
+          shadow.id = shad.id
+
+          shadow.tags.each do |t|
+            tag = Tag.new(:key => t.key, :value => t.value)
+            shad.tags << tag
+          end
+
+       end 
 
       render :text => changeset.id.to_s, :content_type => "text/xml"
    end
@@ -35,7 +48,7 @@ private
    def authenticate
       if user = authenticate_with_http_basic { |u, p| User.authenticate(u, p) }
          @current_user = user
-         current_user = @current_user
+         PaperTrail.whodunnit = @current_user.id.to_s
       else
          request_http_basic_authentication
       end

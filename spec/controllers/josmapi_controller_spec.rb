@@ -228,7 +228,8 @@ describe JosmapiController do
          
          new_osm_shadow =  OsmShadow.where("osm_id = ? and osm_type = ?", 9999, "way")[0]
          new_osm_shadow.tags.first.key.should == "hot:simple:name"
-         new_osm_shadow.tags.first.value.should == "new_value" 
+         new_osm_shadow.tags.first.value.should == "new_value"
+         new_osm_shadow.tags.first.versions.first.whodunnit.should == @user.id.to_s
       end
       
       it "should not create a new osm_shadow if one exists but create a new tag if none exists" do
