@@ -24,7 +24,9 @@
   </tr>
   <% @tag.versions.each do | version |
     revision = version.reify
-    who = User.find(version.whodunnit.to_i)
+    if version.whodunnit.to_i != 0
+     who = User.find(version.whodunnit.to_i)
+    end
   %>
 
     <tr>
