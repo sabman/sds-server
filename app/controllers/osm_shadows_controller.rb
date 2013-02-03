@@ -109,7 +109,7 @@ class OsmShadowsController < ApplicationController
       
       redirect_to(list_shadows_url(:osm_type => @osm_shadow.osm_type, :osm_id=>@osm_shadow.osm_id), {:notice => t("notice.record_deleted") })
    end
-   
+
 private
 
    #filters params to remove any tags from projects the user does not have access to

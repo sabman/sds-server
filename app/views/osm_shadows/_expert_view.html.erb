@@ -7,6 +7,7 @@
    <tr>
       <th>Key</th>
       <th>Value</th>
+      <th>Version</th>
    </tr>
 
    <% @tags.each do |t| %>
@@ -14,16 +15,20 @@
       <tr>
          <td><%= t.key %></td>
          <td><%= t.value %></td>
+         <td><%= link_to_if(t.versions.length > 0, t.versions.length, tag_path(t), { :title => "#{t".versions_title"}" }) %>  </td>
       </tr>
       <% end %>
    <% end %>
    </table>
 <% end %>
 </div>
+<% start_open = "false" if local_assigns[:start_open].nil? %>
 <script type="text/javascript">
    // expert view
    var ex<%=@osm_shadow.id%> = $("#expert_view_<%=@osm_shadow.id%>");
+   <% unless start_open == "true" %>
    ex<%=@osm_shadow.id%>.hide();
+   <% end %>
    $("#jq_expert_view_<%=@osm_shadow.id%>").click(function(e) {
       e.preventDefault();
       ex<%=@osm_shadow.id%>.toggle();   

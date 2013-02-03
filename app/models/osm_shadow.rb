@@ -1,8 +1,7 @@
 class OsmShadow < ActiveRecord::Base
    include OsmShadowXmlConverter
 
-   attr_accessible :osm_id, :osm_type, :version, :changeset_id, :tags_attributes
-   before_create :generate_version
+   attr_accessible :osm_id, :osm_type, :changeset_id, :tags_attributes
 
    belongs_to :changeset
    has_many :tags, :dependent => :destroy
@@ -33,8 +32,7 @@ class OsmShadow < ActiveRecord::Base
       })
       shadow.save!
       self.id = shadow.id
-      self.version = shadow.version
-
+      
       self.tags.each do |t|
          shadow.tags.create!({
             :key            => t.key,
@@ -112,16 +110,6 @@ class OsmShadow < ActiveRecord::Base
       tag.key = key
       tag.value = value
       self.tags << tag unless key.blank?
-   end
-
-private
-   def generate_version
-      version = OsmShadow.where("osm_id = ? and osm_type = ?", self.osm_id, self.osm_type).maximum("version")
-      if version.nil?
-         self.version = 1
-      else
-         self.version = version + 1
-      end
    end
 
 end

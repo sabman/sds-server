@@ -211,6 +211,9 @@ table.osm_shadow {
    width: 500px;   
    background-color: #E5E6E8;
 }
+table.tag_version {
+  width: auto;
+}
 
 table.osm_shadow, table.osm_shadow_results tr:nth-child(1n+2) {
    background-color: #F5F6F8;

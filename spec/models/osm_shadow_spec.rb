@@ -66,81 +66,11 @@ describe OsmShadow do
          @changeset.osm_shadows.build(@attr.merge(:osm_type => nil)).should_not be_valid
       end
 
-      it "should require a version before save" do
-         os3 = Factory(:osm_shadow, :changeset => @changeset)
-         os3.save!
-         os3.version.should_not be_nil
-         os3.version.should be_a_kind_of(Numeric)
-      end
 
-      it "should have an unique combination of oms_id, oms_type and version" do
-         os4 = @changeset.osm_shadows.create(@attr.merge(:osm_type => "way", :oms_id => "345"))
-         os5 = @changeset.osm_shadows.create(@attr.merge(:osm_type => "way", :oms_id => "345"))
-         os4.version.should_not == os5.version
-
-         OsmShadow.where("osm_id = ? and osm_type = ? and version = ?", os4.osm_id, os4.osm_type, os4.version).count("id").should == 1
-         OsmShadow.where("osm_id = ? and osm_type = ? and version = ?", os4.osm_id, os4.osm_type, os5.version).count("id").should == 1
-         OsmShadow.where("osm_id = ? and osm_type = ?", os4.osm_id, os4.osm_type).count("id").should == 2
-      end
 
    end
 
-   it "should generate a valid version" do
-         shadow = @changeset.osm_shadows.new(@attr)
-         shadow.save
-         shadow.save
-         shadow.save
-         shadow.version.should == 1
-         shadow2 = @changeset.osm_shadows.new(@attr)
-         shadow2.save
-         shadow2.version.should == 2
-         shadow3 = @changeset.osm_shadows.new({'osm_id' => 555, 'osm_type' => 'way'})
-         shadow3.save
-         shadow3.version.should == 1
-   end
 
-   it "should generate a valid version using save_with_current" do
-      shadow  = @changeset.osm_shadows.new({:osm_id => 345, :osm_type => 'way'})
-      shadow2 = @changeset.osm_shadows.new({:osm_id => 345, :osm_type => 'node'})
-      shadow3 = @changeset.osm_shadows.new({:osm_id => 345, :osm_type => 'relation'})
-      shadow4 = @changeset.osm_shadows.new({:osm_id => 111, :osm_type => 'way'})
-
-      shadow.save_new_with_tags
-      shadow2.save_new_with_tags
-      shadow3.save_new_with_tags
-      shadow4.save_new_with_tags
-
-      cnt = OsmShadow.where("osm_id = ? and osm_type = ?", shadow.osm_id, shadow.osm_type).count
-      cnt.should == 1
-
-      OsmShadow.where("osm_id = ? and osm_type = ?", shadow.osm_id, shadow.osm_type).each do |s|
-         s.version.should == 1
-      end
-   end
-
-   
-   it "should generate a valid versions higher than 1" do
-      @my_osm_id = 345
-      @my_osm_type = "relation"
-
-      my_changeset = Factory(:changeset)
-      shadow = OsmShadow.new({:osm_id => @my_osm_id, :osm_type => @my_osm_type})
-      shadow.changeset = my_changeset
-      shadow.save_new_with_tags
-
-      my_changeset2 = Factory(:changeset)
-      shadow2 = OsmShadow.new({:osm_id => @my_osm_id, :osm_type => @my_osm_type})
-      shadow2.changeset = my_changeset2
-      shadow2.save_new_with_tags
-
-      cnt = OsmShadow.where("osm_id = ? and osm_type = ?", shadow.osm_id, shadow.osm_type).count
-      cnt.should == 2
-
-      # default_scope :order => 'osm_shadows.created_at DESC' # newest first
-      OsmShadow.where("osm_id = ? and osm_type = ?", shadow.osm_id, shadow.osm_type).first do |s|
-         s.version  == 2
-      end
-   end
 
 
 

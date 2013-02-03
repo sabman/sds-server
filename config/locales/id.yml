@@ -88,7 +88,6 @@ id:
       h2: "Project"
       lastmod: "Last modified"
       by: "By"
-      v: "Version"
       hother: "Other Records"
       siblings: "for this OSM object"
       osmprops: "OSM Properties"
@@ -96,6 +95,7 @@ id:
     expert_view:
       head: "Expert View"
       notags: "No Tags saved for this object."
+      versions_title: "Versions of this tag"
 
 
   projects:
@@ -179,6 +179,20 @@ id:
       not_admin: "Not admin"
       projects: "Projects"
 
+  tags:
+    show:
+      head: "Tag Version History"
+      back: "Back to record"
+      current: "Current version"
+      previous: "Previous versions"
+      key: "Key"
+      value: "Value"
+      user: "User"
+      changed: "Changed"
+      version: "Version"
+      revert: "Revert"
+      confirm_revert: "Are you sure you want to revert to this version?"
+
   shared:
     error_messages:
       head: "prohibited this user from being saved"
@@ -191,6 +205,7 @@ id:
     record_deleted: "Record was successfully deleted."
     user_updated: "User updated successfully!"
     user_created: "Created new user successfully!"
+    tag_reverted: "Tag successfully reverted!"
 
   alert:
     project_not_subscribed: "Sorry you are not subscribed to this project."

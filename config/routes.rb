@@ -22,7 +22,10 @@ HotJosm::Application.routes.draw do
 
    match '/osmapi/*apirequest',  :to => 'osmapi#proxy'
 
-
+   resources :tags, :only => [:show] do
+     post :revert, :on => :member
+   end
+  
    match '/osm_shadows/show/:osm_type/:osm_id', :to =>'osm_shadows#list', :as => 'list_shadows'
    #match '/osm_shadows/edit/:osm_type/:osm_id', :to =>'osm_shadows#edit', :as => 'edit_shadow'
    #match '/osm_shadows/new/:osm_type/:osm_id',  :to =>'osm_shadows#new',  :as => 'new_shadow'

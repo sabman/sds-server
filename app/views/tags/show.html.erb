@@ -1,0 +1,44 @@
+<h1><%= t".head" %></h1>
+<%= link_to "#{t".back"}", @osm_shadow %>
+<h2><%= t".current" %></h2>
+<table class="osm_shadow ">
+  <tr>
+    <th>Key</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td><%= @tag.key %></td>
+    <td><%= @tag.value %></td>
+  </tr>
+</table>
+
+<h2><%= t".previous" %></h2>
+<table class="osm_shadow tag_version">
+  <tr>
+    <th><%= t".key" %></th>
+    <th><%= t".value" %></th>
+    <th><%= t".user" %></th>
+    <th><%= t".changed" %></th>
+    <th><%= t".version" %></th>
+    <th><%= t".revert" %></th>
+  </tr>
+  <% @tag.versions.each do | version |
+    revision = version.reify
+    who = User.find(version.whodunnit.to_i)
+  %>
+
+    <tr>
+      <td><%= revision.key %></td>
+      <td><%= revision.value %></td>
+      <td><%= "#{who.firstname} #{who.lastname}" %></td>
+      <td><%= version.created_at.strftime("%Y-%m-%d")   %></td>
+      <td><%= version.index %> </td>
+      <td><%= button_to "Revert", revert_tag_path(version.id), :method=>:post, :class=>:destroy_button,:confirm=>"#{t".confirm_revert"}" %></td>
+    </tr>
+  <% end %>
+</table>
+
+<ul>
+  <li><a href="#" id="jq_expert_view_<%=@osm_shadow.id%>"><%= t'expert' %></a></li>
+</ul>
+<%= render :partial => 'osm_shadows/expert_view', :locals => { :start_open => "true" } %>

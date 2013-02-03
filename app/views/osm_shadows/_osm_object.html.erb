@@ -145,7 +145,6 @@ $(document).ready(function() {
 <% if ["show", "edit", "list"].include?(params['action']) && !@osm_shadow.new_record? %>
   <li><%= t".lastmod" %>: <%= @osm_shadow.created_at.strftime("%Y-%m-%d") %></li>
   <li><%= t".by" %>: <%= "#{@osm_shadow.changeset.user.firstname} #{@osm_shadow.changeset.user.lastname}" %></li>
-  <li><%= t".v" %>: <%= @osm_shadow.version %></li>
 <% end %>
 
   <li><a href="#" id="change_project_show"><img src="<%= asset_path 'snow/edit.png' %>" width="20" /><%= t"chproj" %></a></li>
