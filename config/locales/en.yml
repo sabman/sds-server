@@ -169,6 +169,7 @@ en:
       version: "Version"
       revert: "Revert"
       confirm_revert: "Are you sure you want to revert to this version?"
+      created: "Created"
 
 
   shared:

@@ -28,12 +28,17 @@
   %>
 
     <tr>
-      <td><%= revision.key %></td>
-      <td><%= revision.value %></td>
+      <td><%= revision.key if revision %></td>
+      <td><%= revision.value if revision %></td>
       <td><%= "#{who.firstname} #{who.lastname}" %></td>
       <td><%= version.created_at.strftime("%Y-%m-%d")   %></td>
       <td><%= version.index %> </td>
-      <td><%= button_to "Revert", revert_tag_path(version.id), :method=>:post, :class=>:destroy_button,:confirm=>"#{t".confirm_revert"}" %></td>
+      <td>
+        <% if revision %>
+          <%= button_to "Revert", revert_tag_path(version.id), :method=>:post, :class=>:destroy_button,:confirm=>"#{t".confirm_revert"}" %></td>
+        <% elsif version.event = "create" %>
+          <%= t(".created") %>
+      <% end  %>
     </tr>
   <% end %>
 </table>
