@@ -16,7 +16,7 @@ class JosmapiController < ApplicationController
 
    def createshadows
       allowed_tag_keys = @current_user.find_visible_tag_keys
-
+      
       existing_shadows, new_shadows = OsmShadowXmlConverter.from_xml(request.raw_post, allowed_tag_keys)
 
       changeset = Changeset.new
@@ -35,6 +35,7 @@ private
    def authenticate
       if user = authenticate_with_http_basic { |u, p| User.authenticate(u, p) }
          @current_user = user
+         current_user = @current_user
       else
          request_http_basic_authentication
       end

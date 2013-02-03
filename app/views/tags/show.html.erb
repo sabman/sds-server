@@ -30,7 +30,7 @@
     <tr>
       <td><%= revision.key if revision %></td>
       <td><%= revision.value if revision %></td>
-      <td><%= "#{who.firstname} #{who.lastname}" %></td>
+      <td><%= "#{who.firstname} #{who.lastname}" if who %></td>
       <td><%= version.created_at.strftime("%Y-%m-%d")   %></td>
       <td><%= version.index %> </td>
       <td>
