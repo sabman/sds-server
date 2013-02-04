@@ -66,6 +66,10 @@ function initmap()
       }
    });
 
+   layer.requestFailure = function(req){
+     $("#osm_object_map").html("<%= t".osm_error" %> ")
+   };
+
    map.addLayer(layer);
    layer.loadGML();
 }
@@ -85,6 +89,13 @@ function josm_link(extent, osm_type, osm_id){
 function display_attributes(attributes){
   if (attributes.name){
     $('#osm_name').text("Name: "+ attributes.name);
+  }
+  if (attributes){
+    $.each(attributes, function(key, value) {
+      var li = document.createElement("li")
+      li.innerHTML = key + " : " + value ;
+      $('#osm_attributes_list').append(li)
+    });
   }
 }
 
@@ -140,6 +151,11 @@ $(document).ready(function() {
    }); 
 
 
+   $("#osm_attributes_link").click(function(e) {
+      e.preventDefault();
+      $("#osm_attributes_list").toggle();
+   });
+
 });
 </script>
 <div class="osm_object">
@@ -178,6 +194,10 @@ $(document).ready(function() {
 <li>OSM Type: <%= @osm_shadow.osm_type %></li>
 <li id="osm_name"></li>
 </ul>
+  <p><a href="#" id="osm_attributes_link"><%= t".more" %></a></p>
+  <ul id="osm_attributes_list" style="display:none">
+    
+  </ul>
 <div id="osm_object_map" class="osm_object_map"></div>
   <p>
     <a href="http://localhost:8111/load_object?new_layer=true&objects=<%=@osm_shadow.osm_type%><%=@osm_shadow.osm_id%>" 

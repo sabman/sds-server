@@ -69,6 +69,8 @@ en:
       siblings: "for this OSM object"
       osmprops: "OSM Properties"
       josm_link: "Open in JOSM (remote control)"
+      more: "More..."
+      osm_error: "Error loading GML. This OSM object may have been deleted, or there is a problem with the OSM server."
     expert_view:
       head: "Expert View"
       notags: "No Tags saved for this object."
