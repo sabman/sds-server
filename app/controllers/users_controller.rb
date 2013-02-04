@@ -41,6 +41,7 @@ class UsersController < ApplicationController
          redirect_to @user, :notice => t("notice.user_created")
       else
          @title = "New User"
+         @user.memberships = []
          render 'new'
       end
    end
