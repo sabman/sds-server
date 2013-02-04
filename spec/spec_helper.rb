@@ -30,5 +30,15 @@ RSpec.configure do |config|
    def test_sign_in(user)
       controller.sign_in(user)
    end
+   
+   def with_versioning
+#     was_enabled = PaperTrail.enabled?
+#     PaperTrail.enabled = true
+#     begin
+#       yield
+#     ensure
+#       PaperTrail.enabled = was_enabled
+#     end
+   end
 
 end

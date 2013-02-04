@@ -192,5 +192,6 @@ en:
     record_not_saved: "Sorry, Record was unable to be saved."
     invalid_email_pw: "Invalid email/password combination."
     deny_access: "Please sign in to access this page."
+    not_allowed: "Sorry, you are not allowed to do that operation."
 
 

@@ -24,7 +24,7 @@
   </tr>
   <% @tag.versions.each do | version |
     revision = version.reify
-    if version.whodunnit.to_i != 0
+    if version.whodunnit.to_i != 0 && User.exists?(version.whodunnit.to_i)
      who = User.find(version.whodunnit.to_i)
     end
   %>
@@ -37,7 +37,7 @@
       <td><%= version.index %> </td>
       <td>
         <% if revision %>
-          <%= button_to "Revert", revert_tag_path(version.id), :method=>:post, :class=>:destroy_button,:confirm=>"#{t".confirm_revert"}" %></td>
+          <%= button_to "#{t".revert"}", revert_tag_path(version.id), :method=>:put, :class=>:destroy_button,:confirm=>"#{t".confirm_revert"}" %></td>
         <% elsif version.event = "create" %>
           <%= t(".created") %>
       <% end  %>
