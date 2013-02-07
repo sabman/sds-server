@@ -10,10 +10,10 @@ id:
       attributes:
         user:
           firstname: "nama depan"
-          lastname: "mame last"
+          lastname: "nama akhir"
           email: "email"
           password: "password"
-          active: "active"
+          active: "aktif"
           admin: "admin"
           zoom: "zoom"
           lat: "lat"
@@ -22,165 +22,166 @@ id:
           key: "key"
           value: "value"
         project:
-          tags_definition: "tags definition"
-          name: "dama"
-          preset_filename: "preset filename"
-
+          tags_definition: "definisi tag"
+          name: "nama"
+          preset_filename: "nama preset"
+ 
   site_title: ""
-  user_th: "User"
-  date_th: "Date"
-  users_title: "Users"
-  projects_title: "Projects"
+  user_th: "pengguna"
+  date_th: "tanggal"
+  users_title: "Nama Pengguna"
+  projects_title: "Nama Proyek"
   edit: "Edit"
-  expert: "Expert View"
-  cancel: "Cancel"
-  chproj: "Change project"
-  name: "Name"
-
+  expert: "Tampilan mahir"
+  cancel: "Batalkan"
+  chproj: "Ganti proyek"
+  name: "Nama"
+ 
   layouts:
       application:
         title:  "HOT Separate OSM Data Store"
       header:
-        sign_in: "Sign in"
-        sign_out: "Sign out"
-        home: "Home"
-        search: "Search"
+        sign_in: "Masuk"
+        sign_out: "Keluar"
+        home: "Beranda"
+        search: "Pencarian"
         logohead: "Separate Datastore (SDS)"
       footer:
-        support: "With support from"
-        attrib: "Map data from OpenStreetMap, CC-BY-SA 2.0"
-
+        support: "Dengan bantuan dari"
+        attrib: "Data peta dari OpenStreetMap, CC-BY-SA 2.0"
+ 
   home:
     status:
-      title: "Application Status"
-      stats_title: "Database Statistics"
-      num_objects: "Number of objects"
-      num_tags: "Number of tags"
-      num_users: "Number of users"
-      admins_title: "Application Admins"
-      last_edits_title: "Last Edits in Database"
-      osm_objects: "OSM Objects"
-      osm_id_type: "OSM ID - OSM Type"
-      show_object: "Show Object"
-      view_others: "View others"
+      title: "Status Aplikasi"
+      stats_title: "Statistik Basisdata"
+      num_objects: "Jumlah Objek"
+      num_tags: "Jumlah Tag"
+      num_users: "Jumlah Pengguna"
+      admins_title: "Admin Aplikasi"
+      last_edits_title: "Perubahan terakhir di database"
+      osm_objects: "Objek OSM"
+      osm_id_type: "ID – Tipe OSM"
+      show_object: "Tampilkan Objek"
+      view_others: "Lihat Lainnya"
       other_count: "%{count} other records"
-
+  
   osm_shadows:
     show:
-      title: "Object %{id} Properties"
-      h1: "Object Properties"
+      title: "Properti %{id} Objek"
+      h1: "Properti Objek"
     new:
-      h1: "New Tags"
+      h1: "Tag Baru"
     list:
-      title: "Records for this Object. %{type}:%{osmid}"
-      h1: "Records"
-      add_new: "Add new Record"
+      title: "Catatan untuk objek ini. %{type}:%{osmid}"
+      h1: "Catatan"
+      add_new: "Tambahkan Catatan Baru"
     edit:
-      title: "Edit Tags"
-      h1: "Edit Object"
-      view: "View Object"
-      view2: "View Object Properties (Cancel Edit)"
+      title: "Ubah Tag"
+      h1: "Ubah Objek"
+      view: "Lihat Objek"
+      view2: "Lihat Properti Objek (Batalkan Perubahan)"
     osm_shadow:
-      savetags: "Save Tags"
-      deleterec: "Delete this record"
-      confirm: "Are you sure you want to delete this?"
+      savetags: "Simpan Tag"
+      deleterec: "Hapus Catatan Ini"
+      confirm: "Apakah anda yakin anda mau menghapus ini?"
     osm_object:
-      h2: "Project"
-      lastmod: "Last modified"
-      by: "By"
-      hother: "Other Records"
-      siblings: "for this OSM object"
-      osmprops: "OSM Properties"
-      josm_link: "Open in JOSM (remote control)"
+      h2: "Proyek"
+      lastmod: "Pengubahan Terakhir"
+      by: "Oleh"
+      v: "Versi"
+      hother: "Catatan Lainnya"
+      siblings: "untuk objek OSM ini"
+      osmprops: "Properti OSM"
+      josm_link: "Buka di JOSM (Kendali Jarak Jauh)"
       more: "More..."
       osm_error: "Error loading GML. This OSM object may have been deleted, or there is a problem with the OSM server."
     expert_view:
-      head: "Expert View"
-      notags: "No Tags saved for this object."
+      head: "Tampilan Mahir"
+      notags: "Tidak ada tag yang disimpan untuk objek ini."
       versions_title: "Versions of this tag"
-
-
+ 
+ 
   projects:
     show:
-      title: "Showing project %{name}"
-      head: "Showing Project"
+      title: "Memperlihatkan Objek %{nama}"
+      head: "Menampilkan Proyek"
     new:
-      head: "Add new project"
+      head: "Menambahkan Proyek Baru"
     index:
-      head: "Viewing All Projects"
-      create_new: "Create New Project"
+      head: "Melihat Semua Proyek"
+      create_new: "Membuat Proyek Baru"
     data:
-      desc: "Lists all the records which have tags relevant to this project"
-      csv_link: "Download as CSV (tab separated)"
-      xls_link: "Download as Excel (XLS)"
+      desc: "Tampilkan semua catatan yang mempunyai tag yang relevan dengan objek ini"
+      csv_link: "Unduh sebagai CSV (tab dipisah)"
+      xls_link: "Unduh sebagai Excel (XLS)"
     project:
-      tags_def: "Tags Definition (JSON):"
-      no_preset: "No preset file found"
-      created: "Created"
+      tags_def: "Definisi Tag (JSON):"
+      no_preset: "File preset tidak ditemukan"
+      created: "Dibuat"
     form:
-      legend: "Project form"
-      tags_def: "Tag Fields Definition (JSON)"
-      preset_desc: "Preset File (must be an .xml file)"
-      current: "Current file"
-      deleterec: "Delete this record"
-      confirm: "Are you sure you want to delete this?"
-
+      legend: "Proyek dari"
+      tags_def: "Area Definisi Tag (JSON)"
+      preset_desc: "Deskripsi file (harus merupakan file dengan ekstensi .xml)"
+      current: "File saat ini"
+      deleterec: "Hapus catatan ini "
+      confirm: "Apakah anda yakin ingin menghapus ini?"
+ 
   search:
     osm_shadow:
-      view: "View Object"
+      view: "Lihat Objek"
     mapsearch:
-      head: "Map Search"
-      desc: "Zoom to an area of interest, then load buildings by clicking the button below the map."
-      or: "Or try"
-      tagsearch_link: "Search for records using tags"
-      load_osm: "Load OSM Geometries"
+      head: "Pencarian Peta"
+      desc: "Perbesar ke area yang diinginkan, kemudian tampilkan bangunan dengan klik tombol dibawah peta."
+      or: "Atau"
+      tagsearch_link: "Cari catatan yang menggunakan tag"
+      load_osm: "Tampilkan Geometri OSM"
     tagsearch:
-      results_title: "Tag Search Results"
-      head: "Search"
-      desc: "Enter a word. You receive a list of records, which contains this word as the key or value in any tag."
-      or: "Or try"
-      mapsearch_link: "Search for records using a map"
-      searched: "Your search values"
-      selproj: "Select Project"
-      search_head: "Enter Search String"
-      results: "Search results"
-      none: "No Objects found."
-
-
+      results_title: "Hasil Pencarian Tag"
+      head: "Cari"
+      desc: "Masukkan kata. Anda akan menerima daftar catatan, yang mengandung huruf sebagai key atau value di tag manapun."
+      or: "Atau"
+      mapsearch_link: "Pencarian untuk catatan dengan menggunakan peta"
+      searched: "Hasil pencarian anda"
+      selproj: "Pilih Proyek"
+      search_head: "Masukkan Kata Kunci Pencarian"
+      results: "Hasil Pencarian"
+      none: "Objek tidak ditemukan."
+ 
+ 
   sessions:
     new:
-      head: "Sign in"
-      login_btn: "Sign in"
-      new_user_help: "New user? Contact HOT!"
-
+      head: "Masuk"
+      login_btn: "Masuk"
+      new_user_help: "Pengguna baru? Hubungi HOT!"
+ 
   users:
-    firstname: "First Name"
-    lastname: "Last Name"
+    firstname: "Nama Depan"
+    lastname: "Nama Belakang"
     email: "Email"
-    projects: "Subscribed Projects"
+    projects: "Proyek Langganan"
     show:
-      head: "User Details"
-      edit: "Edit User"
-      active: "Active"
+      head: "Detail Pengguna"
+      edit: "Ubah Pengguna"
+      active: "Actif"
       admin: "Admin"
     new:
-      head: "New User"
+      head: "Pengguna Baru"
     index:
-      hide_show: "Hide/show inactive users"
+      hide_show: "Sembunyikan/tampilkan pengguna yang tidak aktif"
     edit:
-      head: "Edit User"
+      head: "Ubah Pengguna"
     users_sidebar:
-      add_user: "Add New User"
-      all_users: "All Users"
+      add_user: "Tambahkan Pengguna Baru"
+      all_users: "Semua Pengguna"
     user:
-      view: "View User"
-      none: "No Users Found"
+      view: "Lihat Pengguna"
+      none: "Pengguna Tidak ditemukan"
     form:
-      reset_pass: "Reset & gnerate new password"
-      inactive: "Inactive"
-      not_admin: "Not admin"
-      projects: "Projects"
-
+      reset_pass: "Reset dan hasilkan Sandi baru"
+      inactive: "Non Aktif"
+      not_admin: "Bukan Admin"
+      projects: "Proyek"
+      
   tags:
     show:
       head: "Tag Version History"
@@ -195,26 +196,26 @@ id:
       revert: "Revert"
       confirm_revert: "Are you sure you want to revert to this version?"
       created: "Created"
-
+ 
   shared:
     error_messages:
-      head: "prohibited this user from being saved"
-      desc: "There were problems with the following fields"
-
-  #alert and success messages sent from controllers
+      head: "Pengguna ini dilarang menyimpan"
+      desc: "Terdapat masalah dengan area berikut"
+ 
+   #alert and success messages sent from controllers
   notice:
-    record_updated: "Record updated successfully"
-    record_saved: "Record successfully saved."
-    record_deleted: "Record was successfully deleted."
-    user_updated: "User updated successfully!"
-    user_created: "Created new user successfully!"
+    record_updated: "Catatan telah sukses diperbaharui "
+    record_saved: "Catatan telah sukses disimpan."
+    record_deleted: "Catatan telah berhasil dihapus."
+    user_updated: "Pengguna telah berhasil diperbaharui!"
+    user_created: "Pembuatan pengguna baru telah berhasil!"
     tag_reverted: "Tag successfully reverted!"
-
+ 
   alert:
-    project_not_subscribed: "Sorry you are not subscribed to this project."
-    record_not_updated: "Sorry, Record was unable to be updated."
-    record_not_saved: "Sorry, Record was unable to be saved."
-    invalid_email_pw: "Invalid email/password combination."
-    deny_access: "Please sign in to access this page."
+    project_not_subscribed: "Maaf, anda tidak berlangganan dengan pengguna ini."
+    record_not_updated: "Maaf, catatan tidak dapat diperbaharui."
+    record_not_saved: "Maaf, catatan tidak dapat disimpan."
+    invalid_email_pw: "Salah kombinasi email/sandi."
+    deny_access: "Harap masuk untuk mengakses halaman ini."
     not_allowed: "Sorry, you are not allowed to do that operation."
-
+    
