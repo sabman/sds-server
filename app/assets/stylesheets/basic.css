@@ -397,6 +397,7 @@ div.osm_object_map {
 }
 
 #header div.nav {
+   font-size: 14px;
    float: right;
    text-align: right;
 }
