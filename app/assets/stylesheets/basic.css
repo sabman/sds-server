@@ -426,7 +426,7 @@ div.osm_object_map {
 }
 
 #header div.logo {
-   width: 384px;
+   width: 300px;
    float: left;
    padding: 10px 0px 40px 0px;
 }
@@ -440,9 +440,9 @@ div.osm_object_map {
 
 #header div.logo h1 {
    margin: 0px;
-   font-family: serif;
+   font-family: Arial, Helvetica, sans-serif;
    font-weight: normal; 
-   text-shadow: #000 1px 1px 1px; font-size: 28px; color: #fff;
+   text-shadow: #000 1px 1px 1px; font-size: 26px; color: #fff;
 }
 
 
