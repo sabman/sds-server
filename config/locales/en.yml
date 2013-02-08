@@ -157,6 +157,8 @@ en:
       inactive: "Inactive"
       not_admin: "Not admin"
       projects: "Projects"
+    change_password:
+      change_password: "Change password"
 
   tags:
     show:
@@ -187,6 +189,7 @@ en:
     user_updated: "User updated successfully!"
     user_created: "Created new user successfully!"
     tag_reverted: "Tag successfully reverted!"
+    password_updated: "Password successfully updated"
 
   alert:
     project_not_subscribed: "Sorry you are not subscribed to this project."
@@ -195,5 +198,8 @@ en:
     invalid_email_pw: "Invalid email/password combination."
     deny_access: "Please sign in to access this page."
     not_allowed: "Sorry, you are not allowed to do that operation."
+    password_not_updated: "Password not changed"
+    password_mismatch: "New Passwords mismatch" 
+    password_incorrect: "Old password incorrect" 
 
 

@@ -181,6 +181,8 @@ id:
       inactive: "Non Aktif"
       not_admin: "Bukan Admin"
       projects: "Proyek"
+    change_password:
+      change_password: "Ganti password"
       
   tags:
     show:
@@ -210,6 +212,7 @@ id:
     user_updated: "Pengguna telah berhasil diperbaharui!"
     user_created: "Pembuatan pengguna baru telah berhasil!"
     tag_reverted: "Tag telah berhasil dikembalikan!"
+    password_updated: "Password successfully updated"
  
   alert:
     project_not_subscribed: "Maaf, anda tidak berlangganan dengan pengguna ini."
@@ -218,4 +221,7 @@ id:
     invalid_email_pw: "Salah kombinasi email/sandi."
     deny_access: "Harap masuk untuk mengakses halaman ini."
     not_allowed: "Maaf, anda tidak diperbolehkan untuk melakukan operasi itu."
+    password_not_updated: "Password not changed"
+    password_mismatch: "New Passwords mismatch" 
+    password_incorrect: "Old password incorrect" 
     

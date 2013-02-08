@@ -3,6 +3,9 @@ HotJosm::Application.routes.draw do
    root :to => "sessions#new"
 
    resources :users
+   match 'change_password', :to => "users#change_password", :via => :get
+   match 'update_password', :to => "users#update_password", :via => :put
+   
    resources :osm_shadows
    resources :sessions, :only => [:new, :create, :destroy]
    

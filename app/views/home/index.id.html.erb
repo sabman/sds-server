@@ -42,6 +42,10 @@
   <th>Email</th>
   <td><%= current_user.email %></td></tr>
 <tr>
+<tr>
+   <th>Password</th>
+   <td><%= link_to "Ganti Password", change_password_path %></td>
+</tr>
   <th>Proyek</th>
   <% if current_user.projects %>
     <td> <%= current_user.projects.map{|projs| projs.name}.join(', ') %> </td>

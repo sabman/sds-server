@@ -345,4 +345,48 @@ describe UsersController do
       end
    end
 
+   describe "put 'update_password'" do
+      before(:each) do
+         @user = Factory(:user, :email => "aaaa@geofabrik.de")
+         @orig_password_hash = @user.password_hash
+         test_sign_in(@user)
+      end
+      
+      it "should update password if correct" do
+        @attr = {
+               :old_password => "pass",
+               :password => "newpass",
+               :password_confirmation => "newpass"
+            }
+         put :update_password, @attr
+         response.should redirect_to(home_path)
+         @user.reload.password_hash.should_not == @orig_password_hash
+      end
+      
+      it "should not update password if new password is incorrect" do
+         @attr = {
+               :old_password => "pass",
+               :password => "new_pass",
+               :password_confirmation => "wrong_pass"
+            }
+         put :update_password, @attr
+         response.should redirect_to(change_password_path)
+         @user.reload.password_hash.should == @orig_password_hash
+      
+      end
+      
+      it "should not update password if old password is incorrect" do
+         @attr = {
+               :old_password => "pasmistake",
+               :password => "newpass",
+               :password_confirmation => "newpass"
+            }
+         put :update_password, @attr
+         response.should redirect_to(change_password_path)
+         @user.reload.password_hash.should == @orig_password_hash
+      
+      end
+      
+   end
+   
 end
