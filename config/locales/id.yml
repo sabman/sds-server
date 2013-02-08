@@ -10,14 +10,14 @@ id:
       attributes:
         user:
           firstname: "nama depan"
-          lastname: "nama akhir"
+          lastname: "nama belakang"
           email: "email"
           password: "password"
           active: "aktif"
           admin: "admin"
           zoom: "zoom"
-          lat: "lat"
-          lon: "lon"
+          lat: "lintang"
+          lon: "bujur"
         tag:
           key: "key"
           value: "value"
@@ -63,7 +63,7 @@ id:
       osm_id_type: "ID – Tipe OSM"
       show_object: "Tampilkan Objek"
       view_others: "Lihat Lainnya"
-      other_count: "%{count} other records"
+      other_count: "%{count} catatan lainnya"
   
   osm_shadows:
     show:
@@ -93,12 +93,12 @@ id:
       siblings: "untuk objek OSM ini"
       osmprops: "Properti OSM"
       josm_link: "Buka di JOSM (Kendali Jarak Jauh)"
-      more: "More..."
-      osm_error: "Error loading GML. This OSM object may have been deleted, or there is a problem with the OSM server."
+      more: "Tambah..."
+      osm_error: "Error ketika memuat GML. Objek OSM ini mungkin telah dihapus, atau terdapat masalah dengan sever OSM."
     expert_view:
       head: "Tampilan Mahir"
       notags: "Tidak ada tag yang disimpan untuk objek ini."
-      versions_title: "Versions of this tag"
+      versions_title: "Versi dari tag ini"
  
  
   projects:
@@ -162,7 +162,7 @@ id:
     show:
       head: "Detail Pengguna"
       edit: "Ubah Pengguna"
-      active: "Actif"
+      active: "Aktif"
       admin: "Admin"
     new:
       head: "Pengguna Baru"
@@ -184,18 +184,18 @@ id:
       
   tags:
     show:
-      head: "Tag Version History"
-      back: "Back to record"
-      current: "Current version"
-      previous: "Previous versions"
+      head: "Riwayat versi Tag"
+      back: "Kembali ke catatan"
+      current: "Versi saat ini"
+      previous: "Versi sebelumnya"
       key: "Key"
       value: "Value"
-      user: "User"
-      changed: "Changed"
-      version: "Version"
-      revert: "Revert"
-      confirm_revert: "Are you sure you want to revert to this version?"
-      created: "Created"
+      user: "Pengguna"
+      changed: "Telah diubah"
+      version: "Versi"
+      revert: "Kembali"
+      confirm_revert: "Apakah anda yakin anda ingin mengembalikan ke versi ini?"
+      created: "Telah dibuat"
  
   shared:
     error_messages:
@@ -217,5 +217,5 @@ id:
     record_not_saved: "Maaf, catatan tidak dapat disimpan."
     invalid_email_pw: "Salah kombinasi email/sandi."
     deny_access: "Harap masuk untuk mengakses halaman ini."
-    not_allowed: "Sorry, you are not allowed to do that operation."
+    not_allowed: "Maaf, anda tidak diperbolehkan untuk melakukan operasi itu."
     
