@@ -209,7 +209,7 @@ id:
     record_deleted: "Catatan telah berhasil dihapus."
     user_updated: "Pengguna telah berhasil diperbaharui!"
     user_created: "Pembuatan pengguna baru telah berhasil!"
-    tag_reverted: "Tag successfully reverted!"
+    tag_reverted: "Tag telah berhasil dikembalikan!"
  
   alert:
     project_not_subscribed: "Maaf, anda tidak berlangganan dengan pengguna ini."
