@@ -59,6 +59,7 @@ function initmap()
          extent = this.features[0].geometry.getBounds();
          if (extent) {
             this.map.zoomToExtent(extent.scale(2));
+            mapsearch_link(this.map.getCenter(), this.map.getZoom())
             josm_link(extent.scale(3), '<%= @osm_shadow.osm_type %>', '<%= @osm_shadow.osm_id %>')
          } else {
             this.map.zoomToMaxExtent();
@@ -84,6 +85,12 @@ function josm_link(extent, osm_type, osm_id){
   var bottom = extent.bottom;
   var url = "​http://abc.com/load_and_zoom?left="+left+"&right="+right+"&top="+top+"&bottom="+bottom+"&select="+osm_type+osm_id;
   $("a.josm_remote_link").attr("href", "http://localhost:8111/load_and_zoom?left="+left+"&right="+right+"&top="+top+"&bottom="+bottom+"&select="+osm_type+osm_id);
+}
+
+function mapsearch_link(center, zoom){
+  var proj = new OpenLayers.Projection("EPSG:4326");
+  var newcenter = center.transform(map.getProjectionObject(), proj )
+  $("a#mapsearch_link").attr("href", "<%= mapsearch_path %>?lat="+newcenter.lat+"&lon="+newcenter.lon+"&zoom="+zoom );
 }
 
 function display_attributes(attributes){
@@ -198,7 +205,9 @@ $(document).ready(function() {
   <ul id="osm_attributes_list" style="display:none">
     
   </ul>
-<div id="osm_object_map" class="osm_object_map"></div>
+<div id="osm_object_map" class="osm_object_map">
+  <div id="view_in_mapsearch"><a id="mapsearch_link" href="#"><%= t".view_map" %></a></div>
+</div>
   <p>
     <a href="http://localhost:8111/load_object?new_layer=true&objects=<%=@osm_shadow.osm_type%><%=@osm_shadow.osm_id%>" 
        class="josm_remote_link" target="_blank"><%= t".josm_link" %></a>

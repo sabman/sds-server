@@ -43,14 +43,18 @@ function initmap()
 {
     proj4326 = new OpenLayers.Projection("EPSG:4326");
     projmerc = new OpenLayers.Projection("EPSG:900913");
-
-    var lonlat = new OpenLayers.LonLat(<%= current_user.lon %>, <%= current_user.lat %>);
-    var zoom = <%= current_user.zoom %>;
-
+    <%  if params[:lat] && params[:lon] && params[:zoom] %>
+     var lonlat = new OpenLayers.LonLat(<%= params[:lon] %>, <%= params[:lat] %>);
+     var zoom = <%= params[:zoom] %>;
+    <% else %>
+     var lonlat = new OpenLayers.LonLat(<%= current_user.lon %>, <%= current_user.lat %>);
+     var zoom = <%= current_user.zoom %>;
+    <% end %>
     map = new OpenLayers.Map("map", {
       controls: [
          new OpenLayers.Control.Navigation(),
-         new OpenLayers.Control.PanZoom()
+         new OpenLayers.Control.PanZoom(),
+         new OpenLayers.Control.Permalink()
       ],
       units: "m",
       maxResolution: 156543.0339,

@@ -95,6 +95,7 @@ id:
       josm_link: "Buka di JOSM (Kendali Jarak Jauh)"
       more: "Tambah..."
       osm_error: "Error ketika memuat GML. Objek OSM ini mungkin telah dihapus, atau terdapat masalah dengan sever OSM."
+      view_map: "View in Map Search Page"
     expert_view:
       head: "Tampilan Mahir"
       notags: "Tidak ada tag yang disimpan untuk objek ini."

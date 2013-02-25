@@ -71,6 +71,7 @@ en:
       josm_link: "Open in JOSM (remote control)"
       more: "More..."
       osm_error: "Error loading GML. This OSM object may have been deleted, or there is a problem with the OSM server."
+      view_map: "View in Map Search Page"
     expert_view:
       head: "Expert View"
       notags: "No Tags saved for this object."

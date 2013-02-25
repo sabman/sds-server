@@ -276,6 +276,7 @@ div.osm_object ul li {
 div.osm_object_map {
    width: 190px; 
    height: 190px;
+   position: relative;
 }
 
 #change_project {
@@ -537,6 +538,20 @@ label.error {
    padding-left: 0px;
    margin-left: 0px;
 }
+.olControlPermalink {
+ bottom: 0em!important;
+ padding: 2px;
+ background-color: wheat;
+}
 
+div#view_in_mapsearch {
+  padding: 1px;
+  background-color: wheat;
+  font-size: 13px;
+  bottom: 0px;
+  right: 0px;
+  position: absolute;
+  z-index: 1000;
 
+}
 
