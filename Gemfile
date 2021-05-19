@@ -33,7 +33,7 @@ end
 
 group :test do
    gem 'rspec'
-   gem 'webrat'
+   gem 'webrat', '>= 0.7.3'
    gem 'factory_girl_rails', '1.2'
    gem 'faker', '0.3.1'
 end
