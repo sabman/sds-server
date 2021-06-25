@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1'
+gem 'rails', '4.0.0'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -10,7 +10,7 @@ gem 'libxml-ruby'
 
 gem 'bcrypt-ruby', :require => 'bcrypt'
 
-gem 'paper_trail'
+gem 'paper_trail', '>= 3.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
